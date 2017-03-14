@@ -13,24 +13,32 @@ class SineView: UIView{
     let circleRadius:CGFloat = 5
     var perviousRefPoint:CGPoint = CGPoint(x:0, y:0)
     var refPointsArr: [CGPoint] = [];
-    
+    var isDrawCircle = false
     
     override func draw(_ rect: CGRect) {
         let width = rect.width
         let height = rect.height
 
         drawSineHorizontal(width, height)
-        print("refPointsArr: \(refPointsArr.count)")
-//        
-//        for refPoint in refPointsArr {
-//            //drawRingFittingInsideView(refPoint.x, refPoint.y, UIColor.red.cgColor)
-//           
-//        }
+        let totalPointscount = refPointsArr.count
         
-        //drawRingFittingInsideView(252.083333333333, 474.443190290523)
-        //drawRingFittingInsideView(254.166666666667, 447.563717799111)
-        //x:252.083333333333, y:474.443190290523
-        //x:254.166666666667, y:447.563717799111
+        print("refPointsArr: \(refPointsArr.count)")
+        
+        if isDrawCircle == false {
+            for (index, point) in refPointsArr.enumerated() {
+                if index == 0 {
+                    drawRingFittingInsideView(point.x, point.y, UIColor.green.cgColor)
+                } else if index == (totalPointscount - 1) {
+                    drawRingFittingInsideView(point.x, point.y, UIColor.blue.cgColor)
+                } else {
+                    drawRingFittingInsideView(point.x, point.y, UIColor.red.cgColor)
+                }
+            }
+        }
+        
+        isDrawCircle = true
+        
+        
         
     }
     
@@ -60,7 +68,7 @@ class SineView: UIView{
         let origin = CGPoint(x: 10, y: height * 0.50)
         //print("origin: \(origin)")
         
-        drawRingFittingInsideView(origin.x, origin.y, UIColor.green.cgColor)
+        //drawRingFittingInsideView(origin.x, origin.y, UIColor.green.cgColor)
 
         
         let path = UIBezierPath()
@@ -96,10 +104,10 @@ class SineView: UIView{
             path.addLine(to: CGPoint(x: currentRefPoint.x, y: currentRefPoint.y))
             if angle == endRadius {
                 //print("algle last : \(angle)")
-                drawRingFittingInsideView(currentRefPoint.x, currentRefPoint.y , UIColor.blue.cgColor)
+                //drawRingFittingInsideView(currentRefPoint.x, currentRefPoint.y , UIColor.blue.cgColor)
             } else if angle != 0 {
 
-                drawRingFittingInsideView(currentRefPoint.x, currentRefPoint.y, UIColor.red.cgColor)
+                //drawRingFittingInsideView(currentRefPoint.x, currentRefPoint.y, UIColor.red.cgColor)
             }
             refPointsArr.append(currentRefPoint)
 
