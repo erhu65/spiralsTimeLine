@@ -13,6 +13,7 @@
 		B764CD3F1E76D81900E61A87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B764CD3E1E76D81900E61A87 /* Assets.xcassets */; };
 		B764CD421E76D81900E61A87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B764CD401E76D81900E61A87 /* LaunchScreen.storyboard */; };
 		B764CD4A1E76D88400E61A87 /* SineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764CD491E76D88400E61A87 /* SineView.swift */; };
+		D0065BBF1E79143E0062449C /* SineScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0065BBE1E79143E0062449C /* SineScrollerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B764CD411E76D81900E61A87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B764CD431E76D81900E61A87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B764CD491E76D88400E61A87 /* SineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SineView.swift; sourceTree = "<group>"; };
+		D0065BBE1E79143E0062449C /* SineScrollerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SineScrollerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				B764CD371E76D81900E61A87 /* AppDelegate.swift */,
 				B764CD391E76D81900E61A87 /* ViewController.swift */,
 				B764CD491E76D88400E61A87 /* SineView.swift */,
+				D0065BBE1E79143E0062449C /* SineScrollerView.swift */,
 				B764CD3B1E76D81900E61A87 /* Main.storyboard */,
 				B764CD3E1E76D81900E61A87 /* Assets.xcassets */,
 				B764CD401E76D81900E61A87 /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B764CD4A1E76D88400E61A87 /* SineView.swift in Sources */,
+				D0065BBF1E79143E0062449C /* SineScrollerView.swift in Sources */,
 				B764CD3A1E76D81900E61A87 /* ViewController.swift in Sources */,
 				B764CD381E76D81900E61A87 /* AppDelegate.swift in Sources */,
 			);

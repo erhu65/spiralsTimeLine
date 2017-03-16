@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class SineView: UIView{
     let graphWidth: CGFloat = 0.8  // Graph is 80% of the width of the view
     let amplitude: CGFloat = 0.3   // Amplitude of sine wave is 30% of view height

@@ -8,15 +8,16 @@
 
 import UIKit
 
+typealias ScrollCallback = (_ xOffset:CGFloat, _ yOffset:CGFloat) -> (Void)
+
 class SineView: UIView{
     let graphWidth: CGFloat = 0.95  // Graph is 80% of the width of the view
     let amplitude: CGFloat = 0.22   // Amplitude of sine wave is 30% of view height
     let circleRadius:CGFloat = 5
     var perviousRefPoint:CGPoint = CGPoint(x:0, y:0)
     var refPointsArr: [CGPoint] = []
+    var circles: [UIView] = []
     let rotateDegree:CGFloat = -90
-
-    var lastLocation:CGPoint = CGPoint(x:0, y:0)
 
     override func draw(_ rect: CGRect) {
         let width = rect.width
@@ -25,48 +26,43 @@ class SineView: UIView{
         drawSineHorizontal(width, height)
         let totalPointscount = refPointsArr.count
         
-        print("refPointsArr: \(refPointsArr.count)")
+        //print("refPointsArr: \(refPointsArr.count)")
         
         for (index, point) in refPointsArr.enumerated() {
-            if index == 0 {
-                drawRingFittingInsideView(point.x, point.y, UIColor.green.cgColor)
-            } else if index == (totalPointscount - 1) {
-                drawRingFittingInsideView(point.x, point.y, UIColor.blue.cgColor)
+            
+            let circle = UIView(frame: CGRect(x: point.x - 5, y: point.y, width: 10.0, height: 10.0))
+            
+            //circle.center = containerView.center
+            circle.layer.cornerRadius = 5.0
+            if(index == 433 || index == 1 || index == 1111){
+                circle.backgroundColor = UIColor.red
             } else {
-                drawRingFittingInsideView(point.x, point.y, UIColor.red.cgColor)
+                circle.backgroundColor = UIColor.purple
+
             }
+            self.circles.append(circle)
+            self.addSubview(circle)
+//            
+//            if index == 0 {
+//                drawRingFittingInsideView(point.x, point.y, UIColor.green.cgColor)
+//            } else if index == (totalPointscount - 1) {
+//                drawRingFittingInsideView(point.x, point.y, UIColor.blue.cgColor)
+//            } else {
+//                drawRingFittingInsideView(point.x, point.y, UIColor.red.cgColor)
+//            }
             
             //drawText("\(index)", point)
         }
+      
         
-        // Initialization code
-        let panRecognizer = UIPanGestureRecognizer(target:self, action: #selector(self.detectPan(_:)))
-        self.gestureRecognizers = [panRecognizer]
         
- 
-    
+     
+        
     }
-    
-    func detectPan(_ recognizer:UIPanGestureRecognizer) {
-        
-        let translation  = recognizer.translation(in: self.superview!)
-        let lastCenter:CGPoint = self.center
-        
-        self.center = CGPoint(x: lastCenter.x, y: (lastLocation.y + translation.y))
-           
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Promote the touched view
-        //self.superview?.bringSubview(toFront: self)
-        
-        // Remember original location
-        lastLocation = self.center
-    }
-    
+
     func drawText(_ txt:String, _ p: CGPoint) {
     
-        let atts = [NSFontAttributeName: UIFont.init(name: "Georgia", size: 8)]
+        let atts = [NSFontAttributeName: UIFont.init(name: "Georgia", size: 12)]
         (txt as NSString).draw(
             at: CGPoint(x:p.x, y:p.y), 
             withAttributes: atts)
@@ -132,8 +128,6 @@ class SineView: UIView{
                 //drawRingFittingInsideView(currentRefPoint.x, currentRefPoint.y, UIColor.red.cgColor)
             }
             refPointsArr.append(currentRefPoint)
-            
-            
         }
         
         //UIColor.green.setFill()
@@ -163,5 +157,51 @@ class SineView: UIView{
         layer.addSublayer(shapeLayer)
     }
     
+    func getRefPointsArr() -> [CGPoint] {
+        return self.refPointsArr
+    }
+    
+    func getCircleByIndex(_ index:Int) -> UIView {
+        return self.circles[index] 
+    }
+    
+    func clearAllCircleStatus() -> Void {
+        
+        for (_, circle) in self.circles.enumerated() {
+                circle.backgroundColor = UIColor.clear
+        }
+    }
+    
+    func renderTImeLine(_ startIndex:Int, _ items:[TestItem]){
+        self.clearAllCircleStatus()
+        
+        let originalStartIndex =  self.circles.count / 2
+        let newStartIndex = originalStartIndex - startIndex
+
+        for (index, item) in items.enumerated() {
+            let circleIndexOfItem = newStartIndex + index
+            let circle = self.circles[circleIndexOfItem]
+            switch item.result {
+            case .NotDo:
+                circle.backgroundColor = UIColor.clear
+            case .Pass:
+                circle.backgroundColor = UIColor.green
+            case .Failed:
+                circle.backgroundColor = UIColor.red
+            default:
+                circle.backgroundColor = UIColor.clear
+                
+            }
+        }
+//        let itmesCount = items.count
+//        
+//        for (index, circle) in self.circles.enumerated() {
+//            if index >= newStartIndex {
+//                
+//                
+//            }
+//        }
+        
+    }
     
 }
