@@ -14,6 +14,9 @@
 		B764CD421E76D81900E61A87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B764CD401E76D81900E61A87 /* LaunchScreen.storyboard */; };
 		B764CD4A1E76D88400E61A87 /* SineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764CD491E76D88400E61A87 /* SineView.swift */; };
 		D0065BBF1E79143E0062449C /* SineScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0065BBE1E79143E0062449C /* SineScrollerView.swift */; };
+		D03B7B431E7BD88000EE46C3 /* SineViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03B7B421E7BD88000EE46C3 /* SineViewContainer.swift */; };
+		D07554FA1E7ED933002F810C /* TimeLiineIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07554F91E7ED933002F810C /* TimeLiineIndicatorView.swift */; };
+		D07574BA1E7E7BDD005C2F8E /* TimeLineCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07574B91E7E7BDD005C2F8E /* TimeLineCircleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		B764CD431E76D81900E61A87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B764CD491E76D88400E61A87 /* SineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SineView.swift; sourceTree = "<group>"; };
 		D0065BBE1E79143E0062449C /* SineScrollerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SineScrollerView.swift; sourceTree = "<group>"; };
+		D03B7B421E7BD88000EE46C3 /* SineViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SineViewContainer.swift; sourceTree = "<group>"; };
+		D07554F91E7ED933002F810C /* TimeLiineIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLiineIndicatorView.swift; sourceTree = "<group>"; };
+		D07574B91E7E7BDD005C2F8E /* TimeLineCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineCircleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,9 @@
 				B764CD371E76D81900E61A87 /* AppDelegate.swift */,
 				B764CD391E76D81900E61A87 /* ViewController.swift */,
 				B764CD491E76D88400E61A87 /* SineView.swift */,
+				D07574B91E7E7BDD005C2F8E /* TimeLineCircleView.swift */,
+				D03B7B421E7BD88000EE46C3 /* SineViewContainer.swift */,
+				D07554F91E7ED933002F810C /* TimeLiineIndicatorView.swift */,
 				D0065BBE1E79143E0062449C /* SineScrollerView.swift */,
 				B764CD3B1E76D81900E61A87 /* Main.storyboard */,
 				B764CD3E1E76D81900E61A87 /* Assets.xcassets */,
@@ -144,9 +153,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B764CD4A1E76D88400E61A87 /* SineView.swift in Sources */,
+				D07574BA1E7E7BDD005C2F8E /* TimeLineCircleView.swift in Sources */,
+				D03B7B431E7BD88000EE46C3 /* SineViewContainer.swift in Sources */,
 				D0065BBF1E79143E0062449C /* SineScrollerView.swift in Sources */,
 				B764CD3A1E76D81900E61A87 /* ViewController.swift in Sources */,
 				B764CD381E76D81900E61A87 /* AppDelegate.swift in Sources */,
+				D07554FA1E7ED933002F810C /* TimeLiineIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
