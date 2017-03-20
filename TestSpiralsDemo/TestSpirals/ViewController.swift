@@ -61,7 +61,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         //sineV.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
         
-        for serail in stride(from: 0, through: 150, by: 1) {
+        for serail in stride(from: 0, through: 180, by: 1) {
             let testItem = TestItem()
             testItem.serial = Int(serail)
             testItem.index = Int(serail)
@@ -73,6 +73,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
             case .NotDo:
                 testItem.result = .NotDo
             }
+            
             if serail == 0 {
                 testItem.result = .Pass
             }
@@ -98,7 +99,6 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         self.sineV.renderTImeLine(0, self.testItems)
         self.indicatorV.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.sineV.indicatorV = self.indicatorV
-        
         //self.sineViewContainer.adjustFirstPoinToContainer(self.sineV)
         
     }
