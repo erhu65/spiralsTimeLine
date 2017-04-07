@@ -22,10 +22,14 @@ class SineView: UIView{
     public var testItems: [TestItem] = []
     public var indicatorV: UIView?
     private let ajdustInitYVal:CGFloat = 280//adjust by phone screen size
+    //iPHone 6 280
+    //iPhone 6s plus 300
+    //iPhone SE 220
     
     typealias animationBlock = ()->Void
     private var animationBlocks:[animationBlock] = []
-    func getNextAnimation() -> animationBlock?
+   
+    private func getNextAnimation() -> animationBlock?
     {
         var block:animationBlock?
         if animationBlocks.count > 0 {
@@ -44,27 +48,21 @@ class SineView: UIView{
         print("refPointsArr.count: \(refPointsArr.count)")
         print("self.startPoinsIndexOfrefPointsArr:\(self.startPoinsIndexOfrefPointsArr)")
         
+        
         for (index, point) in refPointsArr.enumerated() {
+            
             
             let circle = TimeLineCircleView(frame: CGRect(x: point.x , y: point.y, width: 13.0, height: 13.0))
             //circle.center = containerView.center
             circle.layer.cornerRadius = 6.0
             circle.center = point
-            self.circles.append(circle)
+            circles.append(circle)
             let tapRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.detectTapCircle(_:)))
             circle.gestureRecognizers = [tapRecognizer]
             
             self.addSubview(circle)
-//            
-//            if index == 0 {
-//                drawRingFittingInsideView(point.x, point.y, UIColor.green.cgColor)
-//            } else if index == (totalPointscount - 1) {
-//                drawRingFittingInsideView(point.x, point.y, UIColor.blue.cgColor)
-//            } else {
-//                drawRingFittingInsideView(point.x, point.y, UIColor.red.cgColor)
-//            }
             
-            drawText("\(index)", point)
+            //drawText("\(index)", point)
         }
       
         // Initialization code
@@ -110,7 +108,7 @@ class SineView: UIView{
             
             //self.indicatorV?.center = self.lastIndicatorVCenter
             
-            let step = (offsetY > 0) ? -10 : 10
+            let step = (offsetY > 0) ? -5 : 5
             //let concurrentQueue = DispatchQueue(label: "queuename", attributes: .concurrent)
             
         
@@ -164,8 +162,6 @@ class SineView: UIView{
                 
             })
             
-            
-        
         } else if recognizer.state == .changed {
             
             let lastCenter:CGPoint = self.center
@@ -286,6 +282,11 @@ class SineView: UIView{
 
         let oldRange = items.count
         let newRange = 215//adjust by phone screen size
+        //iPHone 6 215
+        //iPhone 6s plus 215
+        //iPhone SE 180
+    
+        
         let circleIndexOfItemTest = newIndexOfStartPoin + (0 * newRange/oldRange)
         if circleIndexOfItemTest < 0 {
             return
