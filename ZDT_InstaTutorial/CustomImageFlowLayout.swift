@@ -27,12 +27,14 @@ class CustomImageFlowLayout: UICollectionViewFlowLayout {
         get {
             let numberOfColumns: CGFloat = 8
 
-            let itemWidth = (self.collectionView!.frame.width - (numberOfColumns + 5)) / numberOfColumns
+            let itemWidth = (self.collectionView!.frame.width - (numberOfColumns)) / numberOfColumns
             return CGSize(width: itemWidth, height: itemWidth)
         }
     }
 
     func setupLayout() {
+        
+        
         minimumInteritemSpacing = 0
         minimumLineSpacing = 0
         scrollDirection = .vertical
