@@ -8,8 +8,6 @@
 
 import UIKit
 
-let circleVTag = 1001
-
 class TestResultCollectionViewCell: UICollectionViewCell {
 
     
@@ -59,11 +57,11 @@ class TestResultCollectionViewCell: UICollectionViewCell {
     }
     
     func show2SubCircle() {
-        self.sub1CircleCenterX.constant = 4
-        self.sub2CircleCenterX.constant = -4
+        self.sub1CircleCenterX.constant = 0
+        self.sub2CircleCenterX.constant = 0
         self.subCirclesContainer.isHidden = false
         self.sub1Width.constant = 0
-        self.sub2Width.constant = 20
+        self.sub2Width.constant = 25
         self.sub3Width.constant = 0
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = false
@@ -74,9 +72,9 @@ class TestResultCollectionViewCell: UICollectionViewCell {
         self.sub1CircleCenterX.constant = 0
         self.sub2CircleCenterX.constant = 0
         self.subCirclesContainer.isHidden = false
-        self.sub1Width.constant = 13.3
-        self.sub2Width.constant = 13.3
-        self.sub3Width.constant = 13.3
+        self.sub1Width.constant = 16.67
+        self.sub2Width.constant = 16.67
+        self.sub3Width.constant = 16.67
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = false
         self.sub3Circle.isHidden = false
@@ -185,19 +183,19 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     }
                 
                 } else {
-                    self.circleV?.isHidden = true
-                    self.dateLb.text = ""
+                    //self.circleV?.isHidden = true
+                    self.dateLb.text = "xx"
                     self.hideAllSubCircle()
                 }
                 
             } else {
-                self.circleV?.isHidden = true
-                self.dateLb.text = ""
+                //self.circleV?.isHidden = true
+                self.dateLb.text = "xx"
                 self.hideAllSubCircle()
             }
             
             if let cellGuidLine = brItem?.cellGuildLine {
-            
+             
                 switch cellGuidLine {
                 case .topLeft:
                     self.guidImv.image = UIImage(named:"guidTopLeft")
@@ -211,8 +209,9 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     self.guidImv.image = UIImage(named:"guidHorizontal")
                 case .vertical:
                     self.guidImv.image = UIImage(named:"guidVertical")
-                default:
+                case .none:
                     self.guidImv.image = UIImage(named:"")
+          
                 }
             } else {
                 self.guidImv.image = UIImage(named:"")

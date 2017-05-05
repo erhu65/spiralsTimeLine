@@ -178,13 +178,7 @@ class BRItem {
         if(self.testItems.count == 0){
             return
         }
-        let calendar = Calendar.current
-        //let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date!)
-        let day = calendar.component(.day, from: date!)
-        let weekDay = calendar.component(.weekday, from: date!)
-        let dateStr = "\(month)/\(day)(\(weekDay))"
-        print("date:\(dateStr))")
+    
         var idnexMostImportant:Int = -1;
         for (idx, testItem) in (self.testItems.enumerated()) {
       
@@ -215,7 +209,6 @@ class BRItem {
         }
         
         if idnexMostImportant == -1 {
-            
             
             for (idx, testItem) in (self.testItems.enumerated()) {
           
@@ -341,11 +334,11 @@ class BRItem {
             let mostImportantTestItem = self.testItems.remove(at: idnexMostImportant);
             self.testItems.insert(mostImportantTestItem, at: 0)
             
-            print("testItem.account:\(String(describing: mostImportantTestItem.account))")
-            print("testItem.typ:\(String(describing: mostImportantTestItem.type))")
-            print("testItem.priority:\(mostImportantTestItem.priority)")
-            print("testItem.isDone:\(mostImportantTestItem.isDone())")
-            print("idnexMostImportant:\(idnexMostImportant)")
+//            print("testItem.account:\(String(describing: mostImportantTestItem.account))")
+//            print("testItem.typ:\(String(describing: mostImportantTestItem.type))")
+//            print("testItem.priority:\(mostImportantTestItem.priority)")
+//            print("testItem.isDone:\(mostImportantTestItem.isDone())")
+//            print("idnexMostImportant:\(idnexMostImportant)")
          
         }
 
@@ -363,6 +356,7 @@ UITextFieldDelegate{
     @IBOutlet weak var tf1: UITextField!
     @IBOutlet weak var tf2: UITextField!
 
+    let numberOfColumns:CGFloat = 10
     var allBrItemsForCell:[BRItem?] = []
 
     var collectionViewLayout: CustomImageFlowLayout!
@@ -388,9 +382,8 @@ UITextFieldDelegate{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
     
         let rowIndex = indexPath.row
-        let numberOfColumns: CGFloat = 8
         
-        var itemWidth = (self.collectionView!.frame.width - (numberOfColumns)) / numberOfColumns
+        var itemWidth = (self.collectionView!.frame.width - (self.numberOfColumns)) / self.numberOfColumns
         var itemHeight:CGFloat = 0.0
         
         let barItem = self.allBrItemsForCell[rowIndex]
@@ -484,7 +477,7 @@ UITextFieldDelegate{
             }
             
         } else {
-            cell.brItem = nil
+            cell.brItem = barItem
             cell.serialLb.text = "\(indexPath.row)"
             return cell
         }
@@ -497,10 +490,16 @@ UITextFieldDelegate{
         
         let rowIndex = indexPath.row
         let barItem = self.allBrItemsForCell[rowIndex]
+    
+        guard let cellGuidLine = barItem?.cellGuildLine else {
+            return
+        }
+        
+        print("cellGuildLine: \(cellGuidLine)")
         
         guard let _ = barItem?.date else {
-        
-            return;
+          
+            return
         }
         
         let testIitemsCount = barItem?.testItems.count
@@ -667,6 +666,7 @@ UITextFieldDelegate{
             allBrItems.append(brItem)
             
             futureCount += 1
+            //The last date should have at least one testItem
             if futureCount == 1 {
                 let testItem = ViewController.mkRandomTestItem()
                 brItem.testItems = []
@@ -684,6 +684,7 @@ UITextFieldDelegate{
             brItem.date = date
             allBrItems.append(brItem)
             
+            //Thre first date should have at least one testItem
             if beforeCount == num2 {
                 let testItem = ViewController.mkRandomTestItem()
                 brItem.testItems = []
@@ -698,11 +699,10 @@ UITextFieldDelegate{
         var first7DateOfThisWeekCount = 0
         var firstDateOfThisWeek:Date? = nil
         var lastDateOfThisWeek:Date? = nil
-        chunkCounter = 0
-        var circle8_tmpBrItems:[BRItem?] = []
+       
         var futureBrItems:[BRItem?] = []
-        
-        var tailFutureBrItems:[BRItem?] = []
+        var beforeBrItems:[BRItem?] = []
+   
         
         var allBrItemsReduceEmpty:[BRItem?] = []
         
@@ -737,16 +737,12 @@ UITextFieldDelegate{
             
             if let dateChk = brItem?.date
             {
-                let calendar = Calendar.current
-                let year = calendar.component(.year, from: dateChk)
-                let month = calendar.component(.month, from: dateChk)
-                let day = calendar.component(.day, from: dateChk)
-                let weekDay = calendar.component(.weekday, from: dateChk)
-                
+
                 let fallsBetween = (self.startOfWeek()...self.endOfWeek()).contains(dateChk)
                 
                 if lastDateOfThisWeek == nil
                     && !fallsBetween {
+                    //after this week
                     futureBrItems.append(brItem)
                     continue
                     //print("future: \(year)-\(month)-\(day)(\(weekDay))")
@@ -754,480 +750,284 @@ UITextFieldDelegate{
                 
                 if(fallsBetween
                     && first7DateOfThisWeekCount < 7){
-                    
                     first7DateOfThisWeekCount += 1
                     if first7DateOfThisWeekCount == 1 {
+                        
+                        let brItemVerticleLeft  = self.mkNoDateBrItem(.bottomLeft)
+                        self.allBrItemsForCell.insert(brItemVerticleLeft, at: 0)
+                
                         lastDateOfThisWeek = brItem?.date
-                        brItem?.cellGuildLine = .bottomLeft
+                        brItem?.cellGuildLine = .horizontal
                     } else if first7DateOfThisWeekCount == 7 {
                         firstDateOfThisWeek = brItem?.date
-                        brItem?.cellGuildLine  = .topRight
+                        brItem?.cellGuildLine  = .horizontal
                     } else {
                         brItem?.cellGuildLine  = .horizontal
                     }
-                    
                     //print("first rows date:\(dateChk)")
+                    ///process current week first
+              
                     self.allBrItemsForCell.append(brItem)
+                    
+                    if first7DateOfThisWeekCount == 7 {
+                        let brItemVerticleRight  = self.mkNoDateBrItem(.topRight)
+                        self.allBrItemsForCell.append(brItemVerticleRight)
+                    }
+                   
+              
                     continue
                 }
                 
                 if(firstDateOfThisWeek != nil
                     && firstDateOfThisWeek! > (brItem?.date)!){
-                    
-                    print("before: \(year)-\(month)-\(day)(\(weekDay))")
-                    
-                    switch currentCellPattern {
-                    case .before_pattern_7e_1c:
-                        currentCellPatternCount = 7
-                        for _ in stride(from: 1, through: 7, by: 1) {
-                            let brItem = BRItem()
-                            brItem.cellGuildLine = .none
-                            self.allBrItemsForCell.append(brItem);
-                            chunkCounter  += 1
-                            
-                        }
-                        if(currentCellPatternCount == chunkCounter) {
-                            //tmpBrItems.append(brItem)
-                            brItem?.cellGuildLine = .vertical
-                            self.allBrItemsForCell.append(brItem);
-                            chunkCounter = 0
-                            currentCellPattern = .before_pattern_8c
-                        }
-                    case .before_pattern_8c:
-                        
-                        currentCellPatternCount = 8
-                        circle8_tmpBrItems.append(brItem)
-                        chunkCounter  += 1
-                        
-                        if(currentCellPatternCount == chunkCounter) {
-                            let tmpBrItemsReverse = circle8_tmpBrItems.reversed()
-                            for obj in tmpBrItemsReverse.enumerated() {
-                                if obj.offset == 0 {
-                                    if allBrItemsLoopCount == 0 {
-                                        obj.element?.cellGuildLine = .horizontal
-                                    } else {
-                                        obj.element?.cellGuildLine = .topLeft
-                                    }
-                                    
-                                } else if obj.offset == 7  {
-                                    obj.element?.cellGuildLine  = .bottomRight
-                                } else {
-                                    obj.element?.cellGuildLine  = .horizontal
-                                }
-                                self.allBrItemsForCell.append(obj.element)
-                            }
-                            
-                            chunkCounter = 0
-                            currentCellPattern = .before_pattern_1c_L
-                            circle8_tmpBrItems = []
-                        }
-                        
-                    case .before_pattern_1c_L:
-                        
-                        currentCellPatternCount = 1
-                        brItem?.cellGuildLine = .vertical
-                        self.allBrItemsForCell.append(brItem);
-                        chunkCounter  += 1
-                        if(currentCellPatternCount == chunkCounter) {
-                            chunkCounter = 0
-                            currentCellPattern = .before_pattern_empty7_2
-                        }
-                    case .before_pattern_empty7_2:
-                        
-                        currentCellPatternCount = 7
-                        for _ in stride(from: 1, through: 7, by: 1) {
-                            let brItem = BRItem()
-                            brItem.cellGuildLine = .horizontal
-                            self.allBrItemsForCell.append(brItem);
-                            chunkCounter  += 1
-                            
-                        }
-                        if(currentCellPatternCount == chunkCounter) {
-                            chunkCounter = 0
-                            currentCellPattern = .before_pattern_circle8_2
-                            
-                            if allBrItemsLoopCount == 0 {
-                                brItem?.cellGuildLine = .vertical
-                            } else {
-                                brItem?.cellGuildLine = .bottomLeft
-                            }
-                            
-                            self.allBrItemsForCell.append(brItem)
-                            chunkCounter  += 1
-                        }
-                    case .before_pattern_circle8_2:
-                        currentCellPatternCount = 8
-                        chunkCounter  += 1
-                        self.allBrItemsForCell.append(brItem)
-                        if chunkCounter == 8 {
-                            if allBrItemsLoopCount == 0 {
-                                brItem?.cellGuildLine = .horizontal
-                            } else {
-                                brItem?.cellGuildLine = .topRight
-                            }
-                        } else {
-                            brItem?.cellGuildLine = .horizontal
-                        }
-                        if(currentCellPatternCount == chunkCounter) {
-                            chunkCounter = 0
-                            currentCellPattern = .before_pattern_7e_1c
-                            
-                        }
-                    default:
-                        continue
-                        
-                    }
-                    
+                    //before this week
+                    beforeBrItems.append(brItem);
                 }
-                
-                
+
+            
             }
             
         }
-        
-        //process circle8 not enough
-        if circle8_tmpBrItems.count > 0 {
-            let paddLeft = 8 - circle8_tmpBrItems.count
-            
-            for _ in stride(from: 1, through: paddLeft, by: 1) {
-                let brItem = BRItem()
-                brItem.cellGuildLine = .none
-                self.allBrItemsForCell.append(brItem);
-            }
-            
-            let tmpBrItemsReverse = circle8_tmpBrItems.reversed()
-            for obj in tmpBrItemsReverse.enumerated() {
-                
-                if tmpBrItemsReverse.count == 1 {
-                    obj.element?.cellGuildLine = .vertical
-                } else  {
-                    
-                    if obj.offset == (tmpBrItemsReverse.count - 1) {
-                        obj.element?.cellGuildLine  = .bottomRight
-                    } else {
-                        obj.element?.cellGuildLine  = .horizontal
-                    }
-                }
-                
-                self.allBrItemsForCell.append(obj.element)
-            }
-            circle8_tmpBrItems = []
-        }
-        
+
         print("all dates end")
-        
-        let futureBrItemsReverse:[BRItem?] = futureBrItems.reversed()
-        for (_ , brItem) in futureBrItemsReverse.enumerated() {
-            
-            if let date = brItem?.date {
-                let calendar = Calendar.current
-                let year = calendar.component(.year, from: date)
-                let month = calendar.component(.month, from: date)
-                let day = calendar.component(.day, from: date)
-                let weekDay = calendar.component(.weekday, from: date)
-                print("future: \(year)-\(month)-\(day)(\(weekDay))")
+        for (_, brItem ) in futureBrItems.enumerated() {
+            guard let date = brItem?.date else {
+                continue;
             }
-            //self.allBrItemsForCell.insert(brItem, at: 0);
-            //self.inserCellByBRItemAtFirst(brItem: brItem!)
+            let dateStr = self.formatLocalDate("after current week date: ", date)
+            let testItemCount = brItem?.testItems.count
+            print("\(dateStr) count:\(testItemCount!)")
         }
+ 
+//        for (_, brItem ) in self.allBrItemsForCell.enumerated() {
+//            
+//            guard let date = brItem?.date else {
+//                continue;
+//            }
+//            let dateStr = self.formatLocalDate("current week date: ", date)
+//            let testItemCount = brItem?.testItems.count
+//            print("\(dateStr) count:\(testItemCount!)")
+//        }
         
-        var future_pattern_currentCellPattern:CellRegularPattern = .future_pattern_7e_1c
-        var future_pattern_chunkCounter = 0;
-        var future_pattern_8c_reverse_tmpBrItems:[BRItem?] = [];
-        var future_pattern_8c_not_enough_tmpBrItems:[BRItem?] = [];
+     
+//        for (_, brItem ) in beforeBrItems.enumerated() {
+//            guard let date = brItem?.date else {
+//                continue;
+//            }
+//            
+//            let dateStr = self.formatLocalDate("before current week date: ", date)
+//            let testItemCount = brItem?.testItems.count
+//            print("\(dateStr) count:\(testItemCount!)")
+//        }
         
-        if futureBrItemsReverse.count > 0 {
-            let futureBrItemsReverseCount = futureBrItemsReverse.count
-            var futureBrItemsReverseCountLeft = futureBrItemsReverseCount
+        
+        var beforeBrItemsPerChunkG = beforeBrItems.chunk(8).makeIterator()
+        let modBeforeBrItems = beforeBrItems.count / 8
+        
+        var groupIndex = 0
+        while let beforeBrItemsPerChunk = beforeBrItemsPerChunkG.next() {
             
-            for (_, barItemFutrue) in futureBrItemsReverse.enumerated() {
+            var emptyRowIsR:Bool = true
+            var beforeBrItemsPerChunkReOrder:[BRItem?] = []
+            let beforeBrItemsPerChunkCount = beforeBrItemsPerChunk.count
+            let notEnough = 8 - beforeBrItemsPerChunkCount
+       
+            //reverse
+            if groupIndex % 2 == 0 {
+                emptyRowIsR = true
+                beforeBrItemsPerChunkReOrder = beforeBrItemsPerChunk.reversed()
                 
-                switch future_pattern_currentCellPattern  {
-                case .future_pattern_7e_1c:
-                    for _ in stride(from: 1, through: 7, by: 1) {
-                        let brItem = BRItem()
-                        brItem.cellGuildLine = .none
-                        future_pattern_chunkCounter += 1
-                        self.allBrItemsForCell.insert(brItem, at: 0)
+                //insert before array for the 8 date cell in row
+                if(notEnough > 0){
+                    
+                    for _ in stride(from: 1, through: notEnough, by: 1) {
+                        let brItem = self.mkNoDateBrItem(.none)
+                      beforeBrItemsPerChunkReOrder.insert(brItem, at: 0)
                     }
-                    
-                    future_pattern_chunkCounter += 1
-                    futureBrItemsReverseCountLeft -= 1
-                    barItemFutrue?.cellGuildLine = .vertical
-                    self.allBrItemsForCell.insert(barItemFutrue!, at: 0)
-                    if future_pattern_chunkCounter == 8 {
-                        
-                        future_pattern_chunkCounter = 0
-                        future_pattern_8c_reverse_tmpBrItems = []
-                        
-                        future_pattern_currentCellPattern = .future_pattern_8c_reverse
-                    }
-                case .future_pattern_8c_reverse:
-                    future_pattern_chunkCounter += 1
-                    future_pattern_8c_reverse_tmpBrItems.append(barItemFutrue)
-                    
-                    if future_pattern_chunkCounter == 8 {
-                        
-                        let reverse_tmpBrItems_reverse:[BRItem?] = future_pattern_8c_reverse_tmpBrItems.reversed()
-                        for (idx, brItme) in reverse_tmpBrItems_reverse.enumerated() {
-                            futureBrItemsReverseCountLeft -= 1
-                            if idx == 0 {
-                                brItme?.cellGuildLine = .bottomRight
-                                
-                            } else if idx == (reverse_tmpBrItems_reverse.count - 1){
-                                brItme?.cellGuildLine = .topLeft
-                            } else {
-                                brItme?.cellGuildLine = .horizontal
-                            }
-                            
-                            self.allBrItemsForCell.insert(brItme, at: 0)
-                        }
-                        future_pattern_chunkCounter = 0
-                        future_pattern_currentCellPattern = .future_pattern_1c_7e
-                        future_pattern_8c_reverse_tmpBrItems = []
-                        
-                    }
-                    
-                case .future_pattern_1c_7e:
-                    future_pattern_chunkCounter += 1
-                    futureBrItemsReverseCountLeft -= 1
-                    barItemFutrue?.cellGuildLine = .vertical
-                    self.allBrItemsForCell.insert(barItemFutrue!, at: 0)
-                    
-                    for _ in stride(from: 1, through: 7, by: 1) {
-                        let brItem = BRItem()
-                        brItem.cellGuildLine = .horizontal
-                        future_pattern_chunkCounter += 1
-                        self.allBrItemsForCell.insert(brItem, at: 0)
-                    }
-                    
-                    if future_pattern_chunkCounter == 8 {
-                        if(futureBrItemsReverseCountLeft > 0
-                            && futureBrItemsReverseCountLeft < 8){
-                            
-                            future_pattern_currentCellPattern = .future_pattern_8c_not_enough
-                            future_pattern_8c_not_enough_tmpBrItems = []
-                        } else {
-                            future_pattern_chunkCounter = 0
-                            future_pattern_currentCellPattern = .future_pattern_8c
-                        }
-                    }
-                case .future_pattern_8c_not_enough:
-                    future_pattern_8c_not_enough_tmpBrItems.append(barItemFutrue)
-                case .future_pattern_8c:
-                    future_pattern_chunkCounter += 1
-                    futureBrItemsReverseCountLeft -= 1
-                    
-                    if future_pattern_chunkCounter == 1 {
-                        barItemFutrue?.cellGuildLine = .topRight
-                    } else {
-                        
-                        if future_pattern_chunkCounter == 8 {
-                            barItemFutrue?.cellGuildLine = .bottomLeft
-                        } else {
-                            barItemFutrue?.cellGuildLine = .horizontal
-                        }
-                        
-                    }
-                    
-                    self.allBrItemsForCell.insert(barItemFutrue!, at: 0)
-                    
-                    if future_pattern_chunkCounter == 8 {
-                        
-                        future_pattern_chunkCounter = 0
-                        if futureBrItemsReverseCountLeft > 24 {
-                            future_pattern_currentCellPattern = .future_pattern_7e_1c
-                            
-                        } else {
-                            for _ in stride(from: 1, through: 64, by: 1) {
-                                let brItem = BRItem()
-                                brItem.cellGuildLine = .horizontal
-                                future_pattern_chunkCounter += 1
-                                self.allBrItemsForCell.insert(brItem, at: 0)
-                            }
-                            future_pattern_currentCellPattern = .future_pattern_end
-                            //reverse_currentCellPattern = .tail_7e_1c
-                        }
-                    }
-                case .future_pattern_end:
-                    tailFutureBrItems.append(barItemFutrue)
-                default:
-                    continue
                 }
-            }
-            
-        }
-        
-        //process exceptionn ->  14 ~ 20
-        if future_pattern_8c_not_enough_tmpBrItems.count > 0 {
-            
-            for obj in future_pattern_8c_not_enough_tmpBrItems.enumerated() {
+            //normal
+            } else {
+                emptyRowIsR = false
+                beforeBrItemsPerChunkReOrder = beforeBrItemsPerChunk
                 
-                if obj.offset == 0 {
-                    if future_pattern_8c_not_enough_tmpBrItems.count > 1 {
-                        obj.element?.cellGuildLine = .topRight
-                    } else {
-                        obj.element?.cellGuildLine = .vertical
+                //insert after array for the 8 date cell in row
+                if(notEnough > 0){
+                    for _ in stride(from: 1, through: notEnough, by: 1) {
+                        let brItem = self.mkNoDateBrItem(.none)
+                        beforeBrItemsPerChunkReOrder.append(brItem)
                     }
-                    
-                } else {
-                    obj.element?.cellGuildLine  = .horizontal
                 }
-                self.allBrItemsForCell.insert(obj.element, at: 0);
             }
-            
-            let paddLeft = 8 - future_pattern_8c_not_enough_tmpBrItems.count
-            
-            for _ in stride(from: 1, through: paddLeft, by: 1) {
-                let brItem = BRItem()
-                brItem.cellGuildLine = .none
-                self.allBrItemsForCell.insert(brItem, at: 0);
-            }
-            
-            future_pattern_8c_not_enough_tmpBrItems = []
-            
-        }
-        
-        if future_pattern_8c_reverse_tmpBrItems.count > 0 {
-            let paddLeft = 8 - future_pattern_8c_reverse_tmpBrItems.count
-            
-            for _ in stride(from: 1, through: paddLeft, by: 1) {
-                let brItem = BRItem()
-                brItem.cellGuildLine = .none
-                self.allBrItemsForCell.insert(brItem, at: 0);
-            }
-            let future_pattern_8c_reverse_tmpBrItems_reverse:[BRItem?] = future_pattern_8c_reverse_tmpBrItems.reversed()
-            for obj in future_pattern_8c_reverse_tmpBrItems_reverse.enumerated() {
+            let emptyRowR = self.mkEmptyRowBrItems(isRightVertical: emptyRowIsR)
+            self.allBrItemsForCell += emptyRowR
+            let beforeBrItemsPerChunkReOrderCount = beforeBrItemsPerChunkReOrder.count
+            var notEmptyRow:[BRItem?] = []
+            for (idx, brItem ) in beforeBrItemsPerChunkReOrder.enumerated() {
                 
-                if obj.offset == (future_pattern_8c_reverse_tmpBrItems_reverse.count - 1) {
-                    obj.element?.cellGuildLine = .topLeft
-                } else {
-                    obj.element?.cellGuildLine  = .horizontal
-                }
-                self.allBrItemsForCell.insert(obj.element, at: 0);
-            }
-            future_pattern_8c_reverse_tmpBrItems = []
-            
-        }
-        
-        var tailFutureBrItemsCount = tailFutureBrItems.count
-        
-        for (idx , brItem) in tailFutureBrItems.enumerated() {
-            
-            tailFutureBrItemsCount -= 1
-            
-            switch idx {
-            case 0:
-                let barItemPrevious = self.allBrItemsForCell[64]
-                barItemPrevious?.cellGuildLine = .bottomLeft
-                brItem?.cellGuildLine = .vertical
-                self.allBrItemsForCell[56] = brItem
-            case 1:
-                if tailFutureBrItemsCount == 0 {
-                    brItem?.cellGuildLine = .vertical
-                } else {
-                    brItem?.cellGuildLine = .topLeft
-                }
-                self.allBrItemsForCell[48] = brItem
-            case 2:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[49] = brItem
-            case 3:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[50] = brItem
-            case 4:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[51] = brItem
-            case 5:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[52] = brItem
-            case 6:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[53] = brItem
-            case 7:
-                if tailFutureBrItemsCount == 0 {
+                if(brItem?.cellGuildLine == nil) {
                     brItem?.cellGuildLine = .horizontal
+                }
+                notEmptyRow.append(brItem)
+                
+                //reverse
+                if groupIndex % 2 == 0 {
+                    if idx == 0 {
+                        let brItem = self.mkNoDateBrItem(.topLeft)
+                        //the last row
+                        if(groupIndex == modBeforeBrItems) {
+                            brItem.cellGuildLine = .none
+                        }
+                        notEmptyRow.insert(brItem, at: 0)
+                    }
+                    
+                    if idx == (beforeBrItemsPerChunkReOrderCount - 1) {
+                        let brItem = self.mkNoDateBrItem(.bottomRight)
+                        notEmptyRow.append(brItem)
+                    }
+                    
+                    //not reverse
                 } else {
-                    brItem?.cellGuildLine = .bottomRight
+                    if idx == 0 {
+                        let brItem = self.mkNoDateBrItem(.bottomLeft)
+                    
+                        notEmptyRow.insert(brItem, at: 0)
+                    }
+                    
+                    if idx == (beforeBrItemsPerChunkReOrderCount - 1) {
+                        let brItem = self.mkNoDateBrItem(.topRight)
+                        //the last row
+                        if(groupIndex == modBeforeBrItems) {
+                            brItem.cellGuildLine = .none
+                        }
+                        notEmptyRow.append(brItem)
+                    }
+                    
+                }
+            
+//                if brItem?.date != nil {
+//                    
+//                    let celStr = self.formatLocalDate("before current week date groupIndex:\(groupIndex): ", (brItem?.date!)!)
+//                    let testItemCount = brItem?.testItems.count
+//                    print("\(celStr) count:\(testItemCount!)")
+//                
+//                } else {
+//                    print("before current week date groupIndex:\(groupIndex):  empty guid:\(brItem?.cellGuildLine)" )
+//                }
+                
+            }
+            self.allBrItemsForCell += notEmptyRow
+            
+            groupIndex += 1
+        }
+
+        let futureBrItemsReverse = futureBrItems.reversed()
+        var futureBrItemsReversePerChunkG = futureBrItemsReverse.chunk(8).makeIterator()
+        let modfutureBrItemsReverse = futureBrItemsReverse.count / 8
+        
+        var groupIndexFuture = 0
+        
+        while let futureBrItemsReversePerChunk = futureBrItemsReversePerChunkG.next() {
+            var emptyRowIsR:Bool = true
+            var futureBrItemsPerChunkReOrder:[BRItem?] = []
+            let futureBrItemsPerChunkCount = futureBrItemsReversePerChunk.count
+            let notEnough = 8 - futureBrItemsPerChunkCount
+            
+            
+             //normal
+            if groupIndexFuture % 2 == 0 {
+                emptyRowIsR = false
+                futureBrItemsPerChunkReOrder = futureBrItemsReversePerChunk
+                
+                //insert after array for the 8 date cell in row
+                if(notEnough > 0){
+                    for _ in stride(from: 1, through: notEnough, by: 1) {
+                        let brItem = self.mkNoDateBrItem(.none)
+                        futureBrItemsPerChunkReOrder.append(brItem)
+                    }
+                }
+            //reverse
+            } else {
+                emptyRowIsR = true
+                futureBrItemsPerChunkReOrder = futureBrItemsReversePerChunk.reversed()
+                
+                //insert before array for the 8 date cell in row
+                if(notEnough > 0){
+                    for _ in stride(from: 1, through: notEnough, by: 1) {
+                        let brItem = self.mkNoDateBrItem(.none)
+                        futureBrItemsPerChunkReOrder.insert(brItem, at: 0)
+                    }
+                }
+            
+            }
+            let emptyRowR = self.mkEmptyRowBrItems(isRightVertical: emptyRowIsR)
+            self.allBrItemsForCell.insert(contentsOf: emptyRowR, at: 0)
+            
+            let futureBrItemsPerChunkReOrderCount = futureBrItemsPerChunkReOrder.count
+            var notEmptyRow:[BRItem?] = []
+            for (idx, brItem ) in futureBrItemsPerChunkReOrder.enumerated() {
+                
+                if(brItem?.cellGuildLine == nil) {
+                    brItem?.cellGuildLine = .horizontal
+                }
+                notEmptyRow.append(brItem)
+                
+                //normal
+                if groupIndexFuture % 2 == 0 {
+                    if idx == 0 {
+                        let brItem = self.mkNoDateBrItem(.topLeft)
+
+                        notEmptyRow.insert(brItem, at: 0)
+                    }
+                    
+                    if idx == (futureBrItemsPerChunkReOrderCount - 1) {
+                        let brItem = self.mkNoDateBrItem(.bottomRight)
+                        //the last row
+                        if(groupIndexFuture == modfutureBrItemsReverse) {
+                            brItem.cellGuildLine = .none
+                        }
+                        notEmptyRow.append(brItem)
+                    }
+                    
+                //reverse
+                } else {
+                    if idx == 0 {
+                        let brItem = self.mkNoDateBrItem(.bottomLeft)
+                        //the last row
+                        if(groupIndexFuture == modfutureBrItemsReverse) {
+                            brItem.cellGuildLine = .none
+                        }
+                        notEmptyRow.insert(brItem, at: 0)
+                    }
+                    
+                    if idx == (futureBrItemsPerChunkReOrderCount - 1) {
+                        let brItem = self.mkNoDateBrItem(.topRight)
+                        //the last row
+                        if(groupIndex == modfutureBrItemsReverse) {
+                            brItem.cellGuildLine = .none
+                        }
+                        notEmptyRow.append(brItem)
+                    }
+                    
                 }
                 
-                self.allBrItemsForCell[54] = brItem
-            case 8:
-                brItem?.cellGuildLine = .vertical
-                self.allBrItemsForCell[46] = brItem
-            case 9:
-                if tailFutureBrItemsCount == 0 {
-                    brItem?.cellGuildLine = .vertical
-                } else {
-                    brItem?.cellGuildLine = .topRight
-                }
-                self.allBrItemsForCell[38] = brItem
-            case 10:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[37] = brItem
-            case 11:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[36] = brItem
-            case 12:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[35] = brItem
-            case 13:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[34] = brItem
-            case 14:
-                if tailFutureBrItemsCount == 0 {
-                    brItem?.cellGuildLine = .horizontal
-                } else {
-                    brItem?.cellGuildLine = .bottomLeft
-                }
-                self.allBrItemsForCell[33] = brItem
-            case 15:
-                brItem?.cellGuildLine = .vertical
-                self.allBrItemsForCell[25] = brItem
-            case 16:
-                if tailFutureBrItemsCount == 0 {
-                    brItem?.cellGuildLine = .vertical
-                } else {
-                    brItem?.cellGuildLine = .topLeft
-                }
-                self.allBrItemsForCell[17] = brItem
-            case 17:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[18] = brItem
-            case 18:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[19] = brItem
-            case 19:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[20] = brItem
-            case 20:
-                if tailFutureBrItemsCount == 0 {
-                    brItem?.cellGuildLine = .horizontal
-                } else {
-                    brItem?.cellGuildLine = .bottomRight
-                }
-                self.allBrItemsForCell[21] = brItem
-            case 21:
-                brItem?.cellGuildLine = .vertical
-                self.allBrItemsForCell[13] = brItem
-            case 22:
-                if tailFutureBrItemsCount == 0 {
-                    brItem?.cellGuildLine = .vertical
-                } else {
-                    brItem?.cellGuildLine = .topRight
-                }
-                self.allBrItemsForCell[5] = brItem
-            case 23:
-                brItem?.cellGuildLine = .horizontal
-                self.allBrItemsForCell[4] = brItem
-            default:
-                continue
+//                if brItem?.date != nil {
+//
+//                    let celStr = self.formatLocalDate("before current week date groupIndex:\(groupIndex): ", (brItem?.date!)!)
+//                    let testItemCount = brItem?.testItems.count
+//                    print("\(celStr) count:\(testItemCount!)")
+//
+//                } else {
+//                    print("before current week date groupIndex:\(groupIndex):  empty guid:\(brItem?.cellGuildLine)" )
+//                }
+                
             }
+            self.allBrItemsForCell.insert(contentsOf: notEmptyRow, at: 0)
+            groupIndexFuture += 1
             
         }
         
-        //補上一列空白的，修正原本最右下角cell，位置偏差
-        for _ in stride(from: 1, through: 8, by: 1) {
+        //最後補上一列空白的，修正原本最右下角cell，位置偏差
+        for _ in stride(from: 1, through: self.numberOfColumns, by: 1) {
             let brItem = BRItem()
             brItem.cellGuildLine = .none
             self.allBrItemsForCell.append(brItem)
@@ -1302,5 +1102,84 @@ UITextFieldDelegate{
     }
     
 
+    func formatLocalDate(_ prepend:String,  _ date: Date) -> String {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let weekDay = calendar.component(.weekday, from: date)
+        let formatDateStr = "\(prepend): \(year)-\(month)-\(day)(\(weekDay))"
+        return formatDateStr
     
+    }
+    
+
+    
+    func mkNoDateBrItem(_ cellGuildLine: CellGuildLine) -> BRItem {
+        
+        let brItem  = BRItem()
+        brItem.cellGuildLine = cellGuildLine
+        return brItem
+    }
+    
+    func mkEmptyRowBrItems( isRightVertical:Bool) -> [BRItem?] {
+        
+        var brItems:[BRItem?] = []
+        var count:CGFloat = 0
+        for _ in stride(from: 1, through: self.numberOfColumns, by: 1) {
+            count += 1
+            
+            let brItem = BRItem()
+            var verticalIndex:CGFloat = 0
+            if isRightVertical {
+                verticalIndex = self.numberOfColumns
+            } else {
+                verticalIndex = 1
+            }
+            
+            if(count == verticalIndex){
+                brItem.cellGuildLine = .vertical
+            } else {
+                brItem.cellGuildLine = .none
+            }
+            brItems.append(brItem)
+        }
+        return brItems
+    }
+
+}
+
+
+public struct ChunkIterator<I: IteratorProtocol> : IteratorProtocol {
+    
+    fileprivate var i: I
+    fileprivate let n: Int
+    
+    public mutating func next() -> [I.Element]? {
+        guard let head = i.next() else { return nil }
+        var build = [head]
+        build.reserveCapacity(n)
+        for _ in (1..<n) {
+            guard let x = i.next() else { break }
+            build.append(x)
+        }
+        return build
+    }
+    
+}
+
+public struct ChunkSeq<S: Sequence> : Sequence {
+    
+    fileprivate let seq: S
+    fileprivate let n: Int
+    
+    public func makeIterator() -> ChunkIterator<S.Iterator> {
+        return ChunkIterator(i: seq.makeIterator(), n: n)
+    }
+}
+
+public extension Sequence {
+    func chunk(_ n: Int) -> ChunkSeq<Self> {
+        return ChunkSeq(seq: self, n: n)
+    }
 }
