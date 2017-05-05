@@ -12,6 +12,7 @@ let circleVTag = 1001
 
 class TestResultCollectionViewCell: UICollectionViewCell {
 
+    
     @IBOutlet weak var iconImv: UIImageView!
     @IBOutlet weak var serialLb: UILabel!
     @IBOutlet weak var dateLb: UILabel!
@@ -19,10 +20,66 @@ class TestResultCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var circleV: UIView!
     
+    @IBOutlet weak var subCirclesContainer: UIView!
+    
+
+    @IBOutlet weak var sub1CircleCenterX: NSLayoutConstraint!
+    @IBOutlet weak var sub2CircleCenterX: NSLayoutConstraint!
+    @IBOutlet weak var sub1Width: NSLayoutConstraint!
+    @IBOutlet weak var sub2Width: NSLayoutConstraint!
+    @IBOutlet weak var sub3Width: NSLayoutConstraint!
+    
+    @IBOutlet weak var sub1Circle: UIView!
+    @IBOutlet weak var sub2Circle: UIView!
+    @IBOutlet weak var sub3Circle: UIView!
+    
+    var account:String? = nil
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
         
+    }
+    
+    func hideAllSubCircle() {
+        self.sub1CircleCenterX.constant = 0;
+        self.sub2CircleCenterX.constant = 0;
+        self.subCirclesContainer.isHidden = true
+    }
+    
+    func show1SubCircle() {
+        self.sub1CircleCenterX.constant = 0;
+        self.sub2CircleCenterX.constant = 0;
+        self.subCirclesContainer.isHidden = false
+        self.sub1Width.constant = 0
+        self.sub2Width.constant = 0
+        self.sub3Width.constant = 0
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = true
+        self.sub3Circle.isHidden = true
+    }
+    
+    func show2SubCircle() {
+        self.sub1CircleCenterX.constant = 4
+        self.sub2CircleCenterX.constant = -4
+        self.subCirclesContainer.isHidden = false
+        self.sub1Width.constant = 0
+        self.sub2Width.constant = 20
+        self.sub3Width.constant = 0
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = false
+        self.sub3Circle.isHidden = true
+    }
+    
+    func show3SubCircle() {
+        self.sub1CircleCenterX.constant = 0
+        self.sub2CircleCenterX.constant = 0
+        self.subCirclesContainer.isHidden = false
+        self.sub1Width.constant = 13.3
+        self.sub2Width.constant = 13.3
+        self.sub3Width.constant = 13.3
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = false
+        self.sub3Circle.isHidden = false
     }
     
     var brItem:BRItem? {
@@ -36,10 +93,23 @@ class TestResultCollectionViewCell: UICollectionViewCell {
             self.circleV?.layer.borderColor = UIColor.green.cgColor
             self.circleV?.clipsToBounds = true
             
+            
+            let subCirclesize:CGFloat = 8.0
+            self.sub1Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub1Circle?.layer.borderWidth = 1.0
+            self.sub1Circle?.clipsToBounds = true
+            self.sub2Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub2Circle?.layer.borderWidth = 1.0
+            self.sub2Circle?.clipsToBounds = true
+            self.sub3Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub3Circle?.layer.borderWidth = 1.0
+            self.sub3Circle?.clipsToBounds = true
+            
         
             self.circleV?.isHidden = true
             self.serialLb.isHidden = true
 
+         
             
             if let date =  brItem?.date {
                 
@@ -52,7 +122,6 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                 //"\(month)/\(day)(\(weekDay))"
                 self.dateLb.text = "\(day)"
 
-                
                 var isAllDone = true
                 for (_, testItem) in (brItem?.testItems.enumerated())! {
                     
@@ -63,7 +132,22 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     }
                 }
 
-                if (brItem?.testItems.count)! > 0 {
+                let testItemsCount =  brItem?.testItems.count
+                
+                switch testItemsCount! {
+                case 1:
+                    self.hideAllSubCircle()
+                case 2:
+                    self.show1SubCircle()
+                case 3:
+                    self.show2SubCircle()
+                case 4:
+                     self.show3SubCircle()
+                default:
+                    self.hideAllSubCircle()
+                }
+                
+                if  testItemsCount! > 0 {
                     
                     let firstTestItem:TestItem? = brItem?.testItems[0]
                     
@@ -71,7 +155,8 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
                     let color_LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
                     let color_HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
-                    let color_mating = UIColor.white
+                    let color_mating = UIColor.purple
+                    let color_temperature = UIColor.white
                     
                     var color_current = UIColor.clear
                     
@@ -85,6 +170,8 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                         color_current = color_HCG
                     }  else if firstTestItem?.type == .Mating {
                         color_current = color_mating
+                    }  else if firstTestItem?.type == .Temperature {
+                        color_current = color_temperature
                     }
                     
                     self.circleV?.layer.borderColor = color_current.cgColor
@@ -92,7 +179,7 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     
                     if !isAllDone {
                         self.dateLb.textColor = color_current
-                        self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
+                        self.circleV?.layer.backgroundColor = UIColor.black.cgColor
                     } else {
                         self.dateLb.textColor =  UIColor.black
                     }
@@ -100,11 +187,13 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                 } else {
                     self.circleV?.isHidden = true
                     self.dateLb.text = ""
+                    self.hideAllSubCircle()
                 }
                 
             } else {
                 self.circleV?.isHidden = true
                 self.dateLb.text = ""
+                self.hideAllSubCircle()
             }
             
             if let cellGuidLine = brItem?.cellGuildLine {
@@ -127,6 +216,7 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                 }
             } else {
                 self.guidImv.image = UIImage(named:"")
+                self.hideAllSubCircle()
             }
         
         }
@@ -138,7 +228,6 @@ class TestResultCollectionViewCell: UICollectionViewCell {
         }
         
     }
-
     
     override func prepareForReuse() {
         super.prepareForReuse()

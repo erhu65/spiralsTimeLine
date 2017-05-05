@@ -13,6 +13,8 @@ class TestResultCurrentDateCell: UICollectionViewCell {
     @IBOutlet weak var serialLb: UILabel!
     @IBOutlet weak var dateLb: UILabel!
     
+    var account:String? = nil
+    
     @IBOutlet weak var circleV: UIView!
     var brItem:BRItem? {
         
@@ -59,7 +61,8 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                     let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
                     let color_LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
                     let color_HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
-                    let color_mating = UIColor.white
+                    let color_mating = UIColor.purple
+                    let color_temperature = UIColor.white
                     
                     var color_current = UIColor.clear
                     
@@ -71,8 +74,10 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                         color_current = color_LH
                     } else if firstTestItem?.type == .HCG {
                         color_current = color_HCG
-                    }  else if firstTestItem?.type == .Mating {
+                    } else if firstTestItem?.type == .Mating {
                         color_current = color_mating
+                    } else if firstTestItem?.type == .Temperature {
+                        color_current = color_temperature
                     }
                     
                     self.circleV?.layer.borderColor = color_current.cgColor
@@ -80,23 +85,25 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                     
                     if !isAllDone {
                         self.dateLb.textColor = color_current
-                        self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
+                        self.circleV?.layer.backgroundColor = UIColor.black.cgColor
                     } else {
                         self.dateLb.textColor =  UIColor.black
                     }
               
                 } else {
-                    self.circleV?.isHidden = true
-                    self.dateLb.text = ""
+                    self.circleV?.isHidden = false
+                    self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
+                    self.circleV?.layer.borderColor = UIColor.gray.cgColor
+                    self.dateLb.textColor = UIColor.gray
                 }
             
                 
             } else {
-                self.circleV?.isHidden = true
-                self.dateLb.text = ""
+                self.circleV?.isHidden = false
+                self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
+                self.circleV?.layer.borderColor = UIColor.gray.cgColor
+                self.dateLb.textColor = UIColor.gray
             }
-            
-            
         }
         
         willSet(newValue){

@@ -40,6 +40,7 @@ enum TestItemType: UInt32 {
     case HCG
     case FSH
     case Mating
+    case Temperature
     
     private static let _count: TestItemType.RawValue = {
         // find the maximum enum value
@@ -58,7 +59,29 @@ enum TestItemType: UInt32 {
 }
 
 class TestItem {
-    var type:TestItemType = TestItemType.random()
+    var account:String? = nil
+    var priority:Int = 0
+    var type:TestItemType? {
+   
+        didSet{
+            switch type! {
+            case .Sperm :
+                self.priority = 3
+            case .LH :
+                self.priority = 3
+            case .HCG :
+                self.priority = 3
+            case .FSH :
+                self.priority = 3
+            case .Mating :
+                self.priority = 2
+            case .Temperature :
+                self.priority = 1
+        
+            }
+        
+        }
+    }
     var date:Date? = nil
     
     var value:Float = 0.0
@@ -66,6 +89,7 @@ class TestItem {
     var sperm_motility:Float = 0.0
     var sperm_morpphology:Float = 0.0
     var sperm_concentration:Float = 0.0
+
     
     func isDone()->Bool {
         
@@ -116,7 +140,6 @@ class BRItem {
             testItems.append(testItem)
         }
         
-
         let random = arc4random_uniform(21) + 10;
         if random == 10
             ||  random == 20
@@ -124,10 +147,208 @@ class BRItem {
             let testItem = ViewController.mkRandomTestItem()
             testItems.append(testItem)
         }
+        
+        let random2 = arc4random_uniform(5);
+        if random2 == 0
+            ||  random2 == 1
+            ||  random2 == 1 {
+            
+            let testItem = ViewController.mkRandomTestItem()
+            testItems.append(testItem)
+        }
+        
+        let random３ = arc4random_uniform(5);
+        if random３ == 0
+        ||  random３ == 1 {
+            let testItem = ViewController.mkRandomTestItem()
+            testItems.append(testItem)
+        }
+        
     }
     
     func addTestItem(testItem:TestItem) {
         testItems.append(testItem)
+    }
+    
+    func reOrderTestItems(currentLoginAccount:String) {
+        
+        if date == nil {
+            return;
+        }
+        if(self.testItems.count == 0){
+            return
+        }
+        let calendar = Calendar.current
+        //let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date!)
+        let day = calendar.component(.day, from: date!)
+        let weekDay = calendar.component(.weekday, from: date!)
+        let dateStr = "\(month)/\(day)(\(weekDay))"
+        print("date:\(dateStr))")
+        var idnexMostImportant:Int = -1;
+        for (idx, testItem) in (self.testItems.enumerated()) {
+      
+            
+            if testItem.account == currentLoginAccount
+                && testItem.priority == 3
+                && testItem.isDone() == false
+            {
+                idnexMostImportant = idx;
+                break;
+            }
+        }
+        
+        if idnexMostImportant == -1 {
+    
+            for (idx, testItem) in (self.testItems.enumerated()) {
+         
+                
+                if testItem.account == currentLoginAccount
+                    && testItem.priority == 3
+                    && testItem.isDone() == false
+                {
+                    idnexMostImportant = idx;
+                    break;
+                }
+            }
+          
+        }
+        
+        if idnexMostImportant == -1 {
+            
+            
+            for (idx, testItem) in (self.testItems.enumerated()) {
+          
+                
+                if testItem.account == currentLoginAccount
+                    && testItem.priority == 2
+                    && testItem.isDone() == false
+                {
+                    idnexMostImportant = idx;
+                    break;
+                }
+            }
+      
+        }
+        
+        if idnexMostImportant == -1 {
+            for (idx, testItem) in (self.testItems.enumerated()) {
+        
+                
+                if testItem.account != currentLoginAccount
+                    && testItem.priority == 2
+                    && testItem.isDone() == false
+                {
+                    idnexMostImportant = idx;
+                    break;
+                }
+            }
+
+        }
+
+        
+        if idnexMostImportant == -1 {
+            
+            for (idx, testItem) in (self.testItems.enumerated()) {
+         
+                    if testItem.account == currentLoginAccount
+                        && testItem.priority == 3
+                        && testItem.isDone() == false
+                    {
+                        idnexMostImportant = idx;
+                        break;
+                    }
+                }
+
+        }
+
+        
+        if idnexMostImportant == -1 {
+            
+            for (idx, testItem) in (self.testItems.enumerated()) {
+           
+                    if testItem.account != currentLoginAccount
+                        && testItem.priority == 3
+                        && testItem.isDone() == false
+                    {
+                        idnexMostImportant = idx;
+                        break;
+                    }
+                
+                }
+            
+        }
+        
+        if idnexMostImportant == -1 {
+            
+            for (idx, testItem) in (self.testItems.enumerated()) {
+            
+                    if testItem.account == currentLoginAccount
+                        && (testItem.priority == 3
+                            || testItem.priority == 2
+                            || testItem.priority == 1
+                        )
+                        && testItem.isDone() == false
+                    {
+                        idnexMostImportant = idx;
+                        break;
+                    }
+                }
+            
+
+        }
+        
+        if idnexMostImportant == -1 {
+            
+            for (idx, testItem) in (self.testItems.enumerated()) {
+           
+                    if testItem.account != currentLoginAccount
+                        && (testItem.priority == 3
+                            || testItem.priority == 2
+                            || testItem.priority == 1
+                        )
+                        && testItem.isDone() == false
+                    {
+                        idnexMostImportant = idx;
+                        break;
+                    }
+                }
+
+        }
+
+        if idnexMostImportant == -1 {
+            
+            for (idx, testItem) in (self.testItems.enumerated()) {
+                
+             
+                
+                if testItem.account == currentLoginAccount
+                    && (testItem.priority == 3
+                        || testItem.priority == 2
+                        || testItem.priority == 1
+                    )
+                    && testItem.isDone() == true
+                {
+                    idnexMostImportant = idx;
+                    break;
+                }
+            }
+            
+        }
+        
+        if idnexMostImportant != -1 {
+           
+            let mostImportantTestItem = self.testItems.remove(at: idnexMostImportant);
+            self.testItems.insert(mostImportantTestItem, at: 0)
+            
+            print("testItem.account:\(String(describing: mostImportantTestItem.account))")
+            print("testItem.typ:\(String(describing: mostImportantTestItem.type))")
+            print("testItem.priority:\(mostImportantTestItem.priority)")
+            print("testItem.isDone:\(mostImportantTestItem.isDone())")
+            print("idnexMostImportant:\(idnexMostImportant)")
+         
+        }
+
     }
     
 }
@@ -250,7 +471,7 @@ UITextFieldDelegate{
             if yearCurrent == yearTestItem
                 && monthCurrent == monthTestItem
                 && dayCurrent == dayTestItem{
-                
+              
                 cellCurrent.brItem = barItem
                 cellCurrent.serialLb.text = "\(indexPath.row)"
                 
@@ -270,31 +491,6 @@ UITextFieldDelegate{
    
         //let imageName = (indexPath.row % 2 == 0) ? "image1" : "image2"
      
-        
-//        guard let testItemIndex = testCellIndexItemIndexMapping[rowIndex]
-//            else {
-//                
-//            cell.contentView.isHidden = true
-//            return cell
-//        }
-//        cell.contentView.isHidden = false
-//        
-//        cell.serialLb.text = "\(indexPath.row):\(testItemIndex)"
-//
-//        
-//        if indexPath.row % 2 == 0 {
-//            cell.contentView.backgroundColor = UIColor.blue
-//        } else {
-//            cell.contentView.backgroundColor = UIColor.darkGray
-//        }
-//        
-//        
-//        if rowIndex == 68 {
-//            
-//            return cellCurrent
-//        }
-//        
-//        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -331,7 +527,7 @@ UITextFieldDelegate{
         
         for (idx, testItem) in (barItem?.testItems.enumerated())! {
             var valStr = ""
-            switch testItem.type {
+            switch testItem.type! {
                 
             case .Sperm:
                  valStr = "Sperm:\(testItem.sperm_motility), \(testItem.sperm_morpphology), \(testItem.sperm_concentration)"
@@ -343,6 +539,8 @@ UITextFieldDelegate{
                 valStr = "FSH:\(testItem.value)"
             case .Mating:
                 valStr = "Mating:\(testItem.value)"
+            case .Temperature:
+                valStr = "Temperature:\(testItem.value)"
             }
             
             valStr = "\(idx+1). \(valStr)"
@@ -359,7 +557,7 @@ UITextFieldDelegate{
             testValStrs.append(dateStr)
         }
         
-        testValStrs.append("serial: \(String(describing: barItem?.serial))")
+        //testValStrs.append("serial: \(String(describing: barItem?.serial))")
         
         let testValStr = testValStrs.joined(separator: "\n")
         
@@ -1035,6 +1233,9 @@ UITextFieldDelegate{
             self.allBrItemsForCell.append(brItem)
         }
         
+        for (_ , brItem) in self.allBrItemsForCell.enumerated() {
+           brItem?.reOrderTestItems(currentLoginAccount: "peter@bonraybio.com");
+        }
         self.collectionView.reloadData()
         //(self.allBrItemsForCell.count - 1)
         
@@ -1053,9 +1254,11 @@ UITextFieldDelegate{
         self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
+    
     static func mkRandomTestItem() -> TestItem {
     
         let testItem = TestItem()
+        testItem.account = "peter@bonraybio.com"
         testItem.type = TestItemType.random()
         
         let random = arc4random_uniform(11) + 5;
@@ -1073,13 +1276,27 @@ UITextFieldDelegate{
                 testItem.sperm_morpphology = 0.2
                 testItem.sperm_concentration = 0.3
                 
-            } else if (testItem.type == .Mating) {
-                testItem.value = 1
+            } else if (testItem.type == .Mating
+                || testItem.type == .Temperature
+                ) {
+                
+                if(testItem.type == .Temperature){
+                    testItem.account = "mary@bonraybio.com"
+                }
+              
+                let randomNum = arc4random_uniform(3)
+                if(randomNum == 0){
+                    testItem.value = 1
+                } else {
+                    testItem.value = 0
+                }
             } else {
+                testItem.account = "mary@bonraybio.com"
                 testItem.value = 0.8
             }
         }
-
+        
+        
         
         return testItem
     }
