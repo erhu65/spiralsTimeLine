@@ -39,42 +39,42 @@ class TestResultCollectionViewCell: UICollectionViewCell {
     }
     
     func hideAllSubCircle() {
-        self.sub1CircleCenterX.constant = 0;
-        self.sub2CircleCenterX.constant = 0;
+//        self.sub1CircleCenterX.constant = 0;
+//        self.sub2CircleCenterX.constant = 0;
         self.subCirclesContainer.isHidden = true
     }
     
     func show1SubCircle() {
-        self.sub1CircleCenterX.constant = 0;
-        self.sub2CircleCenterX.constant = 0;
+//        self.sub1CircleCenterX.constant = 0;
+//        self.sub2CircleCenterX.constant = 0;
         self.subCirclesContainer.isHidden = false
-        self.sub1Width.constant = 0
-        self.sub2Width.constant = 0
-        self.sub3Width.constant = 0
+//        self.sub1Width.constant = 0
+//        self.sub2Width.constant = 0
+//        self.sub3Width.constant = 0
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = true
         self.sub3Circle.isHidden = true
     }
     
     func show2SubCircle() {
-        self.sub1CircleCenterX.constant = 0
-        self.sub2CircleCenterX.constant = 0
+//        self.sub1CircleCenterX.constant = 0
+//        self.sub2CircleCenterX.constant = 0
         self.subCirclesContainer.isHidden = false
-        self.sub1Width.constant = 0
-        self.sub2Width.constant = 25
-        self.sub3Width.constant = 0
+//        self.sub1Width.constant = 0
+//        self.sub2Width.constant = 25
+//        self.sub3Width.constant = 0
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = false
         self.sub3Circle.isHidden = true
     }
     
     func show3SubCircle() {
-        self.sub1CircleCenterX.constant = 0
-        self.sub2CircleCenterX.constant = 0
+//        self.sub1CircleCenterX.constant = 0
+//        self.sub2CircleCenterX.constant = 0
         self.subCirclesContainer.isHidden = false
-        self.sub1Width.constant = 16.67
-        self.sub2Width.constant = 16.67
-        self.sub3Width.constant = 16.67
+//        self.sub1Width.constant = 16.67
+//        self.sub2Width.constant = 16.67
+//        self.sub3Width.constant = 16.67
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = false
         self.sub3Circle.isHidden = false
@@ -184,13 +184,13 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                 
                 } else {
                     //self.circleV?.isHidden = true
-                    self.dateLb.text = "xx"
+                    self.dateLb.text = "X"
                     self.hideAllSubCircle()
                 }
                 
             } else {
                 //self.circleV?.isHidden = true
-                self.dateLb.text = "xx"
+                self.dateLb.text = "X"
                 self.hideAllSubCircle()
             }
             
@@ -211,7 +211,6 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     self.guidImv.image = UIImage(named:"guidVertical")
                 case .none:
                     self.guidImv.image = UIImage(named:"")
-          
                 }
             } else {
                 self.guidImv.image = UIImage(named:"")
@@ -221,9 +220,9 @@ class TestResultCollectionViewCell: UICollectionViewCell {
         }
         
         willSet(newValue){
+        
             
-            
-            
+    
         }
         
     }

@@ -58,6 +58,23 @@ enum TestItemType: UInt32 {
     }
 }
 
+enum AdjustCellArrangement: UInt32 {
+    case reverse_false_empty_7
+    case reverse_false_empty_6
+    case reverse_false_empty_5
+    case reverse_false_empty_2
+    case reverse_false_empty_1
+    case reverse_false_empty_0
+    case reverse_true_empty_7
+    case reverse_true_empty_6
+    case reverse_true_empty_5
+    case reverse_true_empty_2
+    case reverse_true_empty_1
+    case reverse_true_empty_0
+    case none
+}
+
+
 class TestItem {
     var account:String? = nil
     var priority:Int = 0
@@ -496,12 +513,13 @@ UITextFieldDelegate{
         }
         
         print("cellGuildLine: \(cellGuidLine)")
+
         
-        guard let _ = barItem?.date else {
+        guard let date = barItem?.date else {
           
             return
         }
-        
+        print("barItem?.date: \(self.formatLocalDate("", date))")
         let testIitemsCount = barItem?.testItems.count
         if testIitemsCount == 0 {
             return
@@ -563,6 +581,7 @@ UITextFieldDelegate{
         //x:\(cellFrameInSuperview.origin.x),y:\(cellFrameInSuperview.origin.y
     
         self.popLb.text = testValStr
+         print("testValStr: \(testValStr)")
 
     }
 
@@ -649,9 +668,7 @@ UITextFieldDelegate{
         self.allBrItemsForCell.removeAll()
         //var brItems:[BRItem?] = []
         var allBrItems:[BRItem?] = []
-        var currentCellPatternCount = 0;
-        var chunkCounter = 0;
-        var currentCellPattern:CellRegularPattern = .before_pattern_7e_1c
+      
         
         print("all dates start")
         //exceptionn -> 14 ~ 20, 5~11
@@ -696,10 +713,11 @@ UITextFieldDelegate{
         print("startOfWeek:\(self.startOfWeek())")
         print("endOfWeek:\(self.endOfWeek())")
         
-        var first7DateOfThisWeekCount = 0
-        var firstDateOfThisWeek:Date? = nil
-        var lastDateOfThisWeek:Date? = nil
+//        var first7DateOfThisWeekCount = 0
+//        var firstDateOfThisWeek:Date? = nil
+//        var lastDateOfThisWeek:Date? = nil
        
+        var thisWeekBrItems:[BRItem?] = []
         var futureBrItems:[BRItem?] = []
         var beforeBrItems:[BRItem?] = []
    
@@ -730,6 +748,22 @@ UITextFieldDelegate{
             }
         }
         
+        let the_1th_day_this_week =  Date().startOfWeek
+        let the_2th_day_this_week =  Date(timeInterval: 60*60*24*1, since: the_1th_day_this_week!)
+        let the_3th_day_this_week =  Date(timeInterval: 60*60*24*2, since: the_1th_day_this_week!)
+        let the_4th_day_this_week =  Date(timeInterval: 60*60*24*3, since: the_1th_day_this_week!)
+        let the_5th_day_this_week =  Date(timeInterval: 60*60*24*4, since: the_1th_day_this_week!)
+        let the_6th_day_this_week =  Date(timeInterval: 60*60*24*5, since: the_1th_day_this_week!)
+        let the_7th_day_this_week =  Date(timeInterval: 60*60*24*6, since: the_1th_day_this_week!)
+        print("\(self.formatLocalDate("the_7th_day_this_week", the_7th_day_this_week))")
+        
+        for idx in stride(from: 0, through: 6, by: 1) {
+            let brItem = self.mkNoDateBrItem(.horizontal)
+            brItem.date = Date(timeInterval: TimeInterval(60*60*24*idx), since: the_1th_day_this_week!)
+            brItem.testItems = []
+            thisWeekBrItems.append(brItem);
+        }
+        
         var allBrItemsLoopCount = allBrItemsReduceEmpty.count
         for (_, brItem ) in allBrItemsReduceEmpty.enumerated() {
             
@@ -740,56 +774,64 @@ UITextFieldDelegate{
 
                 let fallsBetween = (self.startOfWeek()...self.endOfWeek()).contains(dateChk)
                 
-                if lastDateOfThisWeek == nil
+            
+                if dateChk > the_7th_day_this_week
                     && !fallsBetween {
                     //after this week
+                    print("\(self.formatLocalDate("future date:", dateChk))")
+                    
                     futureBrItems.append(brItem)
                     continue
                     //print("future: \(year)-\(month)-\(day)(\(weekDay))")
                 }
                 
-                if(fallsBetween
-                    && first7DateOfThisWeekCount < 7){
-                    first7DateOfThisWeekCount += 1
-                    if first7DateOfThisWeekCount == 1 {
-                        
-                        let brItemVerticleLeft  = self.mkNoDateBrItem(.bottomLeft)
-                        self.allBrItemsForCell.insert(brItemVerticleLeft, at: 0)
-                
-                        lastDateOfThisWeek = brItem?.date
-                        brItem?.cellGuildLine = .horizontal
-                    } else if first7DateOfThisWeekCount == 7 {
-                        firstDateOfThisWeek = brItem?.date
-                        brItem?.cellGuildLine  = .horizontal
-                    } else {
-                        brItem?.cellGuildLine  = .horizontal
-                    }
-                    //print("first rows date:\(dateChk)")
-                    ///process current week first
-              
-                    self.allBrItemsForCell.append(brItem)
-                    
-                    if first7DateOfThisWeekCount == 7 {
-                        let brItemVerticleRight  = self.mkNoDateBrItem(.topRight)
-                        self.allBrItemsForCell.append(brItemVerticleRight)
-                    }
-                   
-              
+                if(fallsBetween){
+                    let calendar = Calendar.current
+                    let weekDay = calendar.component(.weekday, from: dateChk)
+                    let weekDayIndex = weekDay - 1
+                    let brItemPlaceHolder = thisWeekBrItems[weekDayIndex]
+                    brItemPlaceHolder?.date = dateChk
+                    brItemPlaceHolder?.testItems = (brItem?.testItems)!
+                    thisWeekBrItems[weekDayIndex] = brItemPlaceHolder
                     continue
+
                 }
                 
-                if(firstDateOfThisWeek != nil
-                    && firstDateOfThisWeek! > (brItem?.date)!){
+                if dateChk < the_1th_day_this_week!
+                   && !fallsBetween {
                     //before this week
                     beforeBrItems.append(brItem);
+                    continue
                 }
 
             
             }
             
         }
+        
+        //let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*intervalDay))
+        let isSameDate = Calendar.current.isDate(the_3th_day_this_week, inSameDayAs:Date())
+        
+        print("startDateOfThisWeek:\(self.formatLocalDate("", the_2th_day_this_week))")
+        print("isSameDate:\(isSameDate)")
+        
+        for (idx, brItem ) in thisWeekBrItems.enumerated() {
+            guard let date = brItem?.date else {
+                    print("thisWeekBrItems idx:\(idx) brItem.date:nil")
+                    continue
+            }
+                 print("thisWeekBrItems idx:\(idx) brItem.date:\(self.formatLocalDate("", date))")
+        }
+        
+        var thisWeekBrItemsRevrese:[BRItem?] = thisWeekBrItems.reversed()
+        let brItemVerticleLeft  = self.mkNoDateBrItem(.bottomLeft)
+        thisWeekBrItemsRevrese.insert(brItemVerticleLeft, at: 0)
+        let brItemVerticleRight  = self.mkNoDateBrItem(.topRight)
+        thisWeekBrItemsRevrese.append(brItemVerticleRight)
 
-        print("all dates end")
+   
+        self.allBrItemsForCell.insert(contentsOf: thisWeekBrItemsRevrese, at: 0)
+        
         for (_, brItem ) in futureBrItems.enumerated() {
             guard let date = brItem?.date else {
                 continue;
@@ -799,28 +841,7 @@ UITextFieldDelegate{
             print("\(dateStr) count:\(testItemCount!)")
         }
  
-//        for (_, brItem ) in self.allBrItemsForCell.enumerated() {
-//            
-//            guard let date = brItem?.date else {
-//                continue;
-//            }
-//            let dateStr = self.formatLocalDate("current week date: ", date)
-//            let testItemCount = brItem?.testItems.count
-//            print("\(dateStr) count:\(testItemCount!)")
-//        }
-        
-     
-//        for (_, brItem ) in beforeBrItems.enumerated() {
-//            guard let date = brItem?.date else {
-//                continue;
-//            }
-//            
-//            let dateStr = self.formatLocalDate("before current week date: ", date)
-//            let testItemCount = brItem?.testItems.count
-//            print("\(dateStr) count:\(testItemCount!)")
-//        }
-        
-        
+
         var beforeBrItemsPerChunkG = beforeBrItems.chunk(8).makeIterator()
         let modBeforeBrItems = beforeBrItems.count / 8
         
@@ -923,15 +944,21 @@ UITextFieldDelegate{
         let futureBrItemsReverse = futureBrItems.reversed()
         var futureBrItemsReversePerChunkG = futureBrItemsReverse.chunk(8).makeIterator()
         let modfutureBrItemsReverse = futureBrItemsReverse.count / 8
+        let reminderfutureBrItemsReverse = futureBrItemsReverse.count % 8
         
         var groupIndexFuture = 0
-        
+        var adjustCellArrangement:AdjustCellArrangement = .none
         while let futureBrItemsReversePerChunk = futureBrItemsReversePerChunkG.next() {
             var emptyRowIsR:Bool = true
             var futureBrItemsPerChunkReOrder:[BRItem?] = []
             let futureBrItemsPerChunkCount = futureBrItemsReversePerChunk.count
             let notEnough = 8 - futureBrItemsPerChunkCount
-            
+            var isLastRow = false
+            if(groupIndexFuture == modfutureBrItemsReverse
+                || (reminderfutureBrItemsReverse == 0 && ((groupIndexFuture + 1) == modfutureBrItemsReverse))
+                ) {
+                isLastRow = true
+            }
             
              //normal
             if groupIndexFuture % 2 == 0 {
@@ -1010,21 +1037,64 @@ UITextFieldDelegate{
                     
                 }
                 
-//                if brItem?.date != nil {
-//
-//                    let celStr = self.formatLocalDate("before current week date groupIndex:\(groupIndex): ", (brItem?.date!)!)
-//                    let testItemCount = brItem?.testItems.count
-//                    print("\(celStr) count:\(testItemCount!)")
-//
-//                } else {
-//                    print("before current week date groupIndex:\(groupIndex):  empty guid:\(brItem?.cellGuildLine)" )
-//                }
+                if brItem?.date != nil {
+
+                    let celStr = self.formatLocalDate("after current week date groupIndex:\(groupIndexFuture): ", (brItem?.date!)!)
+                    let testItemCount = brItem?.testItems.count
+                    print("\(celStr) count:\(testItemCount!) revere:\(emptyRowIsR) isLastRow: \(isLastRow)")
+
+                } else {
+                    print("after current week date groupIndex:\(groupIndexFuture):  empty guid:\(String(describing: brItem?.cellGuildLine)) revere:\(emptyRowIsR) isLastRow: \(isLastRow)" )
+                }
+                if isLastRow {
+                    if(emptyRowIsR == false) {
+                        
+                        switch notEnough {
+                        case 7:
+                            adjustCellArrangement = .reverse_false_empty_7
+                        case 6:
+                            adjustCellArrangement = .reverse_false_empty_6
+                        case 5:
+                            adjustCellArrangement = .reverse_false_empty_5
+                        case 2:
+                            adjustCellArrangement = .reverse_false_empty_2
+                        case 1:
+                            adjustCellArrangement = .reverse_false_empty_1
+                        case 0:
+                            adjustCellArrangement = .reverse_false_empty_0
+                        default:
+                            print("")
+                        }
+                    } else if(emptyRowIsR == true) {
+                    
+                        switch notEnough {
+                        case 7:
+                            adjustCellArrangement = .reverse_true_empty_7
+                        case 6:
+                            adjustCellArrangement = .reverse_true_empty_6
+                        case 5:
+                            adjustCellArrangement = .reverse_true_empty_5
+                        case 2:
+                            adjustCellArrangement = .reverse_true_empty_2
+                        case 1:
+                            adjustCellArrangement = .reverse_true_empty_1
+                        case 0:
+                            adjustCellArrangement = .reverse_true_empty_0
+                        default:
+                            print("")
+                        }
+                    }
+                    
+                }
                 
             }
             self.allBrItemsForCell.insert(contentsOf: notEmptyRow, at: 0)
             groupIndexFuture += 1
-            
         }
+        
+        print("adjustCellArrangement:\(adjustCellArrangement)")
+        self.adjustCellArrangement(pattern: adjustCellArrangement)
+   
         
         //最後補上一列空白的，修正原本最右下角cell，位置偏差
         for _ in stride(from: 1, through: self.numberOfColumns, by: 1) {
@@ -1033,9 +1103,6 @@ UITextFieldDelegate{
             self.allBrItemsForCell.append(brItem)
         }
         
-        for (_ , brItem) in self.allBrItemsForCell.enumerated() {
-           brItem?.reOrderTestItems(currentLoginAccount: "peter@bonraybio.com");
-        }
         self.collectionView.reloadData()
         //(self.allBrItemsForCell.count - 1)
         
@@ -1146,9 +1213,566 @@ UITextFieldDelegate{
         }
         return brItems
     }
+    
+    func adjustCellArrangement(pattern:AdjustCellArrangement) {
+        
+        //TODO:future less than 3 rows, another Algorithm
+        
+        switch pattern {
+        case .reverse_false_empty_7:
+            let brItem0 = self.allBrItemsForCell[0]
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem10 = self.allBrItemsForCell[10]
+            let brItem12 = self.allBrItemsForCell[12]
+            let brItem20 = self.allBrItemsForCell[20]
+            let brItem21 = self.allBrItemsForCell[21]
+            let brItem22 = self.allBrItemsForCell[22]
+            
+            brItem5?.testItems = (brItem1?.testItems)!
+            brItem5?.date = brItem1?.date
+            brItem5?.cellGuildLine = .horizontal
+            brItem1?.testItems = []
+            brItem1?.date = nil
+            brItem1?.cellGuildLine = .none
+            
+            brItem4?.testItems = (brItem21?.testItems)!
+            brItem4?.cellGuildLine = .horizontal
+            brItem4?.date = brItem21?.date
+            brItem21?.testItems = []
+            brItem21?.date = nil
+            brItem21?.cellGuildLine = .none
+            
+            brItem3?.testItems = (brItem22?.testItems)!
+            brItem3?.cellGuildLine = .horizontal
+            brItem3?.date = brItem22?.date
+            brItem22?.testItems = []
+            brItem22?.date = nil
+            brItem22?.cellGuildLine = .bottomLeft
+            
+            brItem12?.cellGuildLine = .vertical
+            brItem10?.cellGuildLine = .none
+            
+            brItem0?.cellGuildLine = .none
+            brItem20?.cellGuildLine = .none
+            brItem2?.cellGuildLine = .topLeft
+        case .reverse_false_empty_6:
+            let brItem0 = self.allBrItemsForCell[0]
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem10 = self.allBrItemsForCell[10]
+            let brItem11 = self.allBrItemsForCell[11]
+            let brItem20 = self.allBrItemsForCell[20]
+            let brItem21 = self.allBrItemsForCell[21]
+            
+            brItem4?.testItems = (brItem2?.testItems)!
+            brItem4?.date = brItem2?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem3?.testItems = (brItem1?.testItems)!
+            brItem3?.date = brItem1?.date
+            brItem3?.cellGuildLine = .horizontal
+            
+            brItem2?.testItems = (brItem21?.testItems)!
+            brItem2?.date = brItem21?.date
+            brItem3?.cellGuildLine = .horizontal
+            
+            brItem1?.testItems = []
+            brItem1?.date = nil
+            brItem1?.cellGuildLine = .topLeft
+            
+            brItem0?.testItems = []
+            brItem0?.date = nil
+            brItem0?.cellGuildLine = .none
+            
+            brItem10?.testItems = []
+            brItem10?.date = nil
+            brItem10?.cellGuildLine = .none
+            
+            brItem11?.testItems = []
+            brItem11?.date = nil
+            brItem11?.cellGuildLine = .vertical
+            
+            brItem20?.testItems = []
+            brItem20?.date = nil
+            brItem20?.cellGuildLine = .none
+            
+            brItem21?.testItems = []
+            brItem21?.date = nil
+            brItem21?.cellGuildLine = .bottomLeft
+            
+        case .reverse_false_empty_5:
+            let brItem0 = self.allBrItemsForCell[0]
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem10 = self.allBrItemsForCell[10]
+            let brItem11 = self.allBrItemsForCell[11]
+            let brItem20 = self.allBrItemsForCell[20]
+            let brItem21 = self.allBrItemsForCell[21]
+            
+            brItem5?.testItems = (brItem3?.testItems)!
+            brItem5?.date = brItem3?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem4?.testItems = (brItem2?.testItems)!
+            brItem4?.date = brItem2?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem3?.testItems = (brItem1?.testItems)!
+            brItem3?.date = brItem1?.date
+            brItem3?.cellGuildLine = .horizontal
+            
+            brItem2?.testItems = (brItem21?.testItems)!
+            brItem2?.date = brItem21?.date
+            brItem2?.cellGuildLine = .horizontal
+            
+            brItem1?.testItems = []
+            brItem1?.date = nil
+            brItem1?.cellGuildLine = .topLeft
+            
+            brItem0?.testItems = []
+            brItem0?.date = nil
+            brItem0?.cellGuildLine = .none
+            
+            brItem10?.testItems = []
+            brItem10?.date = nil
+            brItem10?.cellGuildLine = .none
+            
+            brItem11?.testItems = []
+            brItem11?.date = nil
+            brItem11?.cellGuildLine = .vertical
+            
+            brItem20?.testItems = []
+            brItem20?.date = nil
+            brItem20?.cellGuildLine = .none
+            
+            brItem21?.testItems = []
+            brItem21?.date = nil
+            brItem21?.cellGuildLine = .bottomLeft
+            
+        case .reverse_false_empty_2:
+            
+            for _ in stride(from: 0, through: 19, by: 1) {
+                let brItem = self.mkNoDateBrItem(.none)
+                self.allBrItemsForCell.insert(brItem, at: 0)
+         
+            }
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem16 = self.allBrItemsForCell[16]
+            let brItem26 = self.allBrItemsForCell[26]
+            
+            brItem5?.testItems = (brItem26?.testItems)!
+            brItem5?.date = brItem26?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem6?.testItems = []
+            brItem6?.date = nil
+            brItem6?.cellGuildLine = .topRight
+            
+            brItem16?.testItems = []
+            brItem16?.date = nil
+            brItem16?.cellGuildLine = .vertical
+            
+            brItem26?.testItems = []
+            brItem26?.date = nil
+            brItem26?.cellGuildLine = .bottomRight
+            
+        case .reverse_false_empty_1:
+            
+            for _ in stride(from: 0, through: 19, by: 1) {
+                let brItem = self.mkNoDateBrItem(.none)
+                self.allBrItemsForCell.insert(brItem, at: 0)
+            }
+            
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem16 = self.allBrItemsForCell[16]
+            let brItem26 = self.allBrItemsForCell[26]
+            let brItem27 = self.allBrItemsForCell[27]
+            
+            brItem4?.testItems = (brItem27?.testItems)!
+            brItem4?.date = brItem27?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem5?.testItems = (brItem26?.testItems)!
+            brItem5?.date = brItem26?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem6?.testItems = []
+            brItem6?.date = nil
+            brItem6?.cellGuildLine = .topRight
+            
+            brItem16?.testItems = []
+            brItem16?.date = nil
+            brItem16?.cellGuildLine = .vertical
+            
+            brItem26?.testItems = []
+            brItem26?.date = nil
+            brItem26?.cellGuildLine = .bottomRight
+            
+            brItem27?.testItems = []
+            brItem27?.date = nil
+            brItem27?.cellGuildLine = .none
+            
+        case .reverse_false_empty_0:
+            
+            for _ in stride(from: 0, through: 19, by: 1) {
+                let brItem = self.mkNoDateBrItem(.none)
+                self.allBrItemsForCell.insert(brItem, at: 0)
+            }
+            
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem17 = self.allBrItemsForCell[17]
+            let brItem27 = self.allBrItemsForCell[27]
+            let brItem28 = self.allBrItemsForCell[28]
+            let brItem29 = self.allBrItemsForCell[29]
+            
+            brItem5?.testItems = (brItem28?.testItems)!
+            brItem5?.date = brItem28?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem6?.testItems = (brItem27?.testItems)!
+            brItem6?.date = brItem27?.date
+            brItem6?.cellGuildLine = .horizontal
+            
+            brItem7?.testItems = []
+            brItem7?.date = nil
+            brItem7?.cellGuildLine = .topRight
+            
+            brItem17?.testItems = []
+            brItem17?.date = nil
+            brItem17?.cellGuildLine = .vertical
+            
+            brItem27?.testItems = []
+            brItem27?.date = nil
+            brItem27?.cellGuildLine = .bottomRight
+            
+            brItem28?.testItems = []
+            brItem28?.date = nil
+            brItem28?.cellGuildLine = .none
+            
+            brItem29?.testItems = []
+            brItem29?.date = nil
+            brItem29?.cellGuildLine = .none
+            
+        case .reverse_true_empty_7:
+            
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
+            let brItem9 = self.allBrItemsForCell[9]
+            let brItem17 = self.allBrItemsForCell[17]
+            let brItem19 = self.allBrItemsForCell[19]
+            let brItem27 = self.allBrItemsForCell[27]
+            let brItem28 = self.allBrItemsForCell[28]
+            let brItem29 = self.allBrItemsForCell[29]
+            
+            brItem4?.testItems = (brItem8?.testItems)!
+            brItem4?.date = brItem8?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem5?.testItems = (brItem28?.testItems)!
+            brItem5?.date = brItem28?.date
+            brItem5?.cellGuildLine = .horizontal
+
+            brItem6?.testItems = (brItem27?.testItems)!
+            brItem6?.date = brItem27?.date
+            brItem6?.cellGuildLine = .horizontal
+            
+            brItem7?.testItems = []
+            brItem7?.date = nil
+            brItem7?.cellGuildLine = .topRight
+            
+            brItem8?.testItems = []
+            brItem8?.date = nil
+            brItem8?.cellGuildLine = .none
+            
+            brItem9?.testItems = []
+            brItem9?.date = nil
+            brItem9?.cellGuildLine = .none
+ 
+            brItem17?.testItems = []
+            brItem17?.date = nil
+            brItem17?.cellGuildLine = .vertical
+            
+            brItem19?.testItems = []
+            brItem19?.date = nil
+            brItem19?.cellGuildLine = .none
+            
+            brItem27?.testItems = []
+            brItem27?.date = nil
+            brItem27?.cellGuildLine = .bottomRight
+            
+            brItem28?.testItems = []
+            brItem28?.date = nil
+            brItem28?.cellGuildLine = .none
+            
+            brItem29?.testItems = []
+            brItem29?.date = nil
+            brItem29?.cellGuildLine = .none
+            
+        case .reverse_true_empty_6:
+            
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
+            let brItem9 = self.allBrItemsForCell[9]
+            let brItem18 = self.allBrItemsForCell[18]
+            let brItem19 = self.allBrItemsForCell[19]
+            let brItem28 = self.allBrItemsForCell[28]
+            let brItem29 = self.allBrItemsForCell[29]
+            
+            brItem5?.testItems = (brItem7?.testItems)!
+            brItem5?.date = brItem7?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem6?.testItems = (brItem28?.testItems)!
+            brItem6?.date = brItem28?.date
+            brItem6?.cellGuildLine = .horizontal
+        
+            brItem7?.testItems = (brItem28?.testItems)!
+            brItem7?.date = brItem28?.date
+            brItem7?.cellGuildLine = .horizontal
+            
+            brItem8?.testItems = []
+            brItem8?.date = nil
+            brItem8?.cellGuildLine = .topRight
+            
+            brItem9?.testItems = []
+            brItem9?.date = nil
+            brItem9?.cellGuildLine = .none
+            
+            brItem18?.testItems = []
+            brItem18?.date = nil
+            brItem18?.cellGuildLine = .vertical
+            
+            brItem19?.testItems = []
+            brItem19?.date = nil
+            brItem19?.cellGuildLine = .none
+
+            brItem28?.testItems = []
+            brItem28?.date = nil
+            brItem28?.cellGuildLine = .bottomRight
+            
+            brItem29?.testItems = []
+            brItem29?.date = nil
+            brItem29?.cellGuildLine = .none
+            
+        case .reverse_true_empty_5:
+            
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
+            let brItem9 = self.allBrItemsForCell[9]
+            let brItem18 = self.allBrItemsForCell[18]
+            let brItem19 = self.allBrItemsForCell[19]
+            let brItem28 = self.allBrItemsForCell[28]
+            let brItem29 = self.allBrItemsForCell[29]
+            
+            brItem4?.testItems = (brItem6?.testItems)!
+            brItem4?.date = brItem6?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem5?.testItems = (brItem7?.testItems)!
+            brItem5?.date = brItem7?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem6?.testItems = (brItem8?.testItems)!
+            brItem6?.date = brItem8?.date
+            brItem6?.cellGuildLine = .horizontal
+            
+            brItem7?.testItems = (brItem28?.testItems)!
+            brItem7?.date = brItem28?.date
+            brItem7?.cellGuildLine = .horizontal
+            
+            brItem8?.testItems = []
+            brItem8?.date = nil
+            brItem8?.cellGuildLine = .topRight
+            
+            brItem9?.testItems = []
+            brItem9?.date = nil
+            brItem9?.cellGuildLine = .none
+            
+            brItem18?.testItems = []
+            brItem18?.date = nil
+            brItem18?.cellGuildLine = .vertical
+            
+            brItem19?.testItems = []
+            brItem19?.date = nil
+            brItem19?.cellGuildLine = .none
+            
+            brItem28?.testItems = []
+            brItem28?.date = nil
+            brItem28?.cellGuildLine = .bottomRight
+            
+            brItem29?.testItems = []
+            brItem29?.date = nil
+            brItem29?.cellGuildLine = .none
+            
+        case .reverse_true_empty_2:
+            
+            for _ in stride(from: 0, through: 19, by: 1) {
+                let brItem = self.mkNoDateBrItem(.none)
+                self.allBrItemsForCell.insert(brItem, at: 0)
+                
+            }
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem13 = self.allBrItemsForCell[13]
+            let brItem23 = self.allBrItemsForCell[23]
+            
+            brItem4?.testItems = (brItem23?.testItems)!
+            brItem4?.date = brItem23?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem3?.testItems = []
+            brItem3?.date = nil
+            brItem3?.cellGuildLine = .topLeft
+            
+            brItem13?.testItems = []
+            brItem13?.date = nil
+            brItem13?.cellGuildLine = .vertical
+            
+            brItem23?.testItems = []
+            brItem23?.date = nil
+            brItem23?.cellGuildLine = .bottomLeft
+            
+        case .reverse_true_empty_1:
+            
+            for _ in stride(from: 0, through: 19, by: 1) {
+                let brItem = self.mkNoDateBrItem(.none)
+                self.allBrItemsForCell.insert(brItem, at: 0)
+                
+            }
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem13 = self.allBrItemsForCell[13]
+            let brItem22 = self.allBrItemsForCell[22]
+            let brItem23 = self.allBrItemsForCell[23]
+            let brItem29 = self.allBrItemsForCell[29]
+            
+            brItem5?.testItems = (brItem22?.testItems)!
+            brItem5?.date = brItem22?.date
+            brItem5?.cellGuildLine = .horizontal
+            
+            brItem4?.testItems = (brItem23?.testItems)!
+            brItem4?.date = brItem23?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem3?.testItems = []
+            brItem3?.date = nil
+            brItem3?.cellGuildLine = .topLeft
+            
+            brItem13?.testItems = []
+            brItem13?.date = nil
+            brItem13?.cellGuildLine = .vertical
+            
+            brItem22?.testItems = []
+            brItem22?.date = nil
+            brItem22?.cellGuildLine = .none
+            
+            brItem23?.testItems = []
+            brItem23?.date = nil
+            brItem23?.cellGuildLine = .bottomLeft
+            
+            brItem29?.testItems = []
+            brItem29?.date = nil
+            brItem29?.cellGuildLine = .topRight
+            
+        case .reverse_true_empty_0:
+            
+            for _ in stride(from: 0, through: 19, by: 1) {
+                let brItem = self.mkNoDateBrItem(.none)
+                self.allBrItemsForCell.insert(brItem, at: 0)
+                
+            }
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            let brItem12 = self.allBrItemsForCell[12]
+            let brItem20 = self.allBrItemsForCell[20]
+            let brItem21 = self.allBrItemsForCell[21]
+            let brItem22 = self.allBrItemsForCell[22]
+            
+            brItem4?.testItems = (brItem21?.testItems)!
+            brItem4?.date = brItem21?.date
+            brItem4?.cellGuildLine = .horizontal
+            
+            brItem3?.testItems = (brItem22?.testItems)!
+            brItem3?.date = brItem22?.date
+            brItem3?.cellGuildLine = .horizontal
+            
+            brItem2?.testItems = []
+            brItem2?.date = nil
+            brItem2?.cellGuildLine = .topLeft
+            
+            brItem12?.testItems = []
+            brItem12?.date = nil
+            brItem12?.cellGuildLine = .vertical
+            
+            brItem20?.testItems = []
+            brItem20?.date = nil
+            brItem20?.cellGuildLine = .none
+            
+            brItem21?.testItems = []
+            brItem21?.date = nil
+            brItem21?.cellGuildLine = .none
+            
+            brItem22?.testItems = []
+            brItem22?.date = nil
+            brItem22?.cellGuildLine = .bottomLeft
+        default:
+            print("XXX")
+        }
+        
+    }
+    
+    func isTheDateExistInThisWeekDates(dateToCheck:Date, thisWeekBrItems: [BRItem?]) -> Bool {
+        var isExist = false
+        
+        for (_, brItem ) in thisWeekBrItems.enumerated() {
+            guard let date = brItem?.date else {
+                continue;
+            }
+            let isSameDate = Calendar.current.isDate(dateToCheck, inSameDayAs:date)
+            if isSameDate {
+                isExist = true
+                break
+            }
+        }
+        return isExist
+        
+    }
+    
 
 }
 
+extension Date {
+    struct Gregorian {
+        static let calendar = Calendar(identifier: .gregorian)
+    }
+    var startOfWeek: Date? {
+        return Gregorian.calendar.date(from: Gregorian.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))
+    }
+}
 
 public struct ChunkIterator<I: IteratorProtocol> : IteratorProtocol {
     
