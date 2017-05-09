@@ -16,103 +16,182 @@ class TestResultCurrentDateCell: UICollectionViewCell {
     var account:String? = nil
     
     @IBOutlet weak var circleV: UIView!
+    
+    @IBOutlet weak var subCirclesContainer: UIView!
+    @IBOutlet weak var sub1Circle: UIView!
+    @IBOutlet weak var sub2Circle: UIView!
+    @IBOutlet weak var sub3Circle: UIView!
+    
+    @IBOutlet weak var sub1CircleCenterX: NSLayoutConstraint!
+    @IBOutlet weak var sub2CircleCenterX: NSLayoutConstraint!
+    @IBOutlet weak var sub3CircleCenterX: NSLayoutConstraint!
+    
+    func hideAllSubCircle() {
+        self.subCirclesContainer.isHidden = true
+    }
+    
+    func show1SubCircle() {
+        self.subCirclesContainer.isHidden = false
+        self.sub1CircleCenterX.constant = 0
+        
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = true
+        self.sub3Circle.isHidden = true
+    }
+    
+    func show2SubCircle() {
+        
+        self.subCirclesContainer.isHidden = false
+        self.sub1CircleCenterX.constant = -5
+        self.sub2CircleCenterX.constant = 5
+        
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = false
+        self.sub3Circle.isHidden = true
+    }
+    
+    func show3SubCircle() {
+        
+        self.subCirclesContainer.isHidden = false
+        self.sub1CircleCenterX.constant = -10
+        self.sub2CircleCenterX.constant = 0
+        self.sub3CircleCenterX.constant = 10
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = false
+        self.sub3Circle.isHidden = false
+    }
+    
+    
     var brItem:BRItem? {
         
         didSet{
-            self.circleV?.layer.cornerRadius = 12
+            let size:CGFloat = 25
+            self.circleV?.layer.cornerRadius = size / 2
             self.circleV?.layer.borderWidth = 2.0
             self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
             self.circleV?.layer.borderColor = UIColor.green.cgColor
             self.circleV?.clipsToBounds = true
             
             
+            let subCirclesize:CGFloat = 6.0
+            self.sub1Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub1Circle?.layer.borderWidth = 1.0
+            self.sub1Circle?.clipsToBounds = true
+            self.sub2Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub2Circle?.layer.borderWidth = 1.0
+            self.sub2Circle?.clipsToBounds = true
+            self.sub3Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub3Circle?.layer.borderWidth = 1.0
+            self.sub3Circle?.clipsToBounds = true
+            
             self.circleV?.isHidden = true
             self.serialLb.isHidden = true
             
+            
+            let color_sperm = UIColor.init(red: 247/255.0, green: 176/255.0, blue: 41/255.0, alpha: 1)
+            let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
+            let color_LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
+            let color_HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
+            let color_mating = UIColor.purple
+            let color_temperature = UIColor.white
+            let color_gray = UIColor.gray
+            
             if let date =  brItem?.date {
+                
                 self.circleV?.isHidden = false
-                //let calendar = Calendar.current
-                //let year = calendar.component(.year, from: date!)
-//                let month = calendar.component(.month, from: date)
-//                let day = calendar.component(.day, from: date)
-//                let weekDay = calendar.component(.weekday, from: date)
+                let calendar = Calendar.current
+                let day = calendar.component(.day, from: date)
+                self.dateLb.text = "\(day)"
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MMM dd"
-                self.dateLb.text = dateFormatter.string(from: date)
+                let testItemsCount =  brItem?.testItems.count
                 
-                
-                var isAllDone = true
-                for (_, testItem) in (brItem?.testItems.enumerated())! {
-                    
-                    let isDone =
-                        testItem.isDone()
-                    if !isDone {
-                        isAllDone = false
-                        break
-                    }
+                switch testItemsCount! {
+                case 1:
+                    self.hideAllSubCircle()
+                case 2:
+                    self.show1SubCircle()
+                case 3:
+                    self.show2SubCircle()
+                case 4:
+                    self.show3SubCircle()
+                default:
+                    self.hideAllSubCircle()
                 }
                 
-                if (brItem?.testItems.count)! > 0 {
+                if  testItemsCount! > 0 {
                     
-                    let firstTestItem:TestItem? = brItem?.testItems[0]
-                    
-                    let color_sperm = UIColor.init(red: 247/255.0, green: 176/255.0, blue: 41/255.0, alpha: 1)
-                    let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
-                    let color_LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
-                    let color_HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
-                    let color_mating = UIColor.purple
-                    let color_temperature = UIColor.white
-                    
-                    var color_current = UIColor.clear
-                    
-                    if firstTestItem?.type == .Sperm {
-                        color_current = color_sperm
-                    } else if firstTestItem?.type == .FSH {
-                        color_current = color_FSH
-                    } else if firstTestItem?.type == .LH {
-                        color_current = color_LH
-                    } else if firstTestItem?.type == .HCG {
-                        color_current = color_HCG
-                    } else if firstTestItem?.type == .Mating {
-                        color_current = color_mating
-                    } else if firstTestItem?.type == .Temperature {
-                        color_current = color_temperature
+                    for (idx, testItem) in (brItem?.testItems.enumerated())! {
+                        var color_current = UIColor.clear
+                        var circleV:UIView? = nil
+                        switch idx {
+                        case 0:
+                            circleV = self.circleV
+                        case 1:
+                            circleV = self.sub1Circle
+                        case 2:
+                            circleV = self.sub2Circle
+                        case 3:
+                            circleV = self.sub3Circle
+                        default:
+                            print("")
+                        }
+                        
+                        switch testItem.type! {
+                        case .Sperm:
+                            color_current = color_sperm
+                        case .FSH:
+                            color_current = color_FSH
+                        case .LH:
+                            color_current = color_LH
+                        case .HCG:
+                            color_current = color_HCG
+                        case .Mating:
+                            color_current = color_mating
+                        case .Temperature:
+                            color_current = color_temperature
+                            
+                        }
+                        
+                        circleV?.layer.borderColor = color_current.cgColor
+                        circleV?.layer.backgroundColor = color_current.cgColor
+                        
+                        if testItem.isDone() == false {
+                            if idx == 0 {
+                                self.dateLb.textColor = color_current
+                            }
+                            
+                            circleV?.layer.backgroundColor = UIColor.black.cgColor
+                        } else {
+                            if idx == 0 {
+                                self.dateLb.textColor =  UIColor.black
+                            }
+                        }
+                        
                     }
                     
-                    self.circleV?.layer.borderColor = color_current.cgColor
-                    self.circleV?.layer.backgroundColor = color_current.cgColor
                     
-                    if !isAllDone {
-                        self.dateLb.textColor = color_current
-                        self.circleV?.layer.backgroundColor = UIColor.black.cgColor
-                    } else {
-                        self.dateLb.textColor =  UIColor.black
-                    }
-              
                 } else {
                     self.circleV?.isHidden = false
                     self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
-                    self.circleV?.layer.borderColor = UIColor.gray.cgColor
-                    self.dateLb.textColor = UIColor.gray
+                    self.circleV?.layer.borderColor = color_gray.cgColor
+                    self.dateLb.textColor = color_gray
                 }
-            
                 
             } else {
-                self.circleV?.isHidden = false
-                self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
-                self.circleV?.layer.borderColor = UIColor.gray.cgColor
-                self.dateLb.textColor = UIColor.gray
+                self.circleV?.isHidden = true
+                self.dateLb.text = ""
+                self.hideAllSubCircle()
             }
+
         }
-        
-        willSet(newValue){
-            
-            
-        }
-        
-    }
     
+        willSet(newValue){
+    
+    
+        }
+    
+    }
+
 }
 
 

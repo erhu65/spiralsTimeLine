@@ -10,6 +10,7 @@ import UIKit
 
 enum CellGuildLine: UInt32 {
     case none
+    case noneEmpty
     case topLeft
     case bottomLeft
     case topRight
@@ -17,22 +18,6 @@ enum CellGuildLine: UInt32 {
     case horizontal
     case vertical
 }
-
-enum CellRegularPattern: UInt32 {
-    case before_pattern_7e_1c
-    case before_pattern_8c
-    case before_pattern_1c_L
-    case before_pattern_empty7_2
-    case before_pattern_circle8_2
-    case future_pattern_7e_1c
-    case future_pattern_8c_reverse
-    case future_pattern_1c_7e
-    case future_pattern_8c
-    case future_pattern_8c_not_enough
-    case future_pattern_end
-}
-
-
 
 enum TestItemType: UInt32 {
     case Sperm
@@ -62,12 +47,16 @@ enum AdjustCellArrangement: UInt32 {
     case reverse_false_empty_7
     case reverse_false_empty_6
     case reverse_false_empty_5
+    case reverse_false_empty_4
+    case reverse_false_empty_3
     case reverse_false_empty_2
     case reverse_false_empty_1
     case reverse_false_empty_0
     case reverse_true_empty_7
     case reverse_true_empty_6
     case reverse_true_empty_5
+    case reverse_true_empty_4
+    case reverse_true_empty_3
     case reverse_true_empty_2
     case reverse_true_empty_1
     case reverse_true_empty_0
@@ -101,20 +90,20 @@ class TestItem {
     }
     var date:Date? = nil
     
-    var value:Float = 0.0
+    var value:Float = -1.0
     
-    var sperm_motility:Float = 0.0
-    var sperm_morpphology:Float = 0.0
-    var sperm_concentration:Float = 0.0
+    var sperm_motility:Float = -1.0
+    var sperm_morpphology:Float = -1.0
+    var sperm_concentration:Float = -1.0
 
     
     func isDone()->Bool {
         
         if self.type == .Sperm
         {
-            if self.sperm_motility == 0.0
-                && self.sperm_morpphology == 0.0
-                && self.sperm_concentration == 0.0 {
+            if self.sperm_motility == -1.0
+                && self.sperm_morpphology == -1.0
+                && self.sperm_concentration == -1.0 {
                 
                 return false
             } else {
@@ -123,7 +112,7 @@ class TestItem {
             }
         }
 
-        if self.value == 0.0 {
+        if self.value == -1.0 {
             return false
         }
         
@@ -350,13 +339,6 @@ class BRItem {
            
             let mostImportantTestItem = self.testItems.remove(at: idnexMostImportant);
             self.testItems.insert(mostImportantTestItem, at: 0)
-            
-//            print("testItem.account:\(String(describing: mostImportantTestItem.account))")
-//            print("testItem.typ:\(String(describing: mostImportantTestItem.type))")
-//            print("testItem.priority:\(mostImportantTestItem.priority)")
-//            print("testItem.isDone:\(mostImportantTestItem.isDone())")
-//            print("idnexMostImportant:\(idnexMostImportant)")
-         
         }
 
     }
@@ -373,6 +355,8 @@ UITextFieldDelegate{
     @IBOutlet weak var tf1: UITextField!
     @IBOutlet weak var tf2: UITextField!
 
+    var currentIndex:Int = -1
+    
     let numberOfColumns:CGFloat = 10
     var allBrItemsForCell:[BRItem?] = []
 
@@ -473,6 +457,7 @@ UITextFieldDelegate{
         cellCurrent.backgroundColor = UIColor.clear
         
         if let barItemDate = barItem?.date {
+            
             let componentsTestItem = calendar.dateComponents([.year, .month, .day], from: barItemDate )
             let yearTestItem  =  componentsTestItem.year
             let monthTestItem  = componentsTestItem.month
@@ -587,8 +572,8 @@ UITextFieldDelegate{
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 
-        let rowIndex = indexPath.row
-        let barItem = self.allBrItemsForCell[rowIndex]
+//        let rowIndex = indexPath.row
+//        let barItem = self.allBrItemsForCell[rowIndex]
         self.popV.isHidden = true
     }
     
@@ -779,7 +764,7 @@ UITextFieldDelegate{
                     && !fallsBetween {
                     //after this week
                     print("\(self.formatLocalDate("future date:", dateChk))")
-                    
+               
                     futureBrItems.append(brItem)
                     continue
                     //print("future: \(year)-\(month)-\(day)(\(weekDay))")
@@ -924,16 +909,6 @@ UITextFieldDelegate{
                     }
                     
                 }
-            
-//                if brItem?.date != nil {
-//                    
-//                    let celStr = self.formatLocalDate("before current week date groupIndex:\(groupIndex): ", (brItem?.date!)!)
-//                    let testItemCount = brItem?.testItems.count
-//                    print("\(celStr) count:\(testItemCount!)")
-//                
-//                } else {
-//                    print("before current week date groupIndex:\(groupIndex):  empty guid:\(brItem?.cellGuildLine)" )
-//                }
                 
             }
             self.allBrItemsForCell += notEmptyRow
@@ -1056,6 +1031,10 @@ UITextFieldDelegate{
                             adjustCellArrangement = .reverse_false_empty_6
                         case 5:
                             adjustCellArrangement = .reverse_false_empty_5
+                        case 4:
+                            adjustCellArrangement = .reverse_false_empty_4
+                        case 3:
+                            adjustCellArrangement = .reverse_false_empty_3
                         case 2:
                             adjustCellArrangement = .reverse_false_empty_2
                         case 1:
@@ -1074,6 +1053,10 @@ UITextFieldDelegate{
                             adjustCellArrangement = .reverse_true_empty_6
                         case 5:
                             adjustCellArrangement = .reverse_true_empty_5
+                        case 4:
+                            adjustCellArrangement = .reverse_true_empty_4
+                        case 3:
+                            adjustCellArrangement = .reverse_true_empty_3
                         case 2:
                             adjustCellArrangement = .reverse_true_empty_2
                         case 1:
@@ -1103,6 +1086,16 @@ UITextFieldDelegate{
             self.allBrItemsForCell.append(brItem)
         }
         
+        //get the current date rowIndex
+        for (idx, brItem ) in self.allBrItemsForCell.enumerated() {
+            if let date = brItem?.date {
+                let isCurrentDate = Calendar.current.isDate(date, inSameDayAs:Date())
+                if(isCurrentDate){
+                    self.currentIndex = idx
+                }
+            }
+        }
+       
         self.collectionView.reloadData()
         //(self.allBrItemsForCell.count - 1)
         
@@ -1119,6 +1112,16 @@ UITextFieldDelegate{
         
         let indexPath = IndexPath(row: (self.allBrItemsForCell.count - 1), section: 0)
         self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+    }
+    
+    
+    @IBAction func moveToCurrentDate(_ sender: Any) {
+        
+        if self.currentIndex != -1 {
+            let indexPath = IndexPath(row: self.currentIndex, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+            
+        }
     }
     
     
@@ -1226,6 +1229,11 @@ UITextFieldDelegate{
             let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
+            
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
+            
             let brItem10 = self.allBrItemsForCell[10]
             let brItem12 = self.allBrItemsForCell[12]
             let brItem20 = self.allBrItemsForCell[20]
@@ -1259,12 +1267,21 @@ UITextFieldDelegate{
             brItem0?.cellGuildLine = .none
             brItem20?.cellGuildLine = .none
             brItem2?.cellGuildLine = .topLeft
+            
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+            
         case .reverse_false_empty_6:
             let brItem0 = self.allBrItemsForCell[0]
             let brItem1 = self.allBrItemsForCell[1]
             let brItem2 = self.allBrItemsForCell[2]
             let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
             let brItem10 = self.allBrItemsForCell[10]
             let brItem11 = self.allBrItemsForCell[11]
             let brItem20 = self.allBrItemsForCell[20]
@@ -1306,6 +1323,11 @@ UITextFieldDelegate{
             brItem21?.date = nil
             brItem21?.cellGuildLine = .bottomLeft
             
+            brItem5?.cellGuildLine = .noneEmpty
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+        
         case .reverse_false_empty_5:
             let brItem0 = self.allBrItemsForCell[0]
             let brItem1 = self.allBrItemsForCell[1]
@@ -1313,6 +1335,9 @@ UITextFieldDelegate{
             let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
             let brItem10 = self.allBrItemsForCell[10]
             let brItem11 = self.allBrItemsForCell[11]
             let brItem20 = self.allBrItemsForCell[20]
@@ -1358,6 +1383,29 @@ UITextFieldDelegate{
             brItem21?.date = nil
             brItem21?.cellGuildLine = .bottomLeft
             
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+            
+        case .reverse_false_empty_4:
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
+
+            brItem5?.cellGuildLine = .noneEmpty
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+            
+         case .reverse_false_empty_3:
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+            
         case .reverse_false_empty_2:
             
             for _ in stride(from: 0, through: 19, by: 1) {
@@ -1365,6 +1413,11 @@ UITextFieldDelegate{
                 self.allBrItemsForCell.insert(brItem, at: 0)
          
             }
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
             let brItem16 = self.allBrItemsForCell[16]
@@ -1386,13 +1439,20 @@ UITextFieldDelegate{
             brItem26?.date = nil
             brItem26?.cellGuildLine = .bottomRight
             
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            brItem4?.cellGuildLine = .noneEmpty
+            
         case .reverse_false_empty_1:
             
             for _ in stride(from: 0, through: 19, by: 1) {
                 let brItem = self.mkNoDateBrItem(.none)
                 self.allBrItemsForCell.insert(brItem, at: 0)
             }
-            
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
@@ -1424,13 +1484,20 @@ UITextFieldDelegate{
             brItem27?.date = nil
             brItem27?.cellGuildLine = .none
             
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            
         case .reverse_false_empty_0:
             
             for _ in stride(from: 0, through: 19, by: 1) {
                 let brItem = self.mkNoDateBrItem(.none)
                 self.allBrItemsForCell.insert(brItem, at: 0)
             }
-            
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
             let brItem7 = self.allBrItemsForCell[7]
@@ -1467,8 +1534,16 @@ UITextFieldDelegate{
             brItem29?.date = nil
             brItem29?.cellGuildLine = .none
             
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            brItem4?.cellGuildLine = .noneEmpty
+            
         case .reverse_true_empty_7:
             
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
@@ -1525,7 +1600,16 @@ UITextFieldDelegate{
             brItem29?.date = nil
             brItem29?.cellGuildLine = .none
             
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            
         case .reverse_true_empty_6:
+            
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
             
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
@@ -1573,8 +1657,17 @@ UITextFieldDelegate{
             brItem29?.date = nil
             brItem29?.cellGuildLine = .none
             
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            brItem4?.cellGuildLine = .noneEmpty
+            
+            
         case .reverse_true_empty_5:
             
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
@@ -1626,6 +1719,30 @@ UITextFieldDelegate{
             brItem29?.date = nil
             brItem29?.cellGuildLine = .none
             
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            
+        case .reverse_true_empty_4:
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            let brItem4 = self.allBrItemsForCell[4]
+            
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            brItem4?.cellGuildLine = .noneEmpty
+            
+        case .reverse_true_empty_3:
+            let brItem1 = self.allBrItemsForCell[1]
+            let brItem2 = self.allBrItemsForCell[2]
+            let brItem3 = self.allBrItemsForCell[3]
+            
+            brItem1?.cellGuildLine = .noneEmpty
+            brItem2?.cellGuildLine = .noneEmpty
+            brItem3?.cellGuildLine = .noneEmpty
+            
         case .reverse_true_empty_2:
             
             for _ in stride(from: 0, through: 19, by: 1) {
@@ -1635,6 +1752,10 @@ UITextFieldDelegate{
             }
             let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
             let brItem13 = self.allBrItemsForCell[13]
             let brItem23 = self.allBrItemsForCell[23]
             
@@ -1654,6 +1775,11 @@ UITextFieldDelegate{
             brItem23?.date = nil
             brItem23?.cellGuildLine = .bottomLeft
             
+            brItem5?.cellGuildLine = .noneEmpty
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+            
         case .reverse_true_empty_1:
             
             for _ in stride(from: 0, through: 19, by: 1) {
@@ -1664,6 +1790,9 @@ UITextFieldDelegate{
             let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
             let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
             let brItem13 = self.allBrItemsForCell[13]
             let brItem22 = self.allBrItemsForCell[22]
             let brItem23 = self.allBrItemsForCell[23]
@@ -1697,6 +1826,10 @@ UITextFieldDelegate{
             brItem29?.date = nil
             brItem29?.cellGuildLine = .topRight
             
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
+            
         case .reverse_true_empty_0:
             
             for _ in stride(from: 0, through: 19, by: 1) {
@@ -1707,6 +1840,10 @@ UITextFieldDelegate{
             let brItem2 = self.allBrItemsForCell[2]
             let brItem3 = self.allBrItemsForCell[3]
             let brItem4 = self.allBrItemsForCell[4]
+            let brItem5 = self.allBrItemsForCell[5]
+            let brItem6 = self.allBrItemsForCell[6]
+            let brItem7 = self.allBrItemsForCell[7]
+            let brItem8 = self.allBrItemsForCell[8]
             let brItem12 = self.allBrItemsForCell[12]
             let brItem20 = self.allBrItemsForCell[20]
             let brItem21 = self.allBrItemsForCell[21]
@@ -1739,29 +1876,18 @@ UITextFieldDelegate{
             brItem22?.testItems = []
             brItem22?.date = nil
             brItem22?.cellGuildLine = .bottomLeft
+            
+            brItem5?.cellGuildLine = .noneEmpty
+            brItem6?.cellGuildLine = .noneEmpty
+            brItem7?.cellGuildLine = .noneEmpty
+            brItem8?.cellGuildLine = .noneEmpty
         default:
             print("XXX")
         }
         
     }
     
-    func isTheDateExistInThisWeekDates(dateToCheck:Date, thisWeekBrItems: [BRItem?]) -> Bool {
-        var isExist = false
-        
-        for (_, brItem ) in thisWeekBrItems.enumerated() {
-            guard let date = brItem?.date else {
-                continue;
-            }
-            let isSameDate = Calendar.current.isDate(dateToCheck, inSameDayAs:date)
-            if isSameDate {
-                isExist = true
-                break
-            }
-        }
-        return isExist
-        
-    }
-    
+
 
 }
 
