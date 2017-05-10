@@ -19,51 +19,52 @@ class BRItem {
     var isEmptyRow:Bool = false
     
     init() {
+        testItems = []
         
-        let random1 = arc4random_uniform(11) + 5;
-        if random1 == 5
-            ||  random1 == 6
-            ||  random1 == 7
-            ||  random1 == 8
-            ||  random1 == 9
-            ||  random1 == 10
-            ||  random1 == 11
-            ||  random1 == 12{
-            
-            let testItem = ViewController.mkRandomTestItem()
-            testItems.append(testItem)
-        }
-        
-        let random = arc4random_uniform(21) + 10;
-        if random == 10
-            ||  random == 20
-            ||  random == 30 {
-            let testItem = ViewController.mkRandomTestItem()
-            testItems.append(testItem)
-        }
-        
-        let random2 = arc4random_uniform(5);
-        if random2 == 0
-            ||  random2 == 1
-            ||  random2 == 1 {
-            
-            let testItem = ViewController.mkRandomTestItem()
-            testItems.append(testItem)
-        }
-        
-        let random３ = arc4random_uniform(5);
-        if random３ == 0
-            ||  random３ == 1 {
-            let testItem = ViewController.mkRandomTestItem()
-            testItems.append(testItem)
-        }
-        
-        let random4 = arc4random_uniform(5);
-        if random4 == 0
-            ||  random4 == 1
-        {
-            testItems = []
-        }
+//        let random1 = arc4random_uniform(11) + 5;
+//        if random1 == 5
+//            ||  random1 == 6
+//            ||  random1 == 7
+//            ||  random1 == 8
+//            ||  random1 == 9
+//            ||  random1 == 10
+//            ||  random1 == 11
+//            ||  random1 == 12{
+//            
+//            let testItem = ViewController.mkRandomTestItem()
+//            testItems.append(testItem)
+//        }
+//        
+//        let random = arc4random_uniform(21) + 10;
+//        if random == 10
+//            ||  random == 20
+//            ||  random == 30 {
+//            let testItem = ViewController.mkRandomTestItem()
+//            testItems.append(testItem)
+//        }
+//        
+//        let random2 = arc4random_uniform(5);
+//        if random2 == 0
+//            ||  random2 == 1
+//            ||  random2 == 2 {
+//            
+//            let testItem = ViewController.mkRandomTestItem()
+//            testItems.append(testItem)
+//        }
+//        
+//        let random３ = arc4random_uniform(5);
+//        if random３ == 0
+//            ||  random３ == 1 {
+//            let testItem = ViewController.mkRandomTestItem()
+//            testItems.append(testItem)
+//        }
+//        
+//        let random4 = arc4random_uniform(5);
+//        if random4 == 0
+//            ||  random4 == 1
+//        {
+//            testItems = []
+//        }
         
         
         
@@ -73,7 +74,7 @@ class BRItem {
         testItems.append(testItem)
     }
     
-    func reOrderTestItems(currentLoginAccount:String) {
+    func reOrderTestItems(currentLoginGender:GenderType) {
         
         if date == nil {
             return;
@@ -86,7 +87,7 @@ class BRItem {
         for (idx, testItem) in (self.testItems.enumerated()) {
             
             
-            if testItem.gender == currentLoginAccount
+            if testItem.gender! == currentLoginGender
                 && testItem.priority == 3
                 && testItem.isDone() == false
             {
@@ -100,7 +101,7 @@ class BRItem {
             for (idx, testItem) in (self.testItems.enumerated()) {
                 
                 
-                if testItem.gender == currentLoginAccount
+                if testItem.gender! != currentLoginGender
                     && testItem.priority == 3
                     && testItem.isDone() == false
                 {
@@ -116,7 +117,7 @@ class BRItem {
             for (idx, testItem) in (self.testItems.enumerated()) {
                 
                 
-                if testItem.gender == currentLoginAccount
+                if testItem.gender! == currentLoginGender
                     && testItem.priority == 2
                     && testItem.isDone() == false
                 {
@@ -131,7 +132,7 @@ class BRItem {
             for (idx, testItem) in (self.testItems.enumerated()) {
                 
                 
-                if testItem.gender != currentLoginAccount
+                if testItem.gender! != currentLoginGender
                     && testItem.priority == 2
                     && testItem.isDone() == false
                 {
@@ -147,39 +148,7 @@ class BRItem {
             
             for (idx, testItem) in (self.testItems.enumerated()) {
                 
-                if testItem.gender == currentLoginAccount
-                    && testItem.priority == 3
-                    && testItem.isDone() == false
-                {
-                    idnexMostImportant = idx;
-                    break;
-                }
-            }
-            
-        }
-        
-        
-        if idnexMostImportant == -1 {
-            
-            for (idx, testItem) in (self.testItems.enumerated()) {
-                
-                if testItem.gender != currentLoginAccount
-                    && testItem.priority == 3
-                    && testItem.isDone() == false
-                {
-                    idnexMostImportant = idx;
-                    break;
-                }
-                
-            }
-            
-        }
-        
-        if idnexMostImportant == -1 {
-            
-            for (idx, testItem) in (self.testItems.enumerated()) {
-                
-                if testItem.gender == currentLoginAccount
+                if testItem.gender! == currentLoginGender
                     && (testItem.priority == 3
                         || testItem.priority == 2
                         || testItem.priority == 1
@@ -198,7 +167,7 @@ class BRItem {
             
             for (idx, testItem) in (self.testItems.enumerated()) {
                 
-                if testItem.gender != currentLoginAccount
+                if testItem.gender! != currentLoginGender
                     && (testItem.priority == 3
                         || testItem.priority == 2
                         || testItem.priority == 1
@@ -218,7 +187,7 @@ class BRItem {
                 
                 
                 
-                if testItem.gender == currentLoginAccount
+                if testItem.gender! == currentLoginGender
                     && (testItem.priority == 3
                         || testItem.priority == 2
                         || testItem.priority == 1

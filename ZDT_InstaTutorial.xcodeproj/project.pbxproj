@@ -70,10 +70,10 @@
 			children = (
 				565D2ECF1C298238004E6F8A /* AppDelegate.swift */,
 				565D2ECD1C297FEC004E6F8A /* ViewController.swift */,
-				D04C1FE91EC2B32A0029C6F3 /* BrItem.swift */,
-				D04C1FE71EC2B28C0029C6F3 /* TestItem.swift */,
 				D04C1FEB1EC2B3890029C6F3 /* Goal.swift */,
 				D04C1FED1EC2B3910029C6F3 /* GoalItem.swift */,
+				D04C1FE91EC2B32A0029C6F3 /* BrItem.swift */,
+				D04C1FE71EC2B28C0029C6F3 /* TestItem.swift */,
 				565D2EC91C29586A004E6F8A /* CustomImageFlowLayout.swift */,
 				565D2ECB1C295883004E6F8A /* TestResultCollectionViewCell.swift */,
 				D02A5E291E9766FF004F5FDD /* TestResultCurrentDateCell.swift */,

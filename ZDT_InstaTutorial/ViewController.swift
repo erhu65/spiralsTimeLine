@@ -9,6 +9,12 @@
 import UIKit
 
 
+enum GenderType: UInt32 {
+    case male = 0
+    case female = 1
+
+}
+
 enum AdjustCellArrangement: UInt32 {
     case reverse_false_empty_7
     case reverse_false_empty_6
@@ -47,6 +53,12 @@ UITextFieldDelegate{
     var allBrItemsForCell:[BRItem?] = []
     var collectionViewLayout: CustomImageFlowLayout!
 
+    @IBOutlet weak var maleBtn: UIButton!
+    @IBOutlet weak var femaleBtn: UIButton!
+    var isMaleBtnHighLight:Bool = false
+    var isFemaleBtnHighLight:Bool = false
+    var currentLoginGender:GenderType = .female
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -132,6 +144,8 @@ UITextFieldDelegate{
         let cellCurrent = collectionView.dequeueReusableCell(withReuseIdentifier: "TestResultCurrentDateCell", for: indexPath) as! TestResultCurrentDateCell
         
         let barItem = self.allBrItemsForCell[rowIndex]
+        barItem?.reOrderTestItems(currentLoginGender: self.currentLoginGender)
+        
         barItem?.serial = rowIndex
         
         let dateCurrent = Date()
@@ -197,13 +211,10 @@ UITextFieldDelegate{
         if testIitemsCount == 0 {
             return
         }
-        
-
+    
         //let count = barItem?.testItems.count
         var testValStrs:[String] = []
-        
-
-        
+    
         for (idx, testItem) in (barItem?.testItems.enumerated())! {
             var valStr = ""
             switch testItem.type! {
@@ -364,12 +375,117 @@ UITextFieldDelegate{
         self.renderTimerLine(num1: tf1Num, num2: tf2Num)
     }
     
+    @IBAction func filterAction(_ sender: UIButton) {
+        self.popV.isHidden = true
+        sender.isSelected = !sender.isSelected;
+        //let filterType = GenderType(rawValue: UInt32(sender.tag))!
+
+        
+        var maleGoals:[Goal] = []
+        var femaleGoals:[Goal] = []
+        
+
+        //make fake raw data
+        for idx in stride(from: 100, through: -100, by: -1) {
+            
+            let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*idx))
+            
+            
+            let random1 = arc4random_uniform(11) + 5;
+            if random1 == 5
+                ||  random1 == 6
+                ||  random1 == 7
+                ||  random1 == 8
+                ||  random1 == 9
+                ||  random1 == 10
+                ||  random1 == 11
+                ||  random1 == 12 {
+                //craete male goal
+                let goal = Goal()
+                goal.date = date
+                
+                let goalItem = GoalItem()
+                goalItem.typeName = "Sperm"
+                goalItem.testItemCid = "\(random1)"
+                goalItem.value = [0.1, 0.2, 0.3]
+                
+                goal.goalItem.append(goalItem)
+                
+                if random1 == 6
+                    ||  random1 == 7
+                    ||  random1 == 8
+                    ||  random1 == 9 {
+                    let goalItem = GoalItem()
+                    goalItem.typeName = "Mating"
+                    goalItem.testItemCid = "\(random1)"
+                    goalItem.value = [-1]
+                    goal.goalItem.append(goalItem)
+                }
+                
+                if random1 == 9
+                ||  random1 == 10
+                ||  random1 == 11
+                ||  random1 == 12 {
+                    goalItem.value = [0.1, 0.2, 0.3]
+                } else {
+                    goalItem.value = [-1, -1, -1]
+                }
+                
+                maleGoals.append(goal)
+           
+            }
+       
+            
+            let random2 = arc4random_uniform(11) + 5;
+            if random2 == 5
+                ||  random2 == 6
+                ||  random2 == 7
+                ||  random2 == 8{
+                
+                //craete female goal
+                let goal = Goal()
+                goal.date = date
+                
+                let random6 = arc4random_uniform(5);
+                if random6 == 0
+                    ||  random6 == 1
+                    ||  random6 == 2 {
+                    
+                    let goalItem = GoalItem.mkRandomFemaleGoalItem()
+                    goal.goalItem.append(goalItem)
+                }
+                
+                let random7 = arc4random_uniform(5);
+                if random7 == 0
+                    ||  random7 == 1
+                    ||  random7 == 2 {
+                    
+                    let goalItem = GoalItem.mkRandomFemaleGoalItem()
+                    goal.goalItem.append(goalItem)
+                }
+                
+                let random8 = arc4random_uniform(5);
+                if random8 == 0
+                    ||  random8 == 1
+                    ||  random8 == 2 {
+                    
+                    let goalItem = GoalItem.mkRandomFemaleGoalItem()
+                    goal.goalItem.append(goalItem)
+                }
+        
+                femaleGoals.append(goal)
+                
+            }
+        }
+
+        self.convertGoalsToBrItems(maleGoals: maleGoals, femaleGoals: femaleGoals, loginGender: self.currentLoginGender)
+
+    }
+    
     func renderTimerLine(num1:Int32, num2:Int32) {
         
-        self.allBrItemsForCell.removeAll()
         var allBrItems:[BRItem?] = []
-      
-        
+    
         print("all dates start")
         //exceptionn -> 14 ~ 20, 5~11
         
@@ -417,15 +533,254 @@ UITextFieldDelegate{
         
         print("startOfWeek:\(self.startOfWeek())")
         print("endOfWeek:\(self.endOfWeek())")
+        self.reloadByBrItems(allBrItems: allBrItems)
+    
+    }
+
+    @IBAction func scrollToTop(_ sender: Any) {
         
-//        var first7DateOfThisWeekCount = 0
-//        var firstDateOfThisWeek:Date? = nil
-//        var lastDateOfThisWeek:Date? = nil
-       
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+    }
+    
+    @IBAction func scrollTobottom(_ sender: Any) {
+        
+        let indexPath = IndexPath(row: (self.allBrItemsForCell.count - 1), section: 0)
+        self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+    }
+    
+    
+    @IBAction func moveToCurrentDate(_ sender: Any) {
+        
+        if self.currentIndex != -1 {
+            let indexPath = IndexPath(row: self.currentIndex, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+            
+        }
+    }
+    
+    func convertGoalsToBrItems(maleGoals:[Goal], femaleGoals:[Goal], loginGender:GenderType) {
+        
+        let isGetMale = self.maleBtn.isSelected
+        let isGetFemale = self.femaleBtn.isSelected
+        
+        print("isGetMale:\(isGetMale)")
+        print("isGetFemale:\(isGetFemale)")
+        
+        var maxDate:Date? = nil
+        var minDate:Date? = nil
+        
+        
+        if isGetMale {
+            //let maleGoalsCount = maleGoals.count
+            for (idx, goal ) in maleGoals.enumerated() {
+                let date = goal.date!
+                let goalItems = goal.goalItem
+                
+                if maxDate == nil {
+                    maxDate = date
+                } else {
+                    if date >  maxDate! {
+                        maxDate = date
+                    }
+                }
+                
+                if minDate == nil {
+                    minDate = date
+                } else {
+                    if date <  minDate! {
+                        minDate = date
+                    }
+                }
+
+                
+                if idx == 0 || (idx == maleGoals.count - 1) {
+                    let dateStr = self.formatLocalDate("male:\(idx)", date)
+                    print(dateStr)
+                }
+                
+                for (_, goalItem) in goalItems.enumerated() {
+                    let type = goalItem.typeName
+                    let values = goalItem.value
+                    var valueStr:String? = nil
+                    if type ==  "Sperm" {
+                        valueStr = "\(values[0]),\(values[1]),\(values[2])"
+                    } else {
+                        valueStr = "\(values[0])"
+                    }
+                    if idx == 0 || (idx == maleGoals.count - 1) {
+                        print("....\(type!):\(valueStr!)")
+                    }
+                    
+                }
+                
+            }
+            
+            
+        }
+        
+        if isGetFemale {
+            //let femaleGoalsCount = femaleGoals.count
+            for (idx, goal ) in femaleGoals.enumerated() {
+                let date = goal.date!
+                let goalItems = goal.goalItem
+                
+                if maxDate == nil {
+                    maxDate = date
+                } else {
+                    if date >  maxDate! {
+                        maxDate = date
+                    }
+                }
+                
+                if minDate == nil {
+                    minDate = date
+                } else {
+                    if date <  minDate! {
+                        minDate = date
+                    }
+                }
+
+                
+                if idx == 0 || (idx == femaleGoals.count - 1) {
+                    let dateStr = self.formatLocalDate("female:\(idx)", date)
+                    print(dateStr)
+                }
+                for (_, goalItem) in goalItems.enumerated() {
+                    let type = goalItem.typeName
+                    let values = goalItem.value
+                    let valueStr:String? = "\(values[0])"
+                    
+                    if idx == 0 || (idx == femaleGoals.count - 1) {
+                        print("....\(type!):\(valueStr!)")
+                    }
+                }
+                
+            }
+        }
+        
+        if maxDate != nil {
+            let dateStr = self.formatLocalDate("maxDate", maxDate!)
+            print(dateStr)
+        }
+        
+        if minDate != nil {
+            let dateStr = self.formatLocalDate("minDate", minDate!)
+            print(dateStr)
+            
+        }
+
+        var allBrItems:[BRItem?] = []
+        
+        if minDate == nil {
+            self.reloadByBrItems(allBrItems: allBrItems.reversed())
+            return
+        }
+        
+        var everyDate:Date = minDate!
+        var intervalDay = 0
+        
+        while everyDate <=  maxDate! {
+            everyDate = Date(timeInterval: TimeInterval(60*60*24*intervalDay), since: minDate!)
+            
+            let brItem = BRItem()
+            brItem.date = everyDate
+            if isGetMale {
+                for (_, goal) in maleGoals.enumerated() {
+                    let date = goal.date!
+                    
+                    let isSameDate = Calendar.current.isDate(date, inSameDayAs:everyDate)
+                    if isSameDate {
+                        let goalItems = goal.goalItem
+                        for (_, goalItem) in goalItems.enumerated() {
+                            let type = goalItem.typeName
+                            let values = goalItem.value
+                            
+                            let testItem = TestItem()
+                            testItem.gender = .male
+                            testItem.date = everyDate
+                            if type ==  "Sperm" {
+                                testItem.type = .Sperm
+                                testItem.sperm_concentration = values[0]
+                                testItem.sperm_motility = values[1]
+                                testItem.sperm_morpphology = values[2]
+                            } else {
+                                testItem.type = .Mating
+                                testItem.value = values[0]
+                            }
+                            brItem.addTestItem(testItem: testItem)
+                            
+                        }
+                    }
+                }
+
+            }
+            
+            if isGetFemale {
+                for (_, goal) in femaleGoals.enumerated() {
+                    let date = goal.date!
+                    
+                    let isSameDate = Calendar.current.isDate(date, inSameDayAs:everyDate)
+                    if isSameDate {
+                        let goalItems = goal.goalItem
+                        for (_, goalItem) in goalItems.enumerated() {
+                            let type = goalItem.typeName
+                            let values = goalItem.value
+                            
+                            let testItem = TestItem()
+                            testItem.gender = .female
+                            testItem.date = everyDate
+                            if type ==  "LH" {
+                                testItem.type = .LH
+                            } else if type ==  "HCG" {
+                                testItem.type = .HCG
+                            } else if type ==  "FSH" {
+                                testItem.type = .FSH
+                            } else if type ==  "Mating" {
+                                testItem.type = .Mating
+                            } else if type ==  "Temperature" {
+                                testItem.type = .Temperature
+                            }
+                            testItem.value = values[0]
+                            brItem.addTestItem(testItem: testItem)
+                            
+                        }
+                    }
+                }
+            }
+
+
+            allBrItems.append(brItem)
+            
+//            let dateStr = self.formatLocalDate("everyDate", everyDate)
+//            print(dateStr)
+            intervalDay += 1
+        }
+    
+        for (_, brItem ) in allBrItems.reversed().enumerated() {
+            let dateChk = brItem?.date
+            let dateStr = self.formatLocalDate("brItem", dateChk!)
+            print(dateStr)
+            let testItems = brItem?.testItems
+            for (_, testItem) in (testItems?.enumerated())! {
+                let type = testItem.type
+                let gender = testItem.gender
+                let testItemCid = testItem.gender
+                let value = testItem.value
+                print("....\(type!):\(gender!):\(testItemCid!):\(value)")
+            }
+        }
+            
+        self.reloadByBrItems(allBrItems: allBrItems.reversed())
+    }
+    
+    func reloadByBrItems(allBrItems:[BRItem?])  {
+        self.allBrItemsForCell.removeAll()
+        
         var thisWeekBrItems:[BRItem?] = []
         var futureBrItems:[BRItem?] = []
         var beforeBrItems:[BRItem?] = []
-   
         
         var allBrItemsReduceEmpty:[BRItem?] = []
         
@@ -456,9 +811,9 @@ UITextFieldDelegate{
         let the_1th_day_this_week =  Date().startOfWeek
         let the_2th_day_this_week =  Date(timeInterval: 60*60*24*1, since: the_1th_day_this_week!)
         let the_3th_day_this_week =  Date(timeInterval: 60*60*24*2, since: the_1th_day_this_week!)
-//        let the_4th_day_this_week =  Date(timeInterval: 60*60*24*3, since: the_1th_day_this_week!)
-//        let the_5th_day_this_week =  Date(timeInterval: 60*60*24*4, since: the_1th_day_this_week!)
-//        let the_6th_day_this_week =  Date(timeInterval: 60*60*24*5, since: the_1th_day_this_week!)
+        //        let the_4th_day_this_week =  Date(timeInterval: 60*60*24*3, since: the_1th_day_this_week!)
+        //        let the_5th_day_this_week =  Date(timeInterval: 60*60*24*4, since: the_1th_day_this_week!)
+        //        let the_6th_day_this_week =  Date(timeInterval: 60*60*24*5, since: the_1th_day_this_week!)
         let the_7th_day_this_week =  Date(timeInterval: 60*60*24*6, since: the_1th_day_this_week!)
         print("\(self.formatLocalDate("the_7th_day_this_week", the_7th_day_this_week))")
         
@@ -476,15 +831,15 @@ UITextFieldDelegate{
             
             if let dateChk = brItem?.date
             {
-
+                
                 let fallsBetween = (self.startOfWeek()...self.endOfWeek()).contains(dateChk)
                 
-            
+                
                 if dateChk > the_7th_day_this_week
                     && !fallsBetween {
                     //after this week
                     print("\(self.formatLocalDate("future date:", dateChk))")
-               
+                    
                     futureBrItems.append(brItem)
                     continue
                     //print("future: \(year)-\(month)-\(day)(\(weekDay))")
@@ -499,17 +854,17 @@ UITextFieldDelegate{
                     brItemPlaceHolder?.testItems = (brItem?.testItems)!
                     thisWeekBrItems[weekDayIndex] = brItemPlaceHolder
                     continue
-
+                    
                 }
                 
                 if dateChk < the_1th_day_this_week!
-                   && !fallsBetween {
+                    && !fallsBetween {
                     //before this week
                     beforeBrItems.append(brItem);
                     continue
                 }
-
-            
+                
+                
             }
             
         }
@@ -522,10 +877,10 @@ UITextFieldDelegate{
         
         for (idx, brItem ) in thisWeekBrItems.enumerated() {
             guard let date = brItem?.date else {
-                    print("thisWeekBrItems idx:\(idx) brItem.date:nil")
-                    continue
+                print("thisWeekBrItems idx:\(idx) brItem.date:nil")
+                continue
             }
-                 print("thisWeekBrItems idx:\(idx) brItem.date:\(self.formatLocalDate("", date))")
+            print("thisWeekBrItems idx:\(idx) brItem.date:\(self.formatLocalDate("", date))")
         }
         
         var thisWeekBrItemsRevrese:[BRItem?] = thisWeekBrItems.reversed()
@@ -533,8 +888,8 @@ UITextFieldDelegate{
         thisWeekBrItemsRevrese.insert(brItemVerticleLeft, at: 0)
         let brItemVerticleRight  = self.mkNoDateBrItem(.topRight)
         thisWeekBrItemsRevrese.append(brItemVerticleRight)
-
-   
+        
+        
         self.allBrItemsForCell.insert(contentsOf: thisWeekBrItemsRevrese, at: 0)
         
         for (_, brItem ) in futureBrItems.enumerated() {
@@ -545,8 +900,8 @@ UITextFieldDelegate{
             let testItemCount = brItem?.testItems.count
             print("\(dateStr) count:\(testItemCount!)")
         }
- 
-
+        
+        
         var beforeBrItemsPerChunkG = beforeBrItems.chunk(8).makeIterator()
         let modBeforeBrItems = beforeBrItems.count / 8
         
@@ -557,7 +912,7 @@ UITextFieldDelegate{
             var beforeBrItemsPerChunkReOrder:[BRItem?] = []
             let beforeBrItemsPerChunkCount = beforeBrItemsPerChunk.count
             let notEnough = 8 - beforeBrItemsPerChunkCount
-       
+            
             //reverse
             if groupIndex % 2 == 0 {
                 emptyRowIsR = true
@@ -568,10 +923,10 @@ UITextFieldDelegate{
                     
                     for _ in stride(from: 1, through: notEnough, by: 1) {
                         let brItem = self.mkNoDateBrItem(.none)
-                      beforeBrItemsPerChunkReOrder.insert(brItem, at: 0)
+                        beforeBrItemsPerChunkReOrder.insert(brItem, at: 0)
                     }
                 }
-            //normal
+                //normal
             } else {
                 emptyRowIsR = false
                 beforeBrItemsPerChunkReOrder = beforeBrItemsPerChunk
@@ -615,7 +970,7 @@ UITextFieldDelegate{
                 } else {
                     if idx == 0 {
                         let brItem = self.mkNoDateBrItem(.bottomLeft)
-                    
+                        
                         notEmptyRow.insert(brItem, at: 0)
                     }
                     
@@ -635,7 +990,7 @@ UITextFieldDelegate{
             
             groupIndex += 1
         }
-
+        
         let futureBrItemsReverse = futureBrItems.reversed()
         var futureBrItemsReversePerChunkG = futureBrItemsReverse.chunk(8).makeIterator()
         let modfutureBrItemsReverse = futureBrItemsReverse.count / 8
@@ -655,7 +1010,7 @@ UITextFieldDelegate{
                 isLastRow = true
             }
             
-             //normal
+            //normal
             if groupIndexFuture % 2 == 0 {
                 emptyRowIsR = false
                 futureBrItemsPerChunkReOrder = futureBrItemsReversePerChunk
@@ -667,7 +1022,7 @@ UITextFieldDelegate{
                         futureBrItemsPerChunkReOrder.append(brItem)
                     }
                 }
-            //reverse
+                //reverse
             } else {
                 emptyRowIsR = true
                 futureBrItemsPerChunkReOrder = futureBrItemsReversePerChunk.reversed()
@@ -679,7 +1034,7 @@ UITextFieldDelegate{
                         futureBrItemsPerChunkReOrder.insert(brItem, at: 0)
                     }
                 }
-            
+                
             }
             let emptyRowR = self.mkEmptyRowBrItems(isRightVertical: emptyRowIsR)
             self.allBrItemsForCell.insert(contentsOf: emptyRowR, at: 0)
@@ -697,7 +1052,7 @@ UITextFieldDelegate{
                 if groupIndexFuture % 2 == 0 {
                     if idx == 0 {
                         let brItem = self.mkNoDateBrItem(.topLeft)
-
+                        
                         notEmptyRow.insert(brItem, at: 0)
                     }
                     
@@ -710,7 +1065,7 @@ UITextFieldDelegate{
                         notEmptyRow.append(brItem)
                     }
                     
-                //reverse
+                    //reverse
                 } else {
                     if idx == 0 {
                         let brItem = self.mkNoDateBrItem(.bottomLeft)
@@ -724,20 +1079,20 @@ UITextFieldDelegate{
                     if idx == (futureBrItemsPerChunkReOrderCount - 1) {
                         let brItem = self.mkNoDateBrItem(.topRight)
                         //the last row
-//                        if(groupIndex == modfutureBrItemsReverse) {
-//                            brItem.cellGuildLine = .none
-//                        }
+                        //                        if(groupIndex == modfutureBrItemsReverse) {
+                        //                            brItem.cellGuildLine = .none
+                        //                        }
                         notEmptyRow.append(brItem)
                     }
                     
                 }
                 
                 if brItem?.date != nil {
-
+                    
                     let celStr = self.formatLocalDate("after current week date groupIndex:\(groupIndexFuture): ", (brItem?.date!)!)
                     let testItemCount = brItem?.testItems.count
                     print("\(celStr) count:\(testItemCount!) revere:\(emptyRowIsR) isLastRow: \(isLastRow)")
-
+                    
                 } else {
                     print("after current week date groupIndex:\(groupIndexFuture):  empty guid:\(String(describing: brItem?.cellGuildLine)) revere:\(emptyRowIsR) isLastRow: \(isLastRow)" )
                 }
@@ -765,7 +1120,7 @@ UITextFieldDelegate{
                             print("")
                         }
                     } else if(emptyRowIsR == true) {
-                    
+                        
                         switch notEnough {
                         case 7:
                             adjustCellArrangement = .reverse_true_empty_7
@@ -797,7 +1152,7 @@ UITextFieldDelegate{
         
         print("adjustCellArrangement:\(adjustCellArrangement)")
         self.adjustCellArrangement(pattern: adjustCellArrangement)
-   
+        
         
         //最後補上一列空白的，修正原本最右下角cell，位置偏差
         for _ in stride(from: 1, through: self.numberOfColumns, by: 1) {
@@ -815,40 +1170,16 @@ UITextFieldDelegate{
                 }
             }
         }
-       
+        
         self.collectionView.reloadData()
         //(self.allBrItemsForCell.count - 1)
-        
-    }
-
-    @IBAction func scrollToTop(_ sender: Any) {
-        
-        
-        let indexPath = IndexPath(row: 0, section: 0)
-        self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-    }
     
-    @IBAction func scrollTobottom(_ sender: Any) {
-        
-        let indexPath = IndexPath(row: (self.allBrItemsForCell.count - 1), section: 0)
-        self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
-    
-    
-    @IBAction func moveToCurrentDate(_ sender: Any) {
-        
-        if self.currentIndex != -1 {
-            let indexPath = IndexPath(row: self.currentIndex, section: 0)
-            self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-            
-        }
-    }
-    
     
     static func mkRandomTestItem() -> TestItem {
     
         let testItem = TestItem()
-        testItem.gender = "peter@bonraybio.com"
+        testItem.gender = .male
         testItem.type = TestItemType.random()
         
         let random = arc4random_uniform(11) + 5;
@@ -871,7 +1202,7 @@ UITextFieldDelegate{
                 ) {
                 
                 if(testItem.type == .Temperature){
-                    testItem.gender = "mary@bonraybio.com"
+                    testItem.gender = .female
                 }
               
                 let randomNum = arc4random_uniform(3)
@@ -881,7 +1212,7 @@ UITextFieldDelegate{
                     testItem.value = 0
                 }
             } else {
-                testItem.gender = "mary@bonraybio.com"
+                testItem.gender = .female
                 testItem.value = 0.8
             }
         }

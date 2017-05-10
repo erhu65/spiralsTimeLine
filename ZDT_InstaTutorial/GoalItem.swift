@@ -15,10 +15,48 @@ import Foundation
 //case Mating
 //case Temperature
 
-class Goalitem {
+class GoalItem {
     
-    var testItemCid:String? = nil
+    var testItemCid:String? = "1"
     var typeName:String? =  nil
-    var value:Float = -1.0
+    var value:[Float] = [-1.0]
+
+    static func mkRandomFemaleGoalItem() -> GoalItem {
+        
+        let goalItem = GoalItem()
+        goalItem.testItemCid = "0000"
+        
+        let diceRoll = Int(arc4random_uniform(5) + 1)
+        
+        switch diceRoll {
+        case 1:
+            goalItem.typeName = "LH"
+        case 2:
+            goalItem.typeName = "HCG"
+        case 3:
+            goalItem.typeName = "FSH"
+        case 4:
+            goalItem.typeName = "Temperature"
+        case 5:
+            goalItem.typeName = "Mating"
+        default:
+            goalItem.typeName = "Temperature"
+        }
+        
+        let random = arc4random_uniform(11) + 5;
+        if random == 5
+            ||  random == 6
+            ||  random == 7
+            ||  random == 8
+            ||  random == 9
+            ||  random == 10
+            ||  random == 11{
+            
+            goalItem.value = [0.5]
+        }
+        
     
+        return goalItem
+    }
+
 }

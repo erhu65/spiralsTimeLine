@@ -134,6 +134,8 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                     self.show2SubCircle()
                 case 4:
                      self.show3SubCircle()
+                case 5,6,7,8,9,10:
+                    self.show3SubCircle()
                 default:
                     self.hideAllSubCircle()
                 }

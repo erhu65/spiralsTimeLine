@@ -76,10 +76,50 @@
                                             <action selector="moveToCurrentDate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DmU-6y-eAu"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbL-XU-jVd" userLabel="topVContainer">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MONDAY, NOVEMBER 13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLT-Xm-hjH">
+                                                <rect key="frame" x="8" y="0.0" width="193" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Goal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wzg-lg-Hhc">
+                                                <rect key="frame" x="8" y="29" width="92" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQ4-ls-eUx">
+                                                <rect key="frame" x="261" y="24" width="33" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="male"/>
+                                                <connections>
+                                                    <action selector="filterAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wkH-4u-sNa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VF2-vh-I2p">
+                                                <rect key="frame" x="307" y="24" width="46" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="female"/>
+                                                <connections>
+                                                    <action selector="filterAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XgE-fD-tH9"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.58845980769999995" green="0.83192078680000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="gbL-XU-jVd" firstAttribute="top" secondItem="Nvo-Uu-eCN" secondAttribute="top" id="1OJ-tB-8f4"/>
+                                    <constraint firstAttribute="bottom" secondItem="gbL-XU-jVd" secondAttribute="bottom" id="7h1-mG-Wak"/>
+                                    <constraint firstItem="gbL-XU-jVd" firstAttribute="leading" secondItem="Nvo-Uu-eCN" secondAttribute="leading" id="GQi-PB-9JS"/>
                                     <constraint firstAttribute="height" constant="60" id="S1W-5S-dlt"/>
+                                    <constraint firstAttribute="trailing" secondItem="gbL-XU-jVd" secondAttribute="trailing" id="W5A-Bx-MhZ"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZVP-al-Xo5">
@@ -351,6 +391,8 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="ZVP-al-Xo5" id="4Sq-on-acO"/>
+                        <outlet property="femaleBtn" destination="VF2-vh-I2p" id="uQo-4P-kfm"/>
+                        <outlet property="maleBtn" destination="wQ4-ls-eUx" id="F0X-32-nZL"/>
                         <outlet property="popLb" destination="Lgb-wE-jcO" id="f4Y-cK-yvM"/>
                         <outlet property="popV" destination="ddp-dG-Y7s" id="6SI-Yz-GhP"/>
                         <outlet property="tf1" destination="zi1-DZ-ze3" id="vyf-DO-Ksz"/>

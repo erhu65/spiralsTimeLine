@@ -35,7 +35,7 @@ import Foundation
 class TestItem {
     
     var testItemCid:String? = nil
-    var gender:String? = nil
+    var gender:GenderType? = nil
     var priority:Int = 0
     var type:TestItemType? {
         
