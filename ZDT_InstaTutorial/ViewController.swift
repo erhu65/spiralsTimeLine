@@ -585,13 +585,15 @@ UITextFieldDelegate{
         let cellFrameInSuperviewSizeWidth = cellFrameInSuperview.size.width
         
         var anchorXY = CGPoint(x: (cellFrameInSuperview.origin.x + cellFrameInSuperviewSizeWidth / 2), y: cellFrameInSuperview.origin.y)
+        anchorXY.y -= 10
+        
         self.popV.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
         self.popV.center = anchorXY
         //print("testValStr: \(testValStr)")
 
         if (self.topV.frame.intersects(self.popV.frame)) {
             self.popV.layer.anchorPoint = CGPoint(x: 0.5, y: 0.0)
-            anchorXY.y += 30
+            anchorXY.y += 50
             //print("intersect: anchorXY.y: \(anchorXY.y)")
             self.popV.center = anchorXY
         }
