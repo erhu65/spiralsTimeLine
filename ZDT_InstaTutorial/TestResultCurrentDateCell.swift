@@ -65,7 +65,7 @@ class TestResultCurrentDateCell: UICollectionViewCell {
     var brItem:BRItem? {
         
         didSet{
-            let size:CGFloat = 25
+            let size:CGFloat = 30
             self.circleV?.layer.cornerRadius = size / 2
             self.circleV?.layer.borderWidth = 2.0
             self.circleV?.layer.backgroundColor = UIColor.clear.cgColor

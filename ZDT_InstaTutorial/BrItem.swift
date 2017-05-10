@@ -10,12 +10,13 @@ import Foundation
 
 
 class BRItem {
+    
     var index:Int = -1
     var serial:Int = -1
     var testItems:[TestItem] = []
     var date:Date? = nil
     var cellGuildLine:CellGuildLine?
-    
+    var isEmptyRow:Bool = false
     
     init() {
         
@@ -56,6 +57,15 @@ class BRItem {
             let testItem = ViewController.mkRandomTestItem()
             testItems.append(testItem)
         }
+        
+        let random4 = arc4random_uniform(5);
+        if random4 == 0
+            ||  random4 == 1
+        {
+            testItems = []
+        }
+        
+        
         
     }
     

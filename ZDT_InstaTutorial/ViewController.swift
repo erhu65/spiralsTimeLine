@@ -8,16 +8,6 @@
 
 import UIKit
 
-enum CellGuildLine: UInt32 {
-    case none
-    case noneEmpty
-    case topLeft
-    case bottomLeft
-    case topRight
-    case bottomRight
-    case horizontal
-    case vertical
-}
 
 enum AdjustCellArrangement: UInt32 {
     case reverse_false_empty_7
@@ -110,8 +100,11 @@ UITextFieldDelegate{
         } else {
             itemHeight = itemWidth;
         }
-        
-        itemHeight += 14
+        if (barItem?.isEmptyRow)! {
+            //itemHeight -= 10
+        } else {
+            itemHeight += 18
+        }
         return CGSize(width: (itemWidth + 1), height: itemHeight)
     
     }
@@ -285,7 +278,7 @@ UITextFieldDelegate{
 
         if (self.topV.frame.intersects(self.popV.frame)) {
             self.popV.layer.anchorPoint = CGPoint(x: 0.5, y: 0.0)
-            anchorXY.y += 30
+            anchorXY.y += 40
             //print("intersect: anchorXY.y: \(anchorXY.y)")
             self.popV.center = anchorXY
         }
@@ -374,7 +367,6 @@ UITextFieldDelegate{
     func renderTimerLine(num1:Int32, num2:Int32) {
         
         self.allBrItemsForCell.removeAll()
-        //var brItems:[BRItem?] = []
         var allBrItems:[BRItem?] = []
       
         
@@ -408,6 +400,11 @@ UITextFieldDelegate{
             let brItem = BRItem()
             brItem.date = date
             allBrItems.append(brItem)
+            let testItemCount = brItem.testItems.count
+            
+            let str = self.formatLocalDate("before testItemCount:\(testItemCount)", date)
+            print(str)
+            
             
             //Thre first date should have at least one testItem
             if beforeCount == num2 {
@@ -727,9 +724,9 @@ UITextFieldDelegate{
                     if idx == (futureBrItemsPerChunkReOrderCount - 1) {
                         let brItem = self.mkNoDateBrItem(.topRight)
                         //the last row
-                        if(groupIndex == modfutureBrItemsReverse) {
-                            brItem.cellGuildLine = .none
-                        }
+//                        if(groupIndex == modfutureBrItemsReverse) {
+//                            brItem.cellGuildLine = .none
+//                        }
                         notEmptyRow.append(brItem)
                     }
                     
@@ -935,6 +932,7 @@ UITextFieldDelegate{
             } else {
                 brItem.cellGuildLine = .none
             }
+            brItem.isEmptyRow = true
             brItems.append(brItem)
         }
         return brItems
@@ -962,6 +960,7 @@ UITextFieldDelegate{
             let brItem20 = self.allBrItemsForCell[20]
             let brItem21 = self.allBrItemsForCell[21]
             let brItem22 = self.allBrItemsForCell[22]
+            let brItem29 = self.allBrItemsForCell[29]
             
             brItem5?.testItems = (brItem1?.testItems)!
             brItem5?.date = brItem1?.date
@@ -994,6 +993,7 @@ UITextFieldDelegate{
             brItem6?.cellGuildLine = .noneEmpty
             brItem7?.cellGuildLine = .noneEmpty
             brItem8?.cellGuildLine = .noneEmpty
+            brItem29?.cellGuildLine = .topRight
             
         case .reverse_false_empty_6:
             let brItem0 = self.allBrItemsForCell[0]
@@ -1009,6 +1009,7 @@ UITextFieldDelegate{
             let brItem11 = self.allBrItemsForCell[11]
             let brItem20 = self.allBrItemsForCell[20]
             let brItem21 = self.allBrItemsForCell[21]
+            let brItem29 = self.allBrItemsForCell[29]
             
             brItem4?.testItems = (brItem2?.testItems)!
             brItem4?.date = brItem2?.date
@@ -1050,7 +1051,7 @@ UITextFieldDelegate{
             brItem6?.cellGuildLine = .noneEmpty
             brItem7?.cellGuildLine = .noneEmpty
             brItem8?.cellGuildLine = .noneEmpty
-        
+            brItem29?.cellGuildLine = .topRight
         case .reverse_false_empty_5:
             let brItem0 = self.allBrItemsForCell[0]
             let brItem1 = self.allBrItemsForCell[1]
@@ -1065,6 +1066,7 @@ UITextFieldDelegate{
             let brItem11 = self.allBrItemsForCell[11]
             let brItem20 = self.allBrItemsForCell[20]
             let brItem21 = self.allBrItemsForCell[21]
+            let brItem29 = self.allBrItemsForCell[29]
             
             brItem5?.testItems = (brItem3?.testItems)!
             brItem5?.date = brItem3?.date
@@ -1109,17 +1111,21 @@ UITextFieldDelegate{
             brItem6?.cellGuildLine = .noneEmpty
             brItem7?.cellGuildLine = .noneEmpty
             brItem8?.cellGuildLine = .noneEmpty
+            brItem29?.cellGuildLine = .topRight
             
         case .reverse_false_empty_4:
             let brItem5 = self.allBrItemsForCell[5]
             let brItem6 = self.allBrItemsForCell[6]
             let brItem7 = self.allBrItemsForCell[7]
             let brItem8 = self.allBrItemsForCell[8]
-
+            let brItem29 = self.allBrItemsForCell[29]
+            
             brItem5?.cellGuildLine = .noneEmpty
             brItem6?.cellGuildLine = .noneEmpty
             brItem7?.cellGuildLine = .noneEmpty
             brItem8?.cellGuildLine = .noneEmpty
+            brItem29?.cellGuildLine = .topRight
+            
             
          case .reverse_false_empty_3:
             let brItem6 = self.allBrItemsForCell[6]
@@ -1571,6 +1577,7 @@ UITextFieldDelegate{
             let brItem20 = self.allBrItemsForCell[20]
             let brItem21 = self.allBrItemsForCell[21]
             let brItem22 = self.allBrItemsForCell[22]
+            let brItem29 = self.allBrItemsForCell[29]
             
             brItem4?.testItems = (brItem21?.testItems)!
             brItem4?.date = brItem21?.date
@@ -1604,6 +1611,7 @@ UITextFieldDelegate{
             brItem6?.cellGuildLine = .noneEmpty
             brItem7?.cellGuildLine = .noneEmpty
             brItem8?.cellGuildLine = .noneEmpty
+            brItem29?.cellGuildLine = .topRight
         default:
             print("XXX")
         }

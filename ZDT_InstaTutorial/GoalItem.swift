@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+//case Sperm
+//case LH
+//case HCG
+//case FSH
+//case Mating
+//case Temperature
+
+class Goalitem {
+    
+    var testItemCid:String? = nil
+    var typeName:String? =  nil
+    var value:Float = -1.0
+    
+}

@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+
+class Goal {
+    var date:Date? = nil
+    var testItems:[Goalitem] = []
+}
+
+
+    

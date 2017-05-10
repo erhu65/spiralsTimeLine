@@ -8,6 +8,17 @@
 
 import UIKit
 
+enum CellGuildLine: UInt32 {
+    case none
+    case noneEmpty
+    case topLeft
+    case bottomLeft
+    case topRight
+    case bottomRight
+    case horizontal
+    case vertical
+}
+
 class TestResultCollectionViewCell: UICollectionViewCell {
 
     
@@ -72,7 +83,7 @@ class TestResultCollectionViewCell: UICollectionViewCell {
         
         didSet{
 
-            let size:CGFloat = 25
+            let size:CGFloat = 30
             self.circleV?.layer.cornerRadius = size / 2
             self.circleV?.layer.borderWidth = 2.0
             self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
