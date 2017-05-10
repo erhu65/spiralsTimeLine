@@ -99,9 +99,13 @@ class TestResultCurrentDateCell: UICollectionViewCell {
             if let date =  brItem?.date {
                 
                 self.circleV?.isHidden = false
-                let calendar = Calendar.current
-                let day = calendar.component(.day, from: date)
-                self.dateLb.text = "\(day)"
+            
+                let dayTimePeriodFormatter = DateFormatter()
+                dayTimePeriodFormatter.dateFormat = "MMM dd"
+                
+                let dateString = dayTimePeriodFormatter.string(from: date)
+                
+                self.dateLb.text = dateString
                 
                 let testItemsCount =  brItem?.testItems.count
                 

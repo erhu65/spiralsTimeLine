@@ -31,17 +31,17 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="jaa-U6-72e" customClass="TestResultCollectionViewCell" customModule="ZDT_InstaTutorial" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yjj-Rl-jcy" userLabel="guidImv">
-                                                    <rect key="frame" x="-2" y="-2" width="54" height="44"/>
+                                                    <rect key="frame" x="-2" y="-2" width="54" height="58"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FXe-V0-t8M">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="54"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StK-eZ-61o">
                                                     <rect key="frame" x="0.0" y="-5" width="42" height="21"/>
@@ -51,7 +51,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ENN-I4-6SF" userLabel="circleV">
-                                                    <rect key="frame" x="12.5" y="4.5" width="25" height="25"/>
+                                                    <rect key="frame" x="12.5" y="11.5" width="25" height="25"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="ENN-I4-6SF" secondAttribute="height" multiplier="1:1" id="8ej-vV-Mfo"/>
@@ -60,13 +60,22 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8a-fc-t0C">
-                                                    <rect key="frame" x="12.5" y="5" width="25.5" height="25"/>
+                                                    <rect key="frame" x="12.5" y="12" width="25.5" height="25"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRc-oI-RbM" userLabel="monthLb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="10"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="10" id="JW2-ue-FFj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" red="0.54551845788955688" green="0.54594862461090088" blue="0.54558509588241577" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ous-Qw-0Bk" userLabel="subCirclesContainer">
-                                                    <rect key="frame" x="0.0" y="34" width="50" height="6"/>
+                                                    <rect key="frame" x="0.0" y="48" width="50" height="6"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JhW-nQ-sXR" userLabel="sub1Circle">
                                                             <rect key="frame" x="7" y="0.0" width="6" height="6"/>
@@ -113,6 +122,7 @@
                                             <constraint firstItem="r8a-fc-t0C" firstAttribute="width" secondItem="ENN-I4-6SF" secondAttribute="width" id="FJi-vx-Uuf"/>
                                             <constraint firstAttribute="bottom" secondItem="FXe-V0-t8M" secondAttribute="bottom" id="FSc-fc-ML8"/>
                                             <constraint firstItem="ous-Qw-0Bk" firstAttribute="leading" secondItem="jaa-U6-72e" secondAttribute="leading" id="LC4-fo-8nL"/>
+                                            <constraint firstAttribute="trailing" secondItem="bRc-oI-RbM" secondAttribute="trailing" id="MdQ-9E-xty"/>
                                             <constraint firstItem="r8a-fc-t0C" firstAttribute="centerX" secondItem="ENN-I4-6SF" secondAttribute="centerX" id="RyB-5L-phm"/>
                                             <constraint firstItem="FXe-V0-t8M" firstAttribute="leading" secondItem="jaa-U6-72e" secondAttribute="leading" id="SZY-6b-n8E"/>
                                             <constraint firstItem="ous-Qw-0Bk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ENN-I4-6SF" secondAttribute="bottom" id="W5d-m3-gjq"/>
@@ -123,17 +133,20 @@
                                             <constraint firstItem="Yjj-Rl-jcy" firstAttribute="leading" secondItem="jaa-U6-72e" secondAttribute="leading" constant="-2" id="dqQ-DK-laq"/>
                                             <constraint firstItem="r8a-fc-t0C" firstAttribute="centerY" secondItem="ENN-I4-6SF" secondAttribute="centerY" id="lha-9a-cbb"/>
                                             <constraint firstItem="Yjj-Rl-jcy" firstAttribute="top" secondItem="jaa-U6-72e" secondAttribute="top" constant="-2" id="oYK-0c-LhN"/>
+                                            <constraint firstItem="bRc-oI-RbM" firstAttribute="top" secondItem="jaa-U6-72e" secondAttribute="top" id="pjk-YJ-Zn4"/>
                                             <constraint firstAttribute="trailing" secondItem="ous-Qw-0Bk" secondAttribute="trailing" id="s53-M4-jJO"/>
+                                            <constraint firstItem="bRc-oI-RbM" firstAttribute="leading" secondItem="jaa-U6-72e" secondAttribute="leading" id="srL-XJ-PVI"/>
                                             <constraint firstAttribute="bottom" secondItem="Yjj-Rl-jcy" secondAttribute="bottom" constant="-2" id="tRF-iz-c2u"/>
                                             <constraint firstItem="FXe-V0-t8M" firstAttribute="top" secondItem="jaa-U6-72e" secondAttribute="top" id="vfl-io-8Pd"/>
                                             <constraint firstAttribute="trailing" secondItem="FXe-V0-t8M" secondAttribute="trailing" id="wVi-lp-Vn2"/>
                                         </constraints>
-                                        <size key="customSize" width="50" height="40"/>
+                                        <size key="customSize" width="50" height="60"/>
                                         <connections>
                                             <outlet property="circleV" destination="ENN-I4-6SF" id="orI-iy-ZKG"/>
                                             <outlet property="dateLb" destination="r8a-fc-t0C" id="34h-L0-lzb"/>
                                             <outlet property="guidImv" destination="Yjj-Rl-jcy" id="Y1U-ht-RzD"/>
                                             <outlet property="iconImv" destination="FXe-V0-t8M" id="3Po-B6-k6z"/>
+                                            <outlet property="monthLb" destination="bRc-oI-RbM" id="FAz-cX-urL"/>
                                             <outlet property="serialLb" destination="StK-eZ-61o" id="dgg-0u-h94"/>
                                             <outlet property="sub1Circle" destination="JhW-nQ-sXR" id="9ld-5e-o9K"/>
                                             <outlet property="sub1CircleCenterX" destination="bJz-Sy-dqR" id="VRn-Gj-MhT"/>
@@ -145,10 +158,10 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TestResultCurrentDateCell" id="Fdr-7C-sKF" customClass="TestResultCurrentDateCell" customModule="ZDT_InstaTutorial" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="0.0" width="80" height="40"/>
+                                        <rect key="frame" x="50" y="0.0" width="80" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guidHorizontal" translatesAutoresizingMaskIntoConstraints="NO" id="sjP-JB-VUZ" userLabel="guidImv">
@@ -232,7 +245,7 @@
                                             <constraint firstAttribute="bottom" secondItem="IbX-BR-R9j" secondAttribute="bottom" constant="5" id="qQ5-xK-v6g"/>
                                             <constraint firstItem="XTa-gx-FlW" firstAttribute="centerX" secondItem="Fdr-7C-sKF" secondAttribute="centerX" id="tM3-9p-nVY"/>
                                         </constraints>
-                                        <size key="customSize" width="80" height="40"/>
+                                        <size key="customSize" width="80" height="60"/>
                                         <connections>
                                             <outlet property="circleV" destination="XTa-gx-FlW" id="5KX-EW-DA9"/>
                                             <outlet property="dateLb" destination="IbX-BR-R9j" id="pag-Zn-R66"/>

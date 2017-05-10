@@ -26,7 +26,7 @@ class TestResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sub2CircleCenterX: NSLayoutConstraint!
     @IBOutlet weak var sub3CircleCenterX: NSLayoutConstraint!
     
-    var account:String? = nil
+    @IBOutlet weak var monthLb: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
@@ -94,7 +94,7 @@ class TestResultCollectionViewCell: UICollectionViewCell {
         
             self.circleV?.isHidden = true
             self.serialLb.isHidden = true
-
+            self.monthLb.isHidden = true
             
             let color_sperm = UIColor.init(red: 247/255.0, green: 176/255.0, blue: 41/255.0, alpha: 1)
             let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
@@ -110,6 +110,7 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                 let calendar = Calendar.current
                 let day = calendar.component(.day, from: date)
                 self.dateLb.text = "\(day)"
+                
 
                 let testItemsCount =  brItem?.testItems.count
                 
@@ -127,6 +128,15 @@ class TestResultCollectionViewCell: UICollectionViewCell {
                 }
                 
                 if  testItemsCount! > 0 {
+                    
+                    if day == 1 {
+                        self.monthLb.isHidden = false
+                        let dayTimePeriodFormatter = DateFormatter()
+                        dayTimePeriodFormatter.dateFormat = "MMM"
+                        let monthStr = dayTimePeriodFormatter.string(from: date)
+                        self.monthLb.text = monthStr
+                    }
+                    
   
                     for (idx, testItem) in (brItem?.testItems.enumerated())! {
                         var color_current = UIColor.clear
