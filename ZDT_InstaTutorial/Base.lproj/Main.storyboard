@@ -316,7 +316,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgb-wE-jcO" userLabel="popLb">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -342,6 +342,7 @@
                         <outlet property="popV" destination="ddp-dG-Y7s" id="6SI-Yz-GhP"/>
                         <outlet property="tf1" destination="zi1-DZ-ze3" id="vyf-DO-Ksz"/>
                         <outlet property="tf2" destination="H7W-Ba-bLM" id="UTY-vt-uX3"/>
+                        <outlet property="topV" destination="Nvo-Uu-eCN" id="CxT-s9-JIi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -348,6 +348,8 @@ class BRItem {
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
 UITextFieldDelegate{
 
+    
+    @IBOutlet weak var topV: UIView!
     @IBOutlet weak var popV: UIView!
     @IBOutlet weak var popLb: UILabel!
     
@@ -510,18 +512,7 @@ UITextFieldDelegate{
             return
         }
         
-        let  attributes = collectionView.layoutAttributesForItem(at: indexPath)
-        
-        let cellRect = attributes?.frame;
-        
-        let cellFrameInSuperview = collectionView.convert(cellRect!, to: collectionView.superview)
-        
-        self.popV.isHidden = false
-        self.popV.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
-        let cellFrameInSuperviewSizeWidth = cellFrameInSuperview.size.width
-        
-        let anchorXY = CGPoint(x: (cellFrameInSuperview.origin.x + cellFrameInSuperviewSizeWidth / 2), y: cellFrameInSuperview.origin.y)
-        self.popV.center = anchorXY
+
         //let count = barItem?.testItems.count
         var testValStrs:[String] = []
         
@@ -564,9 +555,47 @@ UITextFieldDelegate{
         let testValStr = testValStrs.joined(separator: "\n")
         
         //x:\(cellFrameInSuperview.origin.x),y:\(cellFrameInSuperview.origin.y
-    
+        self.popLb.sizeToFit()
+        self.popV.sizeToFit()
+        
         self.popLb.text = testValStr
-         print("testValStr: \(testValStr)")
+
+        self.popV.isHidden = false
+
+        let font = UIFont (name: "HelveticaNeue-Light", size: 12)
+        var dynamicHieght = testValStr.height(withConstrainedWidth: 100, font: font!)
+        dynamicHieght += 30
+        var  popVRect = self.popV.frame;
+        var  popLbRect = self.popLb.frame;
+        popVRect.size.width = 100;
+        popVRect.size.height = dynamicHieght;
+        popLbRect.size.width = 100;
+        popLbRect.size.height = dynamicHieght;
+        
+        self.popLb.frame = popLbRect;
+        self.popV.frame = popVRect;
+        
+        
+        let attributes = collectionView.layoutAttributesForItem(at: indexPath)
+        
+        let cellRect = attributes?.frame;
+        
+        let cellFrameInSuperview = collectionView.convert(cellRect!, to: collectionView.superview)
+        
+        let cellFrameInSuperviewSizeWidth = cellFrameInSuperview.size.width
+        
+        var anchorXY = CGPoint(x: (cellFrameInSuperview.origin.x + cellFrameInSuperviewSizeWidth / 2), y: cellFrameInSuperview.origin.y)
+        self.popV.layer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+        self.popV.center = anchorXY
+        //print("testValStr: \(testValStr)")
+
+        if (self.topV.frame.intersects(self.popV.frame)) {
+            self.popV.layer.anchorPoint = CGPoint(x: 0.5, y: 0.0)
+            anchorXY.y += 30
+            //print("intersect: anchorXY.y: \(anchorXY.y)")
+            self.popV.center = anchorXY
+        }
+        
 
     }
 
@@ -1931,5 +1960,15 @@ public struct ChunkSeq<S: Sequence> : Sequence {
 public extension Sequence {
     func chunk(_ n: Int) -> ChunkSeq<Self> {
         return ChunkSeq(seq: self, n: n)
+    }
+}
+
+
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        
+        return boundingBox.height
     }
 }
