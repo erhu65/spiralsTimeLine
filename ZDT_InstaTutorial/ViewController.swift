@@ -10,8 +10,8 @@ import UIKit
 
 
 enum GenderType: UInt32 {
-    case male = 0
-    case female = 1
+    case male = 1
+    case female = 0
 
 }
 
@@ -57,7 +57,7 @@ UITextFieldDelegate{
     @IBOutlet weak var femaleBtn: UIButton!
     var isMaleBtnHighLight:Bool = false
     var isFemaleBtnHighLight:Bool = false
-    var currentLoginGender:GenderType = .female
+    var currentLoginGender:GenderType = .male
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ UITextFieldDelegate{
         collectionView.backgroundColor = .black
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -378,7 +378,6 @@ UITextFieldDelegate{
     @IBAction func filterAction(_ sender: UIButton) {
         self.popV.isHidden = true
         sender.isSelected = !sender.isSelected;
-        //let filterType = GenderType(rawValue: UInt32(sender.tag))!
 
         
         var maleGoals:[Goal] = []
@@ -478,7 +477,7 @@ UITextFieldDelegate{
             }
         }
 
-        self.convertGoalsToBrItems(maleGoals: maleGoals, femaleGoals: femaleGoals, loginGender: self.currentLoginGender)
+        self.render(maleGoals: maleGoals, femaleGoals: femaleGoals, loginGender: self.currentLoginGender)
 
     }
     
@@ -560,7 +559,7 @@ UITextFieldDelegate{
         }
     }
     
-    func convertGoalsToBrItems(maleGoals:[Goal], femaleGoals:[Goal], loginGender:GenderType) {
+    func render(maleGoals:[Goal], femaleGoals:[Goal], loginGender:GenderType) {
         
         let isGetMale = self.maleBtn.isSelected
         let isGetFemale = self.femaleBtn.isSelected
@@ -1172,6 +1171,12 @@ UITextFieldDelegate{
         }
         
         self.collectionView.reloadData()
+        
+        if self.currentIndex != -1 {
+            let indexPath = IndexPath(row: self.currentIndex, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+            
+        }
         //(self.allBrItemsForCell.count - 1)
     
     }
