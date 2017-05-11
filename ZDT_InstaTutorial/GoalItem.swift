@@ -13,7 +13,7 @@ import Foundation
 //case HCG
 //case FSH
 //case Mating
-//case Temperature
+//case BBT
 
 class GoalItem {
     
@@ -36,11 +36,11 @@ class GoalItem {
         case 3:
             goalItem.typeName = "FSH"
         case 4:
-            goalItem.typeName = "Temperature"
+            goalItem.typeName = "BBT"
         case 5:
             goalItem.typeName = "Mating"
         default:
-            goalItem.typeName = "Temperature"
+            goalItem.typeName = "BBT"
         }
         
         let random = arc4random_uniform(11) + 5;

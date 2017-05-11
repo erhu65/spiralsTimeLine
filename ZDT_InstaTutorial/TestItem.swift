@@ -12,7 +12,7 @@ enum TestItemType: UInt32 {
     case HCG
     case FSH
     case Mating
-    case Temperature
+    case BBT
     
     private static let _count: TestItemType.RawValue = {
         // find the maximum enum value
@@ -51,7 +51,7 @@ class TestItem {
                 self.priority = 3
             case .Mating :
                 self.priority = 2
-            case .Temperature :
+            case .BBT :
                 self.priority = 1
                 
             }

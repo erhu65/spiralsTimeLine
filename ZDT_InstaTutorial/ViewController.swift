@@ -229,8 +229,8 @@ UITextFieldDelegate{
                 valStr = "FSH:\(testItem.value)"
             case .Mating:
                 valStr = "Mating:\(testItem.value)"
-            case .Temperature:
-                valStr = "Temperature:\(testItem.value)"
+            case .BBT:
+                valStr = "BBT:\(testItem.value)"
             }
             
             valStr = "\(idx+1). \(valStr)"
@@ -738,8 +738,8 @@ UITextFieldDelegate{
                                 testItem.type = .FSH
                             } else if type ==  "Mating" {
                                 testItem.type = .Mating
-                            } else if type ==  "Temperature" {
-                                testItem.type = .Temperature
+                            } else if type ==  "BBT" {
+                                testItem.type = .BBT
                             }
                             testItem.value = values[0]
                             brItem.addTestItem(testItem: testItem)
@@ -1203,10 +1203,10 @@ UITextFieldDelegate{
                 testItem.sperm_concentration = 0.3
                 
             } else if (testItem.type == .Mating
-                || testItem.type == .Temperature
+                || testItem.type == .BBT
                 ) {
                 
-                if(testItem.type == .Temperature){
+                if(testItem.type == .BBT){
                     testItem.gender = .female
                 }
               
