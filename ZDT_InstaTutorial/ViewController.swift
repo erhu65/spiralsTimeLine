@@ -217,21 +217,71 @@ UITextFieldDelegate{
     
         for (idx, testItem) in (barItem?.testItems.enumerated())! {
             var valStr = ""
+            let valueArr = testItem.value;
+            
             switch testItem.type! {
                 
             case .Sperm:
-                 valStr = "Sperm:\(testItem.sperm_motility), \(testItem.sperm_morpphology), \(testItem.sperm_concentration)"
+                if let valueArrUnWrap = valueArr {
+                    let concentrationDict = valueArrUnWrap[0]
+                    let concentration = concentrationDict["typeValue"]
+                    let motilityDict = valueArrUnWrap[1];
+                    let motility = motilityDict["typeValue"]
+                    let morphologyDict = valueArrUnWrap[2];
+                    let morphology = morphologyDict["typeValue"]
+                    valStr = "Sperm:\(concentration!), \(motility!), \(morphology!)"
+                } else {
+                    valStr = "Sperm:"
+                }
             case .LH:
-                valStr = "LH:\(testItem.value)"
+                if let valueArrUnWrap = valueArr {
+                    let valDict = valueArrUnWrap[0]
+                    let value = valDict["typeValue"]
+                    valStr = "LH:\(value!)"
+                } else {
+                    valStr = "LH:"
+                }
+                
             case .HCG:
-                valStr = "HCG:\(testItem.value)"
+                if let valueArrUnWrap = valueArr {
+                    let valDict = valueArrUnWrap[0]
+                    let value = valDict["typeValue"]
+                    valStr = "HCG:\(value!)"
+                } else {
+                    valStr = "HCG:"
+                }
             case .FSH:
-                valStr = "FSH:\(testItem.value)"
-            case .Mating:
-                valStr = "Mating:\(testItem.value)"
+                if let valueArrUnWrap = valueArr {
+                    let valDict = valueArrUnWrap[0]
+                    let value = valDict["typeValue"]
+                    valStr = "FSH:\(value!)"
+                } else {
+                    valStr = "FSH:"
+                }
+            case .SEX:
+                if let valueArrUnWrap = valueArr {
+                    let valDict = valueArrUnWrap[0]
+                    let value = valDict["typeValue"]
+                    valStr = "SEX:\(value!)"
+                } else {
+                    valStr = "SEX:"
+                }
             case .BBT:
-                valStr = "BBT:\(testItem.value)"
-            }
+                if let valueArrUnWrap = valueArr {
+                    let valDict = valueArrUnWrap[0]
+                    let value = valDict["typeValue"]
+                    valStr = "BBT:\(value!)"
+                } else {
+                    valStr = "BBT:"
+                }
+            case .Bleeding:
+                if let valueArrUnWrap = valueArr {
+                    let valDict = valueArrUnWrap[0]
+                    let value = valDict["typeValue"]
+                    valStr = "Bleeding:\(value!)"
+                } else {
+                    valStr = "Bleeding:"
+                }            }
             
             valStr = "\(idx+1). \(valStr)"
             testValStrs.append(valStr)
@@ -372,7 +422,7 @@ UITextFieldDelegate{
 
         let tf2Num:Int32 = Int32(self.tf2.text!)!
         
-        self.renderTimerLine(num1: tf1Num, num2: tf2Num)
+        //self.renderTimerLine(num1: tf1Num, num2: tf2Num)
     }
     
     @IBAction func filterAction(_ sender: UIButton) {
@@ -384,7 +434,7 @@ UITextFieldDelegate{
         var femaleGoals:[GoalMO] = []
         
 
-        //make fake raw data
+        //make fake Core Data GoalMO and GoalItemMO Object
         for idx in stride(from: 100, through: -100, by: -1) {
             
             let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*idx))
@@ -406,7 +456,7 @@ UITextFieldDelegate{
                 let goalItem = GoalItemlMO()
                 goalItem.typeName = "Sperm"
                 goalItem.testItemCid = "\(random1)"
-                goalItem.value = [0.1, 0.2, 0.3]
+                goalItem.value = GoalItemlMO.mkRandomSpermValue()
                 
                 goal.goalItem.append(goalItem)
                 
@@ -415,26 +465,15 @@ UITextFieldDelegate{
                     ||  random1 == 8
                     ||  random1 == 9 {
                     let goalItem = GoalItemlMO()
-                    goalItem.typeName = "Mating"
+                    goalItem.typeName = "SEX"
                     goalItem.testItemCid = "\(random1)"
-                    goalItem.value = [-1]
+                    goalItem.value = GoalItemlMO.mkRandomSEXValue()
                     goal.goalItem.append(goalItem)
                 }
                 
-                if random1 == 9
-                ||  random1 == 10
-                ||  random1 == 11
-                ||  random1 == 12 {
-                    goalItem.value = [0.1, 0.2, 0.3]
-                } else {
-                    goalItem.value = [-1, -1, -1]
-                }
-                
                 maleGoals.append(goal)
-           
             }
        
-            
             let random2 = arc4random_uniform(11) + 5;
             if random2 == 5
                 ||  random2 == 6
@@ -481,60 +520,60 @@ UITextFieldDelegate{
 
     }
     
-    func renderTimerLine(num1:Int32, num2:Int32) {
-        
-        var allBrItems:[BRItem?] = []
-    
-        print("all dates start")
-        //exceptionn -> 14 ~ 20, 5~11
-        
-        var futureCount = 0
-        //future
-        for intervalDay in stride(from: abs(num1), through: 1, by: -1) {
-            
-            let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*intervalDay))
-            let brItem = BRItem()
-            brItem.date = date
-            allBrItems.append(brItem)
-            
-            futureCount += 1
-            //The last date should have at least one testItem
-            if futureCount == 1 {
-                let testItem = ViewController.mkRandomTestItem()
-                brItem.testItems = []
-                brItem.addTestItem(testItem: testItem)
-            }
-        }
-        
-        var beforeCount:Int32 = 0
-        //before
-        //exceptionn -> -5 ~ -11, -23 ~ -29
-        for intervalDay in stride(from: 0, through: -abs(num2), by: -1) {
-            
-            let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*intervalDay))
-            let brItem = BRItem()
-            brItem.date = date
-            allBrItems.append(brItem)
-            let testItemCount = brItem.testItems.count
-            
-            let str = self.formatLocalDate("before testItemCount:\(testItemCount)", date)
-            print(str)
-            
-            
-            //Thre first date should have at least one testItem
-            if beforeCount == num2 {
-                let testItem = ViewController.mkRandomTestItem()
-                brItem.testItems = []
-                brItem.addTestItem(testItem: testItem)
-            }
-            beforeCount += 1
-        }
-        
-        print("startOfWeek:\(self.startOfWeek())")
-        print("endOfWeek:\(self.endOfWeek())")
-        self.reloadByBrItems(allBrItems: allBrItems)
-    
-    }
+//    func renderTimerLine(num1:Int32, num2:Int32) {
+//        
+//        var allBrItems:[BRItem?] = []
+//    
+//        print("all dates start")
+//        //exceptionn -> 14 ~ 20, 5~11
+//        
+//        var futureCount = 0
+//        //future
+//        for intervalDay in stride(from: abs(num1), through: 1, by: -1) {
+//            
+//            let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*intervalDay))
+//            let brItem = BRItem()
+//            brItem.date = date
+//            allBrItems.append(brItem)
+//            
+//            futureCount += 1
+//            //The last date should have at least one testItem
+//            if futureCount == 1 {
+//                let testItem = ViewController.mkRandomTestItem()
+//                brItem.testItems = []
+//                brItem.addTestItem(testItem: testItem)
+//            }
+//        }
+//        
+//        var beforeCount:Int32 = 0
+//        //before
+//        //exceptionn -> -5 ~ -11, -23 ~ -29
+//        for intervalDay in stride(from: 0, through: -abs(num2), by: -1) {
+//            
+//            let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*intervalDay))
+//            let brItem = BRItem()
+//            brItem.date = date
+//            allBrItems.append(brItem)
+//            let testItemCount = brItem.testItems.count
+//            
+//            let str = self.formatLocalDate("before testItemCount:\(testItemCount)", date)
+//            print(str)
+//            
+//            
+//            //Thre first date should have at least one testItem
+//            if beforeCount == num2 {
+//                let testItem = ViewController.mkRandomTestItem()
+//                brItem.testItems = []
+//                brItem.addTestItem(testItem: testItem)
+//            }
+//            beforeCount += 1
+//        }
+//        
+//        print("startOfWeek:\(self.startOfWeek())")
+//        print("endOfWeek:\(self.endOfWeek())")
+//        self.reloadByBrItems(allBrItems: allBrItems)
+//    
+//    }
 
     @IBAction func scrollToTop(_ sender: Any) {
         
@@ -601,21 +640,20 @@ UITextFieldDelegate{
                 
                 for (_, goalItem) in goalItems.enumerated() {
                     let type = goalItem.typeName
-                    let values = goalItem.value
-                    var valueStr:String? = nil
-                    if type ==  "Sperm" {
-                        valueStr = "\(values[0]),\(values[1]),\(values[2])"
-                    } else {
-                        valueStr = "\(values[0])"
-                    }
-                    if idx == 0 || (idx == maleGoals.count - 1) {
-                        print("....\(type!):\(valueStr!)")
-                    }
+                    let value = goalItem.value
+//                    var valueStr:String? = nil
+//                    if type ==  "Sperm" {
+//                        valueStr = "\(values[0]),\(values[1]),\(values[2])"
+//                    } else {
+//                        valueStr = "\(values[0])"
+//                    }
+//                    if idx == 0 || (idx == maleGoals.count - 1) {
+//                        print("....\(type!):\(valueStr!)")
+//                    }
                     
                 }
                 
             }
-            
             
         }
         
@@ -647,13 +685,13 @@ UITextFieldDelegate{
                     print(dateStr)
                 }
                 for (_, goalItem) in goalItems.enumerated() {
-                    let type = goalItem.typeName
-                    let values = goalItem.value
-                    let valueStr:String? = "\(values[0])"
-                    
-                    if idx == 0 || (idx == femaleGoals.count - 1) {
-                        print("....\(type!):\(valueStr!)")
-                    }
+//                    let type = goalItem.typeName
+//                    let values = goalItem.value
+//                    let valueStr:String? = "\(values[0])"
+//                    
+//                    if idx == 0 || (idx == femaleGoals.count - 1) {
+//                        print("....\(type!):\(valueStr!)")
+//                    }
                 }
                 
             }
@@ -694,20 +732,22 @@ UITextFieldDelegate{
                         let goalItems = goal.goalItem
                         for (_, goalItem) in goalItems.enumerated() {
                             let type = goalItem.typeName
-                            let values = goalItem.value
+                            let value = goalItem.value
+                            let testItemCid = goalItem.testItemCid
                             
                             let testItem = TestItem()
                             testItem.gender = .male
                             testItem.date = everyDate
-                            if type ==  "Sperm" {
+                            switch type! {
+                            case "Sperm":
                                 testItem.type = .Sperm
-                                testItem.sperm_concentration = values[0]
-                                testItem.sperm_motility = values[1]
-                                testItem.sperm_morpphology = values[2]
-                            } else {
-                                testItem.type = .Mating
-                                testItem.value = values[0]
+                            case "SEX":
+                                testItem.type = .SEX
+                            default:
+                                testItem.type = .Sperm
                             }
+                            testItem.value = value
+                            testItem.testItemCid = testItemCid
                             brItem.addTestItem(testItem: testItem)
                             
                         }
@@ -725,7 +765,8 @@ UITextFieldDelegate{
                         let goalItems = goal.goalItem
                         for (_, goalItem) in goalItems.enumerated() {
                             let type = goalItem.typeName
-                            let values = goalItem.value
+                            let value = goalItem.value
+                            let testItemCid = goalItem.testItemCid
                             
                             let testItem = TestItem()
                             testItem.gender = .female
@@ -736,20 +777,21 @@ UITextFieldDelegate{
                                 testItem.type = .HCG
                             } else if type ==  "FSH" {
                                 testItem.type = .FSH
-                            } else if type ==  "Mating" {
-                                testItem.type = .Mating
+                            } else if type ==  "SEX" {
+                                testItem.type = .SEX
                             } else if type ==  "BBT" {
                                 testItem.type = .BBT
+                            } else if type ==  "Bleeding" {
+                                testItem.type = .Bleeding
                             }
-                            testItem.value = values[0]
+                            testItem.value = value
+                            testItem.testItemCid = testItemCid
                             brItem.addTestItem(testItem: testItem)
                             
                         }
                     }
                 }
             }
-
-
             allBrItems.append(brItem)
             
 //            let dateStr = self.formatLocalDate("everyDate", everyDate)
@@ -765,7 +807,7 @@ UITextFieldDelegate{
             for (_, testItem) in (testItems?.enumerated())! {
                 let type = testItem.type
                 let gender = testItem.gender
-                let testItemCid = testItem.gender
+                let testItemCid = testItem.testItemCid
                 let value = testItem.value
                 print("....\(type!):\(gender!):\(testItemCid!):\(value)")
             }
@@ -1181,51 +1223,51 @@ UITextFieldDelegate{
     
     }
     
-    static func mkRandomTestItem() -> TestItem {
-    
-        let testItem = TestItem()
-        testItem.gender = .male
-        testItem.type = TestItemType.random()
-        
-        let random = arc4random_uniform(11) + 5;
-        if random == 5
-            ||  random == 6
-            ||  random == 7
-            ||  random == 8
-            ||  random == 9
-            ||  random == 10
-            ||  random == 11{
-            
-            if testItem.type == .Sperm {
-                
-                testItem.sperm_motility = 0.1
-                testItem.sperm_morpphology = 0.2
-                testItem.sperm_concentration = 0.3
-                
-            } else if (testItem.type == .Mating
-                || testItem.type == .BBT
-                ) {
-                
-                if(testItem.type == .BBT){
-                    testItem.gender = .female
-                }
-              
-                let randomNum = arc4random_uniform(3)
-                if(randomNum == 0){
-                    testItem.value = 1
-                } else {
-                    testItem.value = 0
-                }
-            } else {
-                testItem.gender = .female
-                testItem.value = 0.8
-            }
-        }
-        
-        
-        
-        return testItem
-    }
+//    static func mkRandomTestItem() -> TestItem {
+//    
+//        let testItem = TestItem()
+//        testItem.gender = .male
+//        testItem.type = TestItemType.random()
+//        
+//        let random = arc4random_uniform(11) + 5;
+//        if random == 5
+//            ||  random == 6
+//            ||  random == 7
+//            ||  random == 8
+//            ||  random == 9
+//            ||  random == 10
+//            ||  random == 11{
+//            
+//            if testItem.type == .Sperm {
+//                
+//                testItem.sperm_motility = 0.1
+//                testItem.sperm_morpphology = 0.2
+//                testItem.sperm_concentration = 0.3
+//                
+//            } else if (testItem.type == .SEX
+//                || testItem.type == .BBT
+//                ) {
+//                
+//                if(testItem.type == .BBT){
+//                    testItem.gender = .female
+//                }
+//              
+//                let randomNum = arc4random_uniform(3)
+//                if(randomNum == 0){
+//                    testItem.value = 1
+//                } else {
+//                    testItem.value = 0
+//                }
+//            } else {
+//                testItem.gender = .female
+//                testItem.value = 0.8
+//            }
+//        }
+//        
+//        
+//        
+//        return testItem
+//    }
     
 
     func formatLocalDate(_ prepend:String,  _ date: Date) -> String {

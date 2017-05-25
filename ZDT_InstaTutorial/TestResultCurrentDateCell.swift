@@ -92,8 +92,9 @@ class TestResultCurrentDateCell: UICollectionViewCell {
             let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
             let color_LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
             let color_HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
-            let color_mating = UIColor.purple
+            let color_SEX = UIColor.purple
             let color_BBT = UIColor.white
+            let color_Bleeding = UIColor.red
             let color_gray = UIColor.gray
             
             if let date =  brItem?.date {
@@ -151,10 +152,12 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                             color_current = color_LH
                         case .HCG:
                             color_current = color_HCG
-                        case .Mating:
-                            color_current = color_mating
+                        case .SEX:
+                            color_current = color_SEX
                         case .BBT:
                             color_current = color_BBT
+                        case .Bleeding:
+                            color_current = color_Bleeding
                             
                         }
                         

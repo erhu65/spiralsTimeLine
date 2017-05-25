@@ -11,8 +11,9 @@ enum TestItemType: UInt32 {
     case LH
     case HCG
     case FSH
-    case Mating
+    case SEX
     case BBT
+    case Bleeding
     
     private static let _count: TestItemType.RawValue = {
         // find the maximum enum value
@@ -49,9 +50,11 @@ class TestItem {
                 self.priority = 3
             case .FSH :
                 self.priority = 3
-            case .Mating :
+            case .SEX :
                 self.priority = 2
             case .BBT :
+                self.priority = 1
+            case .Bleeding :
                 self.priority = 1
                 
             }
@@ -60,33 +63,15 @@ class TestItem {
     }
     var date:Date? = nil
     
-    var value:Float = -1.0
-    
-    var sperm_motility:Float = -1.0
-    var sperm_morpphology:Float = -1.0
-    var sperm_concentration:Float = -1.0
-    
+    var value:[[String: Any]]? = nil
     
     func isDone()->Bool {
         
-        if self.type == .Sperm
-        {
-            if self.sperm_motility == -1.0
-                && self.sperm_morpphology == -1.0
-                && self.sperm_concentration == -1.0 {
-                
-                return false
-            } else {
-                return true
-                
-            }
+        if self.value != nil {
+            return true;
+        } else {
+            return false;
         }
-        
-        if self.value == -1.0 {
-            return false
-        }
-        
-        return true
     }
     
 }
