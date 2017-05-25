@@ -403,7 +403,7 @@ UITextFieldDelegate{
                 let goal = GoalMO()
                 goal.date = date
                 
-                let goalItem = GoalItem()
+                let goalItem = GoalItemlMO()
                 goalItem.typeName = "Sperm"
                 goalItem.testItemCid = "\(random1)"
                 goalItem.value = [0.1, 0.2, 0.3]
@@ -414,7 +414,7 @@ UITextFieldDelegate{
                     ||  random1 == 7
                     ||  random1 == 8
                     ||  random1 == 9 {
-                    let goalItem = GoalItem()
+                    let goalItem = GoalItemlMO()
                     goalItem.typeName = "Mating"
                     goalItem.testItemCid = "\(random1)"
                     goalItem.value = [-1]
@@ -450,7 +450,7 @@ UITextFieldDelegate{
                     ||  random6 == 1
                     ||  random6 == 2 {
                     
-                    let goalItem = GoalItem.mkRandomFemaleGoalItem()
+                    let goalItem = GoalItemlMO.mkRandomFemaleGoalItem()
                     goal.goalItem.append(goalItem)
                 }
                 
@@ -459,7 +459,7 @@ UITextFieldDelegate{
                     ||  random7 == 1
                     ||  random7 == 2 {
                     
-                    let goalItem = GoalItem.mkRandomFemaleGoalItem()
+                    let goalItem = GoalItemlMO.mkRandomFemaleGoalItem()
                     goal.goalItem.append(goalItem)
                 }
                 
@@ -468,7 +468,7 @@ UITextFieldDelegate{
                     ||  random8 == 1
                     ||  random8 == 2 {
                     
-                    let goalItem = GoalItem.mkRandomFemaleGoalItem()
+                    let goalItem = GoalItemlMO.mkRandomFemaleGoalItem()
                     goal.goalItem.append(goalItem)
                 }
         

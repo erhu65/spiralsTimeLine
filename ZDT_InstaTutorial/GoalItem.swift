@@ -1,5 +1,5 @@
 //
-//  GoalItem.swift
+//  GoalItemlMO.swift
 //  ZDT_InstaTutorial
 //
 //  Created by peter huang on 10/05/2017.
@@ -15,15 +15,15 @@ import Foundation
 //case Mating
 //case BBT
 
-class GoalItem {
+class GoalItemlMO {
     
     var testItemCid:String? = "1"
     var typeName:String? =  nil
     var value:[Float] = [-1.0]
 
-    static func mkRandomFemaleGoalItem() -> GoalItem {
+    static func mkRandomFemaleGoalItem() -> GoalItemlMO {
         
-        let goalItem = GoalItem()
+        let goalItem = GoalItemlMO()
         goalItem.testItemCid = "0000"
         
         let diceRoll = Int(arc4random_uniform(5) + 1)

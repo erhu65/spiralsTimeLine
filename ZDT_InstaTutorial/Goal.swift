@@ -11,7 +11,7 @@ import Foundation
 
 class GoalMO {
     var date:Date? = nil
-    var goalItem:[GoalItem] = []
+    var goalItem:[GoalItemlMO] = []
     
 }
 
