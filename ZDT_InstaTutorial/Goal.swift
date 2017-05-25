@@ -1,5 +1,5 @@
 //
-//  Goal.swift
+//  GoalMO.swift
 //  ZDT_InstaTutorial
 //
 //  Created by peter huang on 10/05/2017.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Goal {
+class GoalMO {
     var date:Date? = nil
     var goalItem:[GoalItem] = []
     

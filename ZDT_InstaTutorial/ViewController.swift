@@ -380,8 +380,8 @@ UITextFieldDelegate{
         sender.isSelected = !sender.isSelected;
 
         
-        var maleGoals:[Goal] = []
-        var femaleGoals:[Goal] = []
+        var maleGoals:[GoalMO] = []
+        var femaleGoals:[GoalMO] = []
         
 
         //make fake raw data
@@ -400,7 +400,7 @@ UITextFieldDelegate{
                 ||  random1 == 11
                 ||  random1 == 12 {
                 //craete male goal
-                let goal = Goal()
+                let goal = GoalMO()
                 goal.date = date
                 
                 let goalItem = GoalItem()
@@ -442,7 +442,7 @@ UITextFieldDelegate{
                 ||  random2 == 8{
                 
                 //craete female goal
-                let goal = Goal()
+                let goal = GoalMO()
                 goal.date = date
                 
                 let random6 = arc4random_uniform(5);
@@ -559,7 +559,7 @@ UITextFieldDelegate{
         }
     }
     
-    func render(maleGoals:[Goal], femaleGoals:[Goal], loginGender:GenderType) {
+    func render(maleGoals:[GoalMO], femaleGoals:[GoalMO], loginGender:GenderType) {
         
         let isGetMale = self.maleBtn.isSelected
         let isGetFemale = self.femaleBtn.isSelected
