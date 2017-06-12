@@ -38,7 +38,7 @@ class TestItem {
     var testItemCid:String? = nil
     var gender:GenderType? = nil
     var priority:Int = 0
-    var value:[[String: Any]]? = nil
+    var value:[String: Float]? = nil
     
     var type:TestItemType? {
         
@@ -67,84 +67,62 @@ class TestItem {
     func menuItemStr()->String {
         
         var valStr = ""
-        let valueArr = self.value;
+        let valueDict = self.value;
         
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "am"
         formatter.pmSymbol = "pm"
-        
+        let dateString = formatter.string(from: self.reminderDate!)
+
         switch self.type! {
 
             case .Sperm:
-                if let valueArrUnWrap = valueArr {
-                    let concentrationDict = valueArrUnWrap[0]
-                    let concentration = concentrationDict["typeValue"]
-                    let motilityDict = valueArrUnWrap[1];
-                    let motility = motilityDict["typeValue"]
-                    let morphologyDict = valueArrUnWrap[2];
-                    let morphology = morphologyDict["typeValue"]
-                    valStr = "Sperm:\(concentration!), \(motility!), \(morphology!)"
+                
+                if let concentration = valueDict?["concentration"], let motility = valueDict?["motility"] , let morphology = valueDict?["morphology"]{
+                    valStr = "Sperm:\(concentration), \(motility), \(morphology)"
                 } else {
-                    let dateString = formatter.string(from: self.reminderDate!)
                     valStr = "Sperm: scheduled @ \(dateString)"
                 }
+
             case .LH:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "LH:\(value!)"
+                if let value = valueDict?["LH"] {
+                    valStr = "LH:\(value)"
                 } else {
-                    let dateString = formatter.string(from: self.reminderDate!)
                     valStr = "LH: scheduled @ \(dateString)"
                 }
-                
             case .HCG:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "HCG:\(value!)"
+                if let value = valueDict?["HCG"] {
+                    valStr = "HCG:\(value)"
                 } else {
-                    let dateString = formatter.string(from: self.reminderDate!)
                     valStr = "HCG: scheduled @ \(dateString)"
                 }
+        
             case .FSH:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "FSH:\(value!)"
+                if let value = valueDict?["HCG"] {
+                    valStr = "HCG:\(value)"
                 } else {
-                    let dateString = formatter.string(from: self.reminderDate!)
-                    valStr = "FSH: scheduled @ \(dateString)"
+                    valStr = "HCG: scheduled @ \(dateString)"
                 }
             case .SEX:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "SEX:\(value!)"
+                if let value = valueDict?["SEX"] {
+                    valStr = "SEX:\(value)"
                 } else {
-                    let dateString = formatter.string(from: self.reminderDate!)
-                    valStr = "SEX: scheduled @ \(dateString)"
-                }
-            case .BBT:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "BBT:\(value!)"
-                } else {
-                    let dateString = formatter.string(from: self.reminderDate!)
-                    valStr = "BBT: scheduled @ \(dateString)"
+                    valStr = "HCG: scheduled @ \(dateString)"
                 }
         case .Bleeding:
-            if let valueArrUnWrap = valueArr {
-                let valDict = valueArrUnWrap[0]
-                let value = valDict["typeValue"]
-                valStr = "Bleeding:\(value!)"
+            if let value = valueDict?["Bleeding"] {
+                valStr = "Bleeding:\(value)"
             } else {
-                valStr = "Bleeding:"
+                valStr = "Bleeding"
             }
-            default:
-                print("")
+        case .BBT:
+            if let value = valueDict?["BBT"] {
+                valStr = "BBT:\(value)"
+            } else {
+                valStr = "BBT: scheduled @ \(dateString)"
+            }
+
         }
         
   

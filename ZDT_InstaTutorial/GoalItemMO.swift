@@ -19,46 +19,45 @@ class GoalItemMO {
     var reminderDate:Date? = Date()
     var testItemCid:String? = "1"
     var typeName:String? =  nil
-    var value:[[String: Any]]? = nil
+    var value:[String: Float]? = nil
     
     
-    static func mkRandomSpermValue() -> [[String: Any]]? {
+    static func mkRandomSpermValue() -> [String: Float]? {
     
         let diceRoll = Int(arc4random_uniform(5) + 1)
         if diceRoll == 1 || diceRoll == 2  {
             return nil;
         } else {
-            return [["type": "concentration", "typeValue": 0.1],
-            ["type": "motility", "typeValue": 0.2],
-            ["type": "morphology", "typeValue": 0.3]];
+            return ["concentration": 0.1, "motility": 0.2, "morphology":  0.3]
+          
         }
     }
     
-    static func mkRandomSEXValue() -> [[String: Any]]? {
-        var vlaue:[[String: Any]]? = nil;
+    static func mkRandomSEXValue() -> [String: Float]? {
+        var vlaue:[String: Float]? = nil;
         let diceRoll = Int(arc4random_uniform(3) + 1)
         switch diceRoll {
         case 1:
             vlaue = nil//SEX Not yet done
         case 2:
-            vlaue = [["type": "SEX", "typeValue": 1]]//sex protected
+            vlaue = ["SEX": 1]//sex protected
         case 3:
-            vlaue = [["type": "SEX", "typeValue": 2]]//sex unprotected
+            vlaue = ["SEX": 2]//sex unprotected
         default:
             vlaue = nil//SEX Not yet done
         }
         return vlaue
     }
-    static func mkRandomBleedingValue() -> [[String: Any]]? {
-        var vlaue:[[String: Any]]? = nil;
+    static func mkRandomBleedingValue() -> [String: Float]? {
+        var vlaue:[String: Float]? = nil;
         let diceRoll = Int(arc4random_uniform(2) + 1)
         switch diceRoll {
         case 1:
-            vlaue = [["type": "Bleeding", "typeValue": 1]]//當天經期中（goal畫面顯示紅色小點）
+            vlaue = ["Bleeding": 1]//當天經期中（goal畫面顯示紅色小點）
         case 2:
-            vlaue = [["type": "Bleeding", "typeValue": 0]]//當天經期中，且當天算結束（goal畫面顯示紅色小點）
+            vlaue = ["Bleeding": 0]//當天經期中，且當天算結束（goal畫面顯示紅色小點）
         default:
-            vlaue = [["type": "Bleeding", "typeValue": 0]]//當天經期中，且當天算結束（goal畫面顯示紅色小點）
+            vlaue = ["Bleeding": 0]//當天經期中，且當天算結束（goal畫面顯示紅色小點）
         }
         return vlaue
     }
@@ -131,16 +130,16 @@ class GoalItemMO {
             switch diceRoll {
             case 1:
                 goalItem.typeName = "LH"
-                goalItem.value = [["type": "LH", "typeValue": 0.1]]
+                goalItem.value = ["LH": 0.1]
             case 2:
                 goalItem.typeName = "HCG"
-                goalItem.value = [["type": "HCG", "typeValue": 0.1]]
+                goalItem.value = ["HCG": 0.1]
             case 3:
                 goalItem.typeName = "FSH"
-                goalItem.value = [["type": "FSH", "typeValue": 0.1]]
+                goalItem.value = ["FSH": 0.1]
             default:
                 goalItem.typeName = "FSH"
-                goalItem.value = [["type": "FSH", "typeValue": 0.1]]
+                goalItem.value = ["FSH": 0.1]
             }
             
             let diceRoll2 = Int(arc4random_uniform(3) + 1)

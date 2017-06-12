@@ -194,8 +194,13 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         let dateString = formatter.string(from: date)
         dateLabel.text = dateString
         
-        collectionViewLayout = CustomImageFlowLayout()
-        collectionView.collectionViewLayout = collectionViewLayout
+//        collectionViewLayout = CustomImageFlowLayout()
+//        collectionView.collectionViewLayout = collectionViewLayout
+//        
+        
+
+        
+        
         collectionView.backgroundColor = .black
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -233,7 +238,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated);
 //        self.view.layoutIfNeeded()
         self.hidePopMenu()
-        
+        self.showPopMenu()
     }
     
     override func didReceiveMemoryWarning() {
@@ -309,7 +314,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             //add BBT everyday forcefully
             let goalItem = GoalItemMO()
             goalItem.typeName = "BBT"
-            goalItem.value = [["type": "BBT", "typeValue": 0.1]]
+            goalItem.value = ["BBT": 0.1]
             let diceRoll2 = Int(arc4random_uniform(3) + 1)
             if diceRoll2 == 1 {
                 goalItem.value = nil
@@ -401,20 +406,30 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         if (barItem?.isEmptyRow)! {
-            itemHeight = 5
+            itemHeight = 25
         } else {
             itemHeight += 18
         }
-        return CGSize(width: (itemWidth + 1), height: itemHeight)
+        //itemWidth += 1
+        if barItem?.cellGuildLine == .horizontal {
+        
+        } else {
+        
+        }
+        return CGSize(width: itemWidth, height: itemHeight)
         
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        //讓原本cell有１pint的距離消失，不然不管水平圖檔怎麼延長都有有間距
+        //目前還要設定cell的leading與trailing的padding = 2
+        return UIEdgeInsets(top: 0, left:5, bottom: 0, right:5)
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -488,98 +503,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         if testIitemsCount == 0 {
             return
         }
-        
-        //let count = barItem?.testItems.count
-        var testValStrs:[String] = []
-        
-        for (idx, testItem) in (barItem?.testItems.enumerated())! {
-            var valStr = ""
-            let valueArr = testItem.value;
-            
-            switch testItem.type! {
-                
-            case .Sperm:
-                if let valueArrUnWrap = valueArr {
-                    let concentrationDict = valueArrUnWrap[0]
-                    let concentration = concentrationDict["typeValue"]
-                    let motilityDict = valueArrUnWrap[1];
-                    let motility = motilityDict["typeValue"]
-                    let morphologyDict = valueArrUnWrap[2];
-                    let morphology = morphologyDict["typeValue"]
-                    valStr = "Sperm:\(concentration!), \(motility!), \(morphology!)"
-                } else {
-                    valStr = "Sperm:"
-                }
-            case .LH:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "LH:\(value!)"
-                } else {
-                    valStr = "LH:"
-                }
-                
-            case .HCG:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "HCG:\(value!)"
-                } else {
-                    valStr = "HCG:"
-                }
-            case .FSH:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "FSH:\(value!)"
-                } else {
-                    valStr = "FSH:"
-                }
-            case .SEX:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "SEX:\(value!)"
-                } else {
-                    valStr = "SEX:"
-                }
-            case .BBT:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "BBT:\(value!)"
-                } else {
-                    valStr = "BBT:"
-                }
-            case .Bleeding:
-                if let valueArrUnWrap = valueArr {
-                    let valDict = valueArrUnWrap[0]
-                    let value = valDict["typeValue"]
-                    valStr = "Bleeding:\(value!)"
-                } else {
-                    valStr = "Bleeding:"
-                }            }
-            
-            valStr = "\(idx+1). \(valStr)"
-            testValStrs.append(valStr)
-        }
-        if let date = barItem?.date {
-            
-            let calendar = Calendar.current
-            //let year = calendar.component(.year, from: date)
-            let month = calendar.component(.month, from: date)
-            let day = calendar.component(.day, from: date)
-            let weekDay = calendar.component(.weekday, from: date)
-            let dateStr = "\(month)/\(day)(\(weekDay))"
-            testValStrs.append(dateStr)
-        }
-        
-        
-        //testValStrs.append("serial: \(String(describing: barItem?.serial))")
-        
-        let testValStr = testValStrs.joined(separator: "\n")
-        print("testValStrs: \(testValStrs)")
-        
+    
         //x:\(cellFrameInSuperview.origin.x),y:\(cellFrameInSuperview.origin.y
         
         
@@ -770,7 +694,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                                 print(error)
                             }
                             
-                            testItem.value = value as? [[String : Any]]
+                            testItem.value = value as? [String : Float]
                             testItem.testItemCid = testItemCid
                             brItem.addTestItem(testItem: testItem)
                             brItem.maleTestItems.append(testItem)
@@ -818,7 +742,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                                 print(error)
                             }
 
-                            testItem.value = value as? [[String : Any]]
+                            testItem.value = value as? [String : Float]
                             testItem.testItemCid = testItemCid
                             brItem.addTestItem(testItem: testItem)
                             brItem.femaleTestItems.append(testItem)
@@ -2272,9 +2196,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                     
                         if testItm.type == .Bleeding
                         {
-                            if let valueArrUnWrap = testItm.value {
-                                let valDict = valueArrUnWrap[0]
-                                let value = valDict["typeValue"] as! Int
+                            if let valudDict = testItm.value {
+                                let value = valudDict["Bleeding"]!
                                 print("yesterDayBrItem female bleeding value: \(value)")
 
                                 if value == 1 {
@@ -2318,21 +2241,21 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         
          //re adjust the width of popV
         var longestWidth:CGFloat = 0
-        var attributeToReSetWidth:[String] = []
+        var lbStr:[String] = []
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd"
         let dateString = formatter.string(from: date)
-        attributeToReSetWidth.append(dateString)
+        lbStr.append(dateString)
         
         for testItem in allTestItems {
             let menuItemStr = testItem.menuItemStr()
-            attributeToReSetWidth.append(menuItemStr)
+            lbStr.append(menuItemStr)
         }
-        for menuItemStr in attributeToReSetWidth {
-            
-            let fontSizeAttribute = [NSForegroundColorAttributeName:  CellGoalTypeColor.White, NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
-            let menuItemStrAttributes = NSMutableAttributedString(string:menuItemStr, attributes: fontSizeAttribute)
+        for menuItemStr in lbStr {
+//            
+//            let fontSizeAttribute = [NSForegroundColorAttributeName:  CellGoalTypeColor.White, NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
+//            let menuItemStrAttributes = NSMutableAttributedString(string:menuItemStr, attributes: fontSizeAttribute)
             self.testWidthLb.text = menuItemStr
             self.view.layoutIfNeeded()
             let width = self.testWidthLb.frame.size.width
@@ -2362,22 +2285,6 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         let calendar = Calendar.current
         self.topVDateAlignType = .Left
         self.view.layoutIfNeeded()//update subview frame immediatelly
-        if (self.rightV.frame.intersects(self.popV.frame)) {
-            //print("popV hit rightV")
-            var itemWidth = (self.collectionView!.frame.width - (self.numberOfColumns)) / self.numberOfColumns
-            
-            self.topVDateAlignType = .Right
-
-            let isToday = calendar.isDateInToday(date)
-            if isToday {
-                itemWidth *= 2
-            }
-            
-            let newConstant = anchorXY.x - self.popVWidth.constant + itemWidth * 0.5
-            self.popVLeading.constant = newConstant
-            self.view.layoutIfNeeded()//update subview frame immediatelly
-            
-        }
 
         
         if (self.bottomV.frame.intersects(self.popV.frame)) {
@@ -2401,6 +2308,12 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             //print("diff: \(diff)")
             self.popVTop.constant += CGFloat(diff)
         }
+        
+        if (self.rightV.frame.intersects(self.popV.frame)) {
+            self.topVDateAlignType = .Right
+        }
+
+        
         let isAllDone = brItem.isAllDone()
         print("goalFilterType: \(self.goalFilterType)")
         print("topVDailyType: \(self.topVDailyType)")
@@ -2504,7 +2417,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         let size:CGFloat = 30
-
+        var currentDateLeftPadding:NSLayoutConstraint? = nil
+        var currentDateRightPadding:NSLayoutConstraint? = nil
         do {
         
             for (idx, goalMenuItem) in self.goalMenuItems.enumerated() {
@@ -2539,13 +2453,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                 switch goalMenuItem.type! {
                 case  .Date:
                     menuLb.textAlignment = .center
-                    
-                    popMenuV.layer.borderColor = UIColor.white.cgColor
-                    if (self.topVDateAlignType == .Right) {
-                        leftPadding.constant = self.popVWidth.constant / 2
-                    } else {
-                        rightPadding.constant = self.popVWidth.constant / 2
-                    }
+
                     if goalMenuItem.isHollow {
                         menuLb.textColor =  CellGoalTypeColor.White
                         popMenuV.layer.backgroundColor =  CellGoalTypeColor.Black.cgColor
@@ -2554,7 +2462,10 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                         popMenuV.layer.backgroundColor = CellGoalTypeColor.White.cgColor
                     }
                      menuLb.text = goalMenuItem.menuItemStr;
-
+                    currentDateLeftPadding = leftPadding
+                    currentDateRightPadding = rightPadding
+                    popMenuV.layer.borderColor = UIColor.white.cgColor
+               
                 default:
                     menuLb.text = goalMenuItem.menuItemStr;
                     print("bbbb")
@@ -2566,7 +2477,33 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch {
             print(error)
         }
-
+        
+        self.view.layoutIfNeeded()
+        if (self.topVDateAlignType == .Right) {
+            currentDateLeftPadding?.constant = self.popV.frame.size.width - 80
+        } else {
+            currentDateRightPadding?.constant = self.popV.frame.size.width - 80
+        }
+        
+        self.view.layoutIfNeeded()
+    
+        if (self.rightV.frame.intersects(self.popV.frame)) {
+            //print("popV hit rightV")
+            var itemWidth = (self.collectionView!.frame.width - (self.numberOfColumns)) / self.numberOfColumns
+            
+            self.topVDateAlignType = .Right
+            
+            let isToday = calendar.isDateInToday(date)
+            if isToday {
+                itemWidth *= 2
+            }
+            
+            let newConstant = anchorXY.x - self.popV.frame.size.width + itemWidth
+            self.popVLeading.constant = newConstant
+            self.view.layoutIfNeeded()//update subview frame immediatelly
+            
+        }
+        
         self.view.layoutIfNeeded()
     }
     
@@ -2606,6 +2543,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBAction func goalMenuItemAction(_ sender: UIButton) {
         
         do {
+            print("self.popV.frame.size.width:\(self.popV.frame.size.width)")
+            print("self.testWidthLb.frame.size.width:\(self.testWidthLb.frame.size.width)")
             if (sender.tag + 1) > self.goalMenuItems.count {
                 
                       throw GoalError.TypeNameInvalid("menuItem select index:\(sender.tag) out of range")
@@ -2633,7 +2572,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
      
         let width = Float(self.widthTf.text!)
         self.widthTf.resignFirstResponder()
-        self.popVWidth.constant = CGFloat(width!)
+        self.popVLeading.constant = CGFloat(width!)
         
     }
     
