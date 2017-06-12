@@ -8,6 +8,9 @@
 
 import UIKit
 
+enum GoalError: Error {
+    case TypeNameInvalid(String)
+}
 
 enum GenderType: UInt32 {
     case male = 1
@@ -738,14 +741,19 @@ UITextFieldDelegate{
                             let testItem = TestItem()
                             testItem.gender = .male
                             testItem.date = everyDate
-                            switch type! {
-                            case "Sperm":
-                                testItem.type = .Sperm
-                            case "SEX":
-                                testItem.type = .SEX
-                            default:
-                                testItem.type = .Sperm
+                            do {
+                                switch type! {
+                                case "Sperm":
+                                    testItem.type = .Sperm
+                                case "SEX":
+                                    testItem.type = .SEX
+                                default:
+                                    throw GoalError.TypeNameInvalid("not valid male typeName")
+                                }
+                            } catch {
+                                print(error)
                             }
+                          
                             testItem.value = value
                             testItem.testItemCid = testItemCid
                             brItem.addTestItem(testItem: testItem)
@@ -771,19 +779,28 @@ UITextFieldDelegate{
                             let testItem = TestItem()
                             testItem.gender = .female
                             testItem.date = everyDate
-                            if type ==  "LH" {
-                                testItem.type = .LH
-                            } else if type ==  "HCG" {
-                                testItem.type = .HCG
-                            } else if type ==  "FSH" {
-                                testItem.type = .FSH
-                            } else if type ==  "SEX" {
-                                testItem.type = .SEX
-                            } else if type ==  "BBT" {
-                                testItem.type = .BBT
-                            } else if type ==  "Bleeding" {
-                                testItem.type = .Bleeding
+                            
+                            do {
+                                switch type! {
+                                case "LH":
+                                    testItem.type = .LH
+                                case "HCG":
+                                    testItem.type = .HCG
+                                case "FSH":
+                                    testItem.type = .FSH
+                                case "SEX":
+                                    testItem.type = .SEX
+                                case "BBT":
+                                    testItem.type = .BBT
+                                case "Bleeding":
+                                    testItem.type = .Bleeding
+                                default:
+                                    throw GoalError.TypeNameInvalid("not valid female typeName")
+                                }
+                            } catch {
+                                print(error)
                             }
+                         
                             testItem.value = value
                             testItem.testItemCid = testItemCid
                             brItem.addTestItem(testItem: testItem)

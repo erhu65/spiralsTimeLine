@@ -21,10 +21,13 @@ class TestResultCurrentDateCell: UICollectionViewCell {
     @IBOutlet weak var sub1Circle: UIView!
     @IBOutlet weak var sub2Circle: UIView!
     @IBOutlet weak var sub3Circle: UIView!
+    @IBOutlet weak var sub4Circle: UIView!
+    
     
     @IBOutlet weak var sub1CircleCenterX: NSLayoutConstraint!
     @IBOutlet weak var sub2CircleCenterX: NSLayoutConstraint!
     @IBOutlet weak var sub3CircleCenterX: NSLayoutConstraint!
+    @IBOutlet weak var sub4CircleCenterX: NSLayoutConstraint!
     
     func hideAllSubCircle() {
         self.subCirclesContainer.isHidden = true
@@ -37,6 +40,7 @@ class TestResultCurrentDateCell: UICollectionViewCell {
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = true
         self.sub3Circle.isHidden = true
+        self.sub4Circle.isHidden = true
     }
     
     func show2SubCircle() {
@@ -48,6 +52,7 @@ class TestResultCurrentDateCell: UICollectionViewCell {
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = false
         self.sub3Circle.isHidden = true
+        self.sub4Circle.isHidden = true
     }
     
     func show3SubCircle() {
@@ -59,8 +64,22 @@ class TestResultCurrentDateCell: UICollectionViewCell {
         self.sub1Circle.isHidden = false
         self.sub2Circle.isHidden = false
         self.sub3Circle.isHidden = false
+        self.sub4Circle.isHidden = true
     }
     
+    func show4SubCircle() {
+        
+        self.subCirclesContainer.isHidden = false
+        self.sub1CircleCenterX.constant = -15
+        self.sub2CircleCenterX.constant = -5
+        self.sub3CircleCenterX.constant = 5
+        self.sub4CircleCenterX.constant = 15
+        
+        self.sub1Circle.isHidden = false
+        self.sub2Circle.isHidden = false
+        self.sub3Circle.isHidden = false
+        self.sub4Circle.isHidden = false
+    }
     
     var brItem:BRItem? {
         
@@ -83,19 +102,13 @@ class TestResultCurrentDateCell: UICollectionViewCell {
             self.sub3Circle?.layer.cornerRadius = subCirclesize / 2
             self.sub3Circle?.layer.borderWidth = 1.0
             self.sub3Circle?.clipsToBounds = true
+            self.sub4Circle?.layer.cornerRadius = subCirclesize / 2
+            self.sub4Circle?.layer.borderWidth = 1.0
+            self.sub4Circle?.clipsToBounds = true
             
             self.circleV?.isHidden = true
-            self.serialLb.isHidden = true
+            //self.serialLb.isHidden = true
             
-            
-            let color_sperm = UIColor.init(red: 247/255.0, green: 176/255.0, blue: 41/255.0, alpha: 1)
-            let color_FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
-            let color_LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
-            let color_HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
-            let color_SEX = UIColor.purple
-            let color_BBT = UIColor.white
-            let color_Bleeding = UIColor.red
-            let color_gray = UIColor.gray
             
             if let date =  brItem?.date {
                 
@@ -119,14 +132,17 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                     self.show2SubCircle()
                 case 4:
                     self.show3SubCircle()
-                case 5,6,7,8,9,10:
+                    self.show3SubCircle()
+                case 5:
+                    self.show4SubCircle()
+                case 6,7,8,9,10:
                     self.show3SubCircle()
                 default:
                     self.hideAllSubCircle()
                 }
                 
                 if  testItemsCount! > 0 {
-                    
+                  
                     for (idx, testItem) in (brItem?.testItems.enumerated())! {
                         var color_current = UIColor.clear
                         var circleV:UIView? = nil
@@ -139,26 +155,27 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                             circleV = self.sub2Circle
                         case 3:
                             circleV = self.sub3Circle
+                        case 4:
+                            circleV = self.sub4Circle
                         default:
                             print("")
                         }
                         
                         switch testItem.type! {
                         case .Sperm:
-                            color_current = color_sperm
+                            color_current = CellGoalTypeColor.Sperm
                         case .FSH:
-                            color_current = color_FSH
+                            color_current = CellGoalTypeColor.FSH
                         case .LH:
-                            color_current = color_LH
+                            color_current = CellGoalTypeColor.LH
                         case .HCG:
-                            color_current = color_HCG
+                            color_current = CellGoalTypeColor.HCG
                         case .SEX:
-                            color_current = color_SEX
+                            color_current = CellGoalTypeColor.SEX
                         case .BBT:
-                            color_current = color_BBT
+                            color_current = CellGoalTypeColor.BBT
                         case .Bleeding:
-                            color_current = color_Bleeding
-                            
+                            color_current = CellGoalTypeColor.Bleeding
                         }
                         
                         circleV?.layer.borderColor = color_current.cgColor
@@ -182,8 +199,8 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                 } else {
                     self.circleV?.isHidden = false
                     self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
-                    self.circleV?.layer.borderColor = color_gray.cgColor
-                    self.dateLb.textColor = color_gray
+                    self.circleV?.layer.borderColor = CellGoalTypeColor.Gray.cgColor
+                    self.dateLb.textColor = CellGoalTypeColor.Gray
                 }
                 
             } else {

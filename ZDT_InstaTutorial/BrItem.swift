@@ -13,6 +13,11 @@ class BRItem {
     
     var index:Int = -1
     var serial:Int = -1
+    var maleGoalCid:String = ""
+    var maleTestItems:[TestItem] = []
+    var femaleGoalCid:String = ""
+    var femaleTestItems:[TestItem] = []
+    
     var testItems:[TestItem] = []
     var date:Date? = nil
     var cellGuildLine:CellGuildLine?
@@ -69,6 +74,7 @@ class BRItem {
         
         
     }
+
     
     func addTestItem(testItem:TestItem) {
         testItems.append(testItem)
@@ -84,6 +90,8 @@ class BRItem {
         }
         
         var idnexMostImportant:Int = -1;
+        var idnexOfBleedingFound:Int = -1;
+        
         for (idx, testItem) in (self.testItems.enumerated()) {
             
             
@@ -160,7 +168,6 @@ class BRItem {
                 }
             }
             
-            
         }
         
         if idnexMostImportant == -1 {
@@ -185,8 +192,6 @@ class BRItem {
             
             for (idx, testItem) in (self.testItems.enumerated()) {
                 
-                
-                
                 if testItem.gender! == currentLoginGender
                     && (testItem.priority == 3
                         || testItem.priority == 2
@@ -207,6 +212,48 @@ class BRItem {
             self.testItems.insert(mostImportantTestItem, at: 0)
         }
         
+        
+        for (idx, testItem) in (self.testItems.enumerated()) {
+            
+            if testItem.type! == .Bleeding
+            {
+                idnexOfBleedingFound = idx;
+                break;
+            }
+        }
+        
+        if(idnexOfBleedingFound != -1) {
+            let lastIndex = (self.testItems.count - 1)
+            let bleedingTestItem = self.testItems.remove(at: idnexOfBleedingFound);
+            self.testItems.insert(bleedingTestItem, at: lastIndex)
+        }
+        
     }
     
+    func isAllDone()->Bool {
+        var isAllDone = true
+        
+        for testItem in testItems {
+        
+            if testItem.isDone() == false {
+                isAllDone = false
+                break
+            }
+            
+        }
+        return isAllDone
+    }
+    
+    func countExcludeBleeding() -> Int {
+        
+        var count = 0
+        for testItem in self.testItems {
+            if testItem.type == .Bleeding {
+                continue
+            }
+            count += 1
+        }
+        
+        return count
+    }
 }

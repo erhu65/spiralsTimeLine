@@ -10,8 +10,9 @@ import Foundation
 
 
 class GoalMO {
+    var cid:String = "goalcid01"
     var date:Date? = nil
-    var goalItem:[GoalItemlMO] = []
+    var goalItems:[GoalItemMO] = []
     
 }
 
