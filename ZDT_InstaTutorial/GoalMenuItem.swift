@@ -9,6 +9,7 @@
 import Foundation
 
 enum GoalMenuItemType: UInt32 {
+    
     case Date = 0
     case BBT = 1
     case LH = 2
@@ -29,5 +30,14 @@ class GoalMenuItem {
     var testItemCid:String?
     var menuItemStr:String?
     var isHollow:Bool = true
+    var goal:GoalMO? = nil
+    var goalItem:GoalItemMO? = nil
+    
+    var selectedIndex:Int  =  -1
+    init(selectedIndex:Int, goal:GoalMO?, goalItem:GoalItemMO?) {
+        self.selectedIndex = selectedIndex
+        self.goal = goal
+        self.goalItem = goalItem
+    }
     
 }

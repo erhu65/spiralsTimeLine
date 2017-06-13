@@ -16,7 +16,7 @@ enum CellGoalTypeColor {
     static let FSH = UIColor.init(red: 234/255.0, green: 97/255.0, blue: 120/255.0, alpha: 1)
     static let LH = UIColor.init(red: 0/255.0, green: 179/255.0, blue: 200/255.0, alpha: 1)
     static let HCG = UIColor.init(red: 196/255.0, green: 214/255.0, blue: 0/255.0, alpha: 1)
-    static let SEX = UIColor.purple
+    static let SEX = UIColor.init(red: 164/255.0, green: 49/255.0, blue: 220/255.0, alpha: 1)
     static let BBT = UIColor.init(red: 29/255.0, green: 116/255.0, blue: 111/255.0, alpha: 1)
     static let Bleeding = UIColor.red
     static let Gray = UIColor.gray

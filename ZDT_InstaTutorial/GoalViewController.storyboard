@@ -26,6 +26,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtc-uI-ky7">
                                 <rect key="frame" x="0.0" y="20" width="375" height="120"/>
                                 <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCR-l7-dEV">
+                                        <rect key="frame" x="20" y="12" width="53" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="-50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mvy-nI-9e5">
+                                        <rect key="frame" x="81" y="13" width="67" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2dn-vS-a3R">
+                                        <rect key="frame" x="99" y="52" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </switch>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell" translatesAutoresizingMaskIntoConstraints="NO" id="dd8-uw-a40">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
                                     </imageView>
@@ -41,83 +59,41 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CD-GC-19L">
-                                        <rect key="frame" x="297" y="52" width="55" height="55"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CD-GC-19L">
+                                        <rect key="frame" x="289" y="52.5" width="55" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="55" id="YE6-h0-95N"/>
                                             <constraint firstAttribute="width" secondItem="8CD-GC-19L" secondAttribute="height" multiplier="1:1" id="gxE-oM-Ay3"/>
                                         </constraints>
-                                        <state key="normal" title="male">
+                                        <state key="normal" image="icon_male_n">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="selected" image="icon_male_s"/>
                                         <connections>
                                             <action selector="filterAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="bcj-Mv-sL7"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgX-GK-wuh">
-                                        <rect key="frame" x="234" y="52" width="55" height="55"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgX-GK-wuh">
+                                        <rect key="frame" x="234" y="52.5" width="55" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="FgX-GK-wuh" secondAttribute="height" multiplier="1:1" id="DO4-6b-AUO"/>
                                             <constraint firstAttribute="width" constant="55" id="F43-hB-0fC"/>
                                         </constraints>
-                                        <state key="normal" title="female">
+                                        <state key="normal" image="icon_female_n">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="selected" image="icon_female_s"/>
                                         <connections>
                                             <action selector="filterAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="egg-Qj-Iza"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V6l-hC-MnO">
-                                        <rect key="frame" x="247" y="8" width="97" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Prh-KY-YIB">
-                                        <rect key="frame" x="270" y="37" width="50" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="leading"/>
-                                        <connections>
-                                            <action selector="changePopVWidth:" destination="0yz-5r-gyq" eventType="touchUpInside" id="8lB-CE-hDh"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCR-l7-dEV">
-                                        <rect key="frame" x="20" y="12" width="53" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="-50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mvy-nI-9e5">
-                                        <rect key="frame" x="81" y="13" width="67" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="testWidthLb" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bl1-dR-sH5">
-                                        <rect key="frame" x="147" y="0.0" width="82" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="82" id="Z3G-su-sbZ"/>
-                                            <constraint firstAttribute="height" constant="35" id="ctg-Hj-uTU"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2dn-vS-a3R">
-                                        <rect key="frame" x="99" y="52" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="mOT-sf-eGc" firstAttribute="top" secondItem="Mtc-uI-ky7" secondAttribute="centerY" id="4yj-0c-3PA"/>
                                     <constraint firstItem="dd8-uw-a40" firstAttribute="leading" secondItem="Mtc-uI-ky7" secondAttribute="leading" id="9QI-EG-gxc"/>
-                                    <constraint firstItem="8CD-GC-19L" firstAttribute="leading" secondItem="FgX-GK-wuh" secondAttribute="trailing" constant="8" id="E5o-bq-B5S"/>
+                                    <constraint firstItem="8CD-GC-19L" firstAttribute="leading" secondItem="FgX-GK-wuh" secondAttribute="trailing" id="E5o-bq-B5S"/>
                                     <constraint firstItem="dd8-uw-a40" firstAttribute="top" secondItem="Mtc-uI-ky7" secondAttribute="top" id="NFZ-kJ-4lh"/>
-                                    <constraint firstItem="bl1-dR-sH5" firstAttribute="centerX" secondItem="Mtc-uI-ky7" secondAttribute="centerX" id="QH9-fb-9ql"/>
                                     <constraint firstAttribute="trailing" secondItem="dd8-uw-a40" secondAttribute="trailing" id="RFh-PV-0bn"/>
                                     <constraint firstItem="FgX-GK-wuh" firstAttribute="centerY" secondItem="mOT-sf-eGc" secondAttribute="centerY" id="S7B-so-2dj"/>
                                     <constraint firstItem="mOT-sf-eGc" firstAttribute="leading" secondItem="Mtc-uI-ky7" secondAttribute="leading" constant="20" id="er5-4k-bhb"/>
@@ -125,7 +101,6 @@
                                     <constraint firstAttribute="height" constant="120" id="gyX-mr-vir"/>
                                     <constraint firstItem="RSh-pl-fm0" firstAttribute="bottom" secondItem="Mtc-uI-ky7" secondAttribute="centerY" constant="-10" id="iC2-Hb-DP0"/>
                                     <constraint firstItem="8CD-GC-19L" firstAttribute="centerY" secondItem="mOT-sf-eGc" secondAttribute="centerY" id="j59-tx-zNS"/>
-                                    <constraint firstItem="bl1-dR-sH5" firstAttribute="top" secondItem="Mtc-uI-ky7" secondAttribute="top" id="jBj-gk-MRY"/>
                                     <constraint firstAttribute="bottom" secondItem="dd8-uw-a40" secondAttribute="bottom" id="n8D-EL-FvB"/>
                                     <constraint firstItem="FgX-GK-wuh" firstAttribute="leading" secondItem="mOT-sf-eGc" secondAttribute="trailing" constant="149" id="s6n-mK-MNJ"/>
                                 </constraints>
@@ -437,7 +412,7 @@
                                     <outlet property="delegate" destination="0yz-5r-gyq" id="95T-Sw-lNH"/>
                                 </connections>
                             </collectionView>
-                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZJv-bL-E86" userLabel="fadeV">
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZJv-bL-E86" userLabel="fadeV">
                                 <rect key="frame" x="0.0" y="140" width="374" height="527"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -456,28 +431,28 @@
                                 </constraints>
                             </view>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nU0-ww-7wr" userLabel="popV">
-                                <rect key="frame" x="10" y="220" width="73.5" height="245"/>
+                                <rect key="frame" x="10" y="220" width="77" height="245"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4w-Ih-Wrj" userLabel="popMenu1V">
-                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0j-Id-cNK" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="R8Z-hc-fCD"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXS-9f-w8o" userLabel="menu1">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9h-fC-wND" userLabel="menuLb1">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="35"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XaO-Zc-yBH" userLabel="menuBtn1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="SwE-2F-UCr"/>
                                                         </connections>
@@ -497,7 +472,7 @@
                                             </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="bXS-9f-w8o" firstAttribute="top" secondItem="A4w-Ih-Wrj" secondAttribute="top" priority="999" id="GpK-b9-QiE"/>
+                                            <constraint firstItem="bXS-9f-w8o" firstAttribute="top" secondItem="A4w-Ih-Wrj" secondAttribute="top" priority="999" id="GpK-b9-QiE" userLabel="popMenu1Top"/>
                                             <constraint firstAttribute="bottom" secondItem="bXS-9f-w8o" secondAttribute="bottom" priority="999" id="P7O-gb-RQh"/>
                                             <constraint firstItem="bXS-9f-w8o" firstAttribute="leading" secondItem="A4w-Ih-Wrj" secondAttribute="leading" priority="999" id="PlQ-Ea-1ZK" userLabel="popMenu1LeftPadding"/>
                                             <constraint firstAttribute="trailing" secondItem="E0j-Id-cNK" secondAttribute="trailing" id="QPh-2c-DDY"/>
@@ -509,25 +484,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phD-wU-bnr" userLabel="popMenu2V">
-                                        <rect key="frame" x="0.0" y="35" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="35" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNf-xW-DxW" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="z14-3k-Jgb"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jay-2u-k8P" userLabel="menu2">
-                                                <rect key="frame" x="0.0" y="4" width="73.5" height="31"/>
+                                                <rect key="frame" x="0.0" y="4" width="77" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ7-h0-p6u" userLabel="menuLb2">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="31"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBn-5e-aFZ" userLabel="menuBtn2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="31"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="31"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="et4-n0-2Ey"/>
                                                         </connections>
@@ -559,25 +534,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jhu-a2-3Zk" userLabel="popMenu3V">
-                                        <rect key="frame" x="0.0" y="70" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="70" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75k-X0-obQ" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="smx-Yn-r6C"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfx-KF-4Yn" userLabel="menu3">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHR-TN-gYF" userLabel="menuLb3">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="35"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyv-vy-B9n" userLabel="menuBtn3">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="bfE-w0-hqn"/>
                                                         </connections>
@@ -609,25 +584,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zZe-WZ-nz0" userLabel="popMenu4V">
-                                        <rect key="frame" x="0.0" y="105" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="105" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQX-hm-nKr" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="UZX-Qv-92e"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtz-0I-myB" userLabel="menu4">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HfO-O2-nNj" userLabel="menuLb4">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="35"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAl-od-KYi" userLabel="menuBtn4">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="css-wA-9Zw"/>
                                                         </connections>
@@ -659,25 +634,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vl8-97-RTQ" userLabel="popMenu5V">
-                                        <rect key="frame" x="0.0" y="140" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="140" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZj-tY-ifQ" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="bcZ-bV-2Q9"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kaL-nr-ucN" userLabel="menu5">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mR2-r7-0Ui">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="35"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddy-0F-ZWI" userLabel="menuBtn5">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="IIa-JW-V1x"/>
                                                         </connections>
@@ -709,25 +684,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6o-7L-eDv" userLabel="popMenu6V">
-                                        <rect key="frame" x="0.0" y="175" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="175" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G7S-R2-vcS" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="wkX-4i-ICk"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Drx-ma-pH6" userLabel="menu6">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb6" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svw-Sz-Q1P" userLabel="menuLb6">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="35"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdY-3f-vPb" userLabel="menuBtn6">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="TTo-F6-uEo"/>
                                                         </connections>
@@ -759,25 +734,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lpM-g5-INx" userLabel="popMenu7V">
-                                        <rect key="frame" x="0.0" y="210" width="73.5" height="35"/>
+                                        <rect key="frame" x="0.0" y="210" width="77" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KN-Oc-Wru" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="mS5-OD-f7M"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqC-SO-UzM" userLabel="menu7">
-                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb7" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOr-zg-sbP" userLabel="menuLb7">
-                                                        <rect key="frame" x="10" y="0.0" width="53.5" height="35"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4J-L5-IAO" userLabel="menuBtn7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="0lm-8J-Vh6"/>
                                                         </connections>
@@ -900,6 +875,7 @@
                         <outlet property="popMenu1Height" destination="h8h-oD-BPf" id="QmB-nq-k7w"/>
                         <outlet property="popMenu1LeftPadding" destination="PlQ-Ea-1ZK" id="CMn-pG-j43"/>
                         <outlet property="popMenu1RightPadding" destination="oLb-Gc-lvw" id="7do-B5-C81"/>
+                        <outlet property="popMenu1Top" destination="GpK-b9-QiE" id="7UC-YX-eBM"/>
                         <outlet property="popMenu2Height" destination="LhY-Ei-ufK" id="Dkd-FJ-r5H"/>
                         <outlet property="popMenu2LeftPadding" destination="MTN-oy-4JR" id="fI1-ui-tnp"/>
                         <outlet property="popMenu2RightPadding" destination="bI5-cZ-QbQ" id="eFf-Mg-Ymq"/>
@@ -927,12 +903,9 @@
                         <outlet property="popV" destination="nU0-ww-7wr" id="7RP-ju-8Ip"/>
                         <outlet property="popVLeading" destination="Ipl-nU-3S5" id="OXT-jj-edD"/>
                         <outlet property="popVTop" destination="ab7-0P-Mr4" id="gmQ-Ga-UeH"/>
-                        <outlet property="popVWidth" destination="F9P-bF-Utg" id="5Qj-oh-CsH"/>
                         <outlet property="rightV" destination="V26-5h-9HR" id="ZdS-pm-FKB"/>
                         <outlet property="startTf" destination="KCR-l7-dEV" id="Z3j-E7-vlC"/>
-                        <outlet property="testWidthLb" destination="bl1-dR-sH5" id="LQ5-Re-odx"/>
                         <outlet property="topV" destination="Mtc-uI-ky7" id="OQS-Az-jKf"/>
-                        <outlet property="widthTf" destination="V6l-hC-MnO" id="XKD-j2-6T4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cgx-7P-Im8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -943,5 +916,9 @@
     <resources>
         <image name="cell" width="273" height="89"/>
         <image name="guidHorizontal" width="35" height="35"/>
+        <image name="icon_female_n" width="34" height="34"/>
+        <image name="icon_female_s" width="34" height="34"/>
+        <image name="icon_male_n" width="34" height="34"/>
+        <image name="icon_male_s" width="34" height="34"/>
     </resources>
 </document>

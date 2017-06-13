@@ -39,6 +39,7 @@ class TestItem {
     var gender:GenderType? = nil
     var priority:Int = 0
     var value:[String: Float]? = nil
+    var goalItem:GoalItemMO? = nil
     
     var type:TestItemType? {
         
@@ -74,7 +75,12 @@ class TestItem {
         formatter.amSymbol = "am"
         formatter.pmSymbol = "pm"
         let dateString = formatter.string(from: self.reminderDate!)
-
+        let dateNow = Date()
+        var isMissed = false
+        if dateNow > self.reminderDate! {
+            isMissed = true
+        }
+        
         switch self.type! {
 
             case .Sperm:
@@ -82,33 +88,52 @@ class TestItem {
                 if let concentration = valueDict?["concentration"], let motility = valueDict?["motility"] , let morphology = valueDict?["morphology"]{
                     valStr = "Sperm:\(concentration), \(motility), \(morphology)"
                 } else {
-                    valStr = "Sperm: scheduled @ \(dateString)"
+                    if isMissed {
+                       valStr = "SPERM: missed"
+                    } else {
+                        valStr = "SPERM: scheduled @ \(dateString)"
+                    }
                 }
 
             case .LH:
                 if let value = valueDict?["LH"] {
                     valStr = "LH:\(value)"
                 } else {
-                    valStr = "LH: scheduled @ \(dateString)"
-                }
+                    if isMissed {
+                        valStr = "LH: missed"
+                    } else {
+                        valStr = "LH: scheduled @ \(dateString)"
+                    }                }
             case .HCG:
                 if let value = valueDict?["HCG"] {
                     valStr = "HCG:\(value)"
                 } else {
-                    valStr = "HCG: scheduled @ \(dateString)"
+                    if isMissed {
+                        valStr = "HCG: missed"
+                    } else {
+                        valStr = "HCG: scheduled @ \(dateString)"
+                    }
                 }
         
             case .FSH:
                 if let value = valueDict?["HCG"] {
-                    valStr = "HCG:\(value)"
+                    valStr = "FSH:\(value)"
                 } else {
-                    valStr = "HCG: scheduled @ \(dateString)"
+                    if isMissed {
+                        valStr = "FSH: missed"
+                    } else {
+                        valStr = "FSH: scheduled @ \(dateString)"
+                    }
                 }
             case .SEX:
                 if let value = valueDict?["SEX"] {
                     valStr = "SEX:\(value)"
                 } else {
-                    valStr = "HCG: scheduled @ \(dateString)"
+                    if isMissed {
+                        valStr = "SEX: missed"
+                    } else {
+                        valStr = "SEX: scheduled @ \(dateString)"
+                    }
                 }
         case .Bleeding:
             if let value = valueDict?["Bleeding"] {
@@ -120,7 +145,11 @@ class TestItem {
             if let value = valueDict?["BBT"] {
                 valStr = "BBT:\(value)"
             } else {
-                valStr = "BBT: scheduled @ \(dateString)"
+                if isMissed {
+                    valStr = "BBT: missed"
+                } else {
+                    valStr = "BBT: scheduled @ \(dateString)"
+                }
             }
 
         }

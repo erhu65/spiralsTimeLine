@@ -39,12 +39,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZDT_InstaTutorial/GoalViewController.swift"
-            timestampString = "518976168.248309"
+            timestampString = "519039304.669531"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2483"
-            endingLineNumber = "2483"
-            landmarkName = "adjustTopVPosition(anchorXY:brItem:gender:)"
+            startingLineNumber = "917"
+            endingLineNumber = "917"
+            landmarkName = "render(maleGoals:femaleGoals:loginGender:isGetMale:isGetFemale:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -55,12 +55,108 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZDT_InstaTutorial/GoalViewController.swift"
-            timestampString = "518976168.248309"
+            timestampString = "519039304.669531"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2485"
-            endingLineNumber = "2485"
-            landmarkName = "adjustTopVPosition(anchorXY:brItem:gender:)"
+            startingLineNumber = "779"
+            endingLineNumber = "779"
+            landmarkName = "render(maleGoals:femaleGoals:loginGender:isGetMale:isGetFemale:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDT_InstaTutorial/GoalViewController.swift"
+            timestampString = "519039304.669531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "785"
+            endingLineNumber = "785"
+            landmarkName = "render(maleGoals:femaleGoals:loginGender:isGetMale:isGetFemale:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDT_InstaTutorial/GoalViewController.swift"
+            timestampString = "519039304.669531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "792"
+            endingLineNumber = "792"
+            landmarkName = "render(maleGoals:femaleGoals:loginGender:isGetMale:isGetFemale:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDT_InstaTutorial/GoalViewController.swift"
+            timestampString = "519039304.669531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "800"
+            endingLineNumber = "800"
+            landmarkName = "render(maleGoals:femaleGoals:loginGender:isGetMale:isGetFemale:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDT_InstaTutorial/GoalViewController.swift"
+            timestampString = "519039304.669531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "904"
+            endingLineNumber = "904"
+            landmarkName = "render(maleGoals:femaleGoals:loginGender:isGetMale:isGetFemale:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDT_InstaTutorial/GoalViewController.swift"
+            timestampString = "519039304.669531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1411"
+            endingLineNumber = "1411"
+            landmarkName = "reloadByBrItems(allBrItems:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDT_InstaTutorial/GoalViewController.swift"
+            timestampString = "519039304.669531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "927"
+            endingLineNumber = "927"
+            landmarkName = "reloadByBrItems(allBrItems:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

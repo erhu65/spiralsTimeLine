@@ -22,6 +22,7 @@ class BRItem {
     var date:Date? = nil
     var cellGuildLine:CellGuildLine?
     var isEmptyRow:Bool = false
+    var goal:GoalMO? = nil
     
     init() {
         testItems = []
