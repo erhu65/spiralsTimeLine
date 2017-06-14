@@ -229,6 +229,19 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
 //        }
         self.hidePopMenu()
         
+
+    
+    
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+//        self.view.layoutIfNeeded()
+        self.hidePopMenu()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.allBrItemsForCell = []
         var maleGoals:[GoalMO] = []
         var femaleGoals:[GoalMO] = []
@@ -336,16 +349,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             femaleGoals.append(goal)
         }
-
+        
         self.render(maleGoals: maleGoals, femaleGoals: femaleGoals, loginGender: .male, isGetMale: true, isGetFemale: true)
-    
-    
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
-//        self.view.layoutIfNeeded()
-        self.hidePopMenu()
     }
     
     override func didReceiveMemoryWarning() {
@@ -376,7 +381,6 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             self.maleBtn.isSelected = false
         }
         
- 
         self.allBrItemsForCell = []
         var maleGoals:[GoalMO] = []
         var femaleGoals:[GoalMO] = []
@@ -431,7 +435,6 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             //craete female goal
             let goal = GoalMO()
             goal.date = date
-            
             
             //add BBT everyday forcefully
             let goalItem = GoalItemMO()
@@ -654,12 +657,15 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.topVDailyType = .None
         self.topVDailyBleedingType = .None
         self.topVDailySEXType = .None
-    
+        
 //        print("barItem?.maleGoalCid: \(String(describing: barItem?.maleGoalCid))")
 //        print("barItem?.maleTestItems: \(String(describing: barItem?.maleTestItems))")
 //        print("barItem?.femaleGoalCid: \(String(describing: barItem?.femaleGoalCid))")
 //        print("barItem?.femaleTestItems: \(String(describing: barItem?.femaleTestItems))")
-
+        print("self.currentBrItem.date: \(self.currentBrItem?.date))")
+        print("barItem.maleGoal.date: \(self.currentBrItem?.maleGoal?.date))")
+        print("barItem.femaleGoal.date: \(self.currentBrItem?.femaleGoal?.date))")
+        
         self.adjustTopVPosition(anchorXY: self.currentAnchorXY!, brItem: self.currentBrItem!, gender: self.currentLoginGender, selectedIndex:rowIndex)
     }
     
@@ -717,9 +723,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if isGetMale {
             //let maleGoalsCount = maleGoals.count
-            for (idx, goal ) in maleGoals.enumerated() {
+            for (idx, goal) in maleGoals.enumerated() {
                 let date = goal.date! as Date
-                let goalItems = goal.goalItems
                 
                 if maxDate == nil {
                     maxDate = date
@@ -736,8 +741,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                         minDate = date
                     }
                 }
-                
-                
+            
                 if idx == 0 || (idx == maleGoals.count - 1) {
                     let dateStr = self.formatLocalDate("male:\(idx)", date)
                     print(dateStr)
@@ -748,9 +752,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if isGetFemale {
             //let femaleGoalsCount = femaleGoals.count
-            for (idx, goal ) in femaleGoals.enumerated() {
+            for (idx, goal) in femaleGoals.enumerated() {
                 let date = goal.date! as Date
-                let goalItems = goal.goalItems
                 
                 if maxDate == nil {
                     maxDate = date
@@ -797,17 +800,24 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         var intervalDay = 0
         
         while everyDate <=  maxDate! {
+            
             everyDate = Date(timeInterval: TimeInterval(60*60*24*intervalDay), since: minDate!)
             
             let brItem = BRItem()
             brItem.date = everyDate
+            
             if isGetMale {
                 for (_, goal) in maleGoals.enumerated() {
+                    
+                    
                     let date = goal.date! as Date
-                    brItem.maleGoalCid = goal.cid
-                    brItem.goal = goal
+                    
+                    
                     let isSameDate = Calendar.current.isDate(date, inSameDayAs:everyDate)
+                    
                     if isSameDate {
+                        brItem.maleGoalCid = goal.cid
+                        brItem.maleGoal = goal
                         let goalItems = goal.goalItems
                         for aGoalItem in goalItems {
                             let goalItem = aGoalItem as! GoalItemMO
@@ -846,11 +856,13 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             if isGetFemale {
                 for (_, goal) in femaleGoals.enumerated() {
+                    
                     let date = goal.date! as Date
-                    brItem.femaleGoalCid = goal.cid
-                    brItem.goal = goal
+                    
                     let isSameDate = Calendar.current.isDate(date, inSameDayAs:everyDate)
                     if isSameDate {
+                        brItem.femaleGoalCid = goal.cid
+                        brItem.femaleGoal = goal
                         let goalItems = goal.goalItems
                         for aGoalItem in goalItems {
                             let goalItem = aGoalItem as! GoalItemMO
@@ -904,6 +916,12 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             let dateChk = brItem?.date
             let dateStr = self.formatLocalDate("brItem", dateChk!)
             print(dateStr)
+//            print("barItem.maleGoal.date: \(brItem?.maleGoal?.date))")
+//            print("barItem.femaleGoal.date: \(brItem?.femaleGoal?.date))")
+//            if brItem?.maleGoal == nil
+//                && brItem?.femaleGoal == nil {
+//                print("Should not happen:")
+//            }
             let testItems = brItem?.testItems
             for (_, testItem) in (testItems?.enumerated())! {
                 let type = testItem.type
@@ -995,8 +1013,10 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                     brItemPlaceHolder?.date = dateChk
                     brItemPlaceHolder?.maleGoalCid = (brItem?.maleGoalCid)!
                     brItemPlaceHolder?.maleTestItems = (brItem?.maleTestItems)!
+                    brItemPlaceHolder?.maleGoal = brItem?.maleGoal
                     brItemPlaceHolder?.femaleGoalCid = (brItem?.femaleGoalCid)!
                     brItemPlaceHolder?.femaleTestItems = (brItem?.femaleTestItems)!
+                    brItemPlaceHolder?.femaleGoal = brItem?.femaleGoal
                     brItemPlaceHolder?.testItems = (brItem?.testItems)!
                     thisWeekBrItems[weekDayIndex] = brItemPlaceHolder
                     continue
@@ -2174,7 +2194,6 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         brItem17?.isEmptyRow = true
         brItem18?.isEmptyRow = true
         brItem19?.isEmptyRow = true
-
     }
 
 
@@ -2381,7 +2400,6 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         
         var isMenuReverse = false
-        
 
         self.popVTop.constant = anchorXY.y
         self.view.layoutIfNeeded()
@@ -2401,6 +2419,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         
         if (self.bottomV.frame.intersects(self.popV.frame)) {
+            isMenuReverse = true
             //print("popV hit bottomV2")
             let tbBottomY = self.collectionView.frame.origin.y + self.collectionView.frame.size.height
             let popVBottomY = self.popV.frame.origin.y + self.popV.frame.size.height
@@ -2439,7 +2458,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.showPopMenu()
         
         self.goalMenuItems = []
-        let goalMenuItmOfDate = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem: nil)
+        let goalMenuItmOfDate = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem: nil)
         goalMenuItmOfDate.type = .Date
         goalMenuItmOfDate.isHollow = !isAllDone
         
@@ -2455,7 +2474,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                 continue
             }
         
-            let goalMenuItem = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem: testItem.goalItem)
+            let goalMenuItem = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem: testItem.goalItem)
             goalMenuItem.menuItemStr = testItem.menuItemStr()
             goalMenuItem.testItemCid = testItem.testItemCid
             
@@ -2486,7 +2505,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if self.topVDailyType == .Collapsed {
             
-            let goalMenuItemUnforded = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem:  nil)
+            let goalMenuItemUnforded = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem:  nil)
 
             goalMenuItemUnforded.type = .ManuallyUnfolded
             goalMenuItemUnforded.isHollow = false
@@ -2497,14 +2516,14 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             if self.topVDailyBleedingType == .Bleeding {
           
-                let goalMenuItem = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem:  nil)
+                let goalMenuItem = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem:  nil)
                 goalMenuItem.type = .ManuallyBLeeding
                 goalMenuItem.isHollow = true
                 goalMenuItem.menuItemStr = "BLeeding"
                 goalMenuItems.append(goalMenuItem)
           
             } else if self.topVDailyBleedingType == .EndBleeding {
-                let goalMenuItem = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem:  nil)
+                let goalMenuItem = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem:  nil)
 
                 goalMenuItem.type = .ManuallyEndBLeeding
                 goalMenuItem.isHollow = true
@@ -2513,13 +2532,13 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             }
             
             if self.topVDailySEXType == .Show {
-                let goalMenuItemSEXProtected = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem:  nil)
+                let goalMenuItemSEXProtected = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem:  nil)
                 goalMenuItemSEXProtected.type = .ManuallySEXProtected
                 goalMenuItemSEXProtected.isHollow = true
                 goalMenuItemSEXProtected.menuItemStr = "SEX: protected"
                 goalMenuItems.append(goalMenuItemSEXProtected)
                 
-                let goalMenuItemSEXUnProtected = GoalMenuItem(selectedIndex: selectedIndex, goal: brItem.goal, goalItem:  nil)
+                let goalMenuItemSEXUnProtected = GoalMenuItem(selectedIndex: selectedIndex, maleGoal:brItem.maleGoal, femaleGoal:brItem.femaleGoal, goalItem:  nil)
                 goalMenuItemSEXUnProtected.type = .ManuallySEXUnProtected
                 goalMenuItemSEXUnProtected.isHollow = true
                 goalMenuItemSEXUnProtected.menuItemStr = "SEX: unprotected"
@@ -2534,6 +2553,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         let size:CGFloat = 30
+        var dateMenuItemHeight:NSLayoutConstraint? = nil
         var dateMenuItemLeftPadding:NSLayoutConstraint? = nil
         var dateMenuItemRightPadding:NSLayoutConstraint? = nil
         var unfordeMenuItemRightPadding:NSLayoutConstraint? = nil
@@ -2556,7 +2576,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                 menuLb.textAlignment = .left
                 leftPadding.constant = 0 //reset all left padding
                 rightPadding.constant = 0 //reset all right padding
-                
+                popMenuHeight.constant = 35
                 popMenuV.layer.cornerRadius = size / 2
                 popMenuV.layer.borderWidth = 2.0
                 popMenuV.layer.backgroundColor = UIColor.gray.cgColor
@@ -2583,6 +2603,8 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
                     dateMenuItemLeftPadding = leftPadding
                     dateMenuItemRightPadding = rightPadding
                     popMenuV.layer.borderColor = CellGoalTypeColor.White.cgColor
+                    //popMenuHeight.constant = 30
+                    dateMenuItemHeight = popMenuHeight
                 case  .BBT:
                     if goalMenuItem.isHollow {
                         menuLb.textColor =  CellGoalTypeColor.BBT
@@ -2692,8 +2714,12 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             self.view.layoutIfNeeded()//update subview frame immediatelly
             
         }
+        if isMenuReverse == false {
+            dateMenuItemHeight?.constant = 30
+        }
         
         self.view.layoutIfNeeded()
+        
         
         if (self.topVDateAlignType == .Right) {
             dateMenuItemLeftPadding?.constant = self.popV.frame.size.width - 80
@@ -2750,14 +2776,28 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             if (sender.tag + 1) > self.goalMenuItems.count {
                 
-                      throw GoalError.TypeNameInvalid("menuItem select index:\(sender.tag) out of range")
+                throw GoalError.TypeNameInvalid("menuItem select index:\(sender.tag) out of range")
             }
             
             let goalMenuItem = self.goalMenuItems[sender.tag]
             
-            print("menuItem selectedCellIndex: \(goalMenuItem.selectedIndex) \(goalMenuItem.type!), isHollow:\(goalMenuItem.isHollow), testItemCid: \(goalMenuItem.testItemCid), menuItemStr: \(goalMenuItem.menuItemStr) goal:\((goalMenuItem.goal)) goalItem:\((goalMenuItem.goalItem))\n ")
 
+            var goalDate:Date? = nil
+            if goalMenuItem.maleGoal != nil  {
+                goalDate = goalMenuItem.maleGoal?.date
+            } else {
+                goalDate = goalMenuItem.femaleGoal?.date
+            }
             
+            print("goalDate: \(goalDate)")
+            print("menuItem selectedCellIndex: \(goalMenuItem.selectedIndex) \(goalMenuItem.type!), isHollow:\(goalMenuItem.isHollow), testItemCid: \(goalMenuItem.testItemCid), menuItemStr: \(goalMenuItem.menuItemStr)  goalItem.typeName:\((goalMenuItem.goalItem?.typeName))\n ")
+            
+            let dateNow = Date()
+            if goalDate! > dateNow {
+                return
+            }
+            
+            //Process Scheduled SEX and other Manually added goalItem and dailys
             if goalMenuItem.type == .ManuallyUnfolded {
                 
                 self.topVDailyType = .Unfolded
@@ -2775,7 +2815,7 @@ class GoalViewController: UIViewController, UICollectionViewDataSource, UICollec
             } else if goalMenuItem.type == .ManuallySEXProtected {
                 //TODO: add ManuallySEXProtected to the goal
                 print("TODO: add ManuallySEXProtected to the goal and daily")
-            } else if goalMenuItem.type == .ManuallyBLeeding {
+            } else if goalMenuItem.type == .ManuallySEXUnProtected {
                 //TODO: add ManuallySEXUnProtected to the goal
                 print("TODO: add ManuallySEXUnProtected to the goal and daily")
             }

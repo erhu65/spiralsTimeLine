@@ -71,7 +71,8 @@ class TestItem {
         let valueDict = self.value;
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
+        //formatter.dateFormat = "h:mm a"
+        formatter.dateFormat = "ha"
         formatter.amSymbol = "am"
         formatter.pmSymbol = "pm"
         let dateString = formatter.string(from: self.reminderDate!)

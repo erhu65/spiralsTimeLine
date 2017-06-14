@@ -87,7 +87,7 @@ class TestResultCurrentDateCell: UICollectionViewCell {
             let size:CGFloat = 30
             self.circleV?.layer.cornerRadius = size / 2
             self.circleV?.layer.borderWidth = 2.0
-            self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
+            self.circleV?.layer.backgroundColor = UIColor.black.cgColor
             self.circleV?.layer.borderColor = UIColor.green.cgColor
             self.circleV?.clipsToBounds = true
             
@@ -144,7 +144,7 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                 if  testItemsCount! > 0 {
                   
                     for (idx, testItem) in (brItem?.testItems.enumerated())! {
-                        var color_current = UIColor.clear
+                        var color_current = UIColor.black
                         var circleV:UIView? = nil
                         switch idx {
                         case 0:
@@ -198,7 +198,7 @@ class TestResultCurrentDateCell: UICollectionViewCell {
                     
                 } else {
                     self.circleV?.isHidden = false
-                    self.circleV?.layer.backgroundColor = UIColor.clear.cgColor
+                    self.circleV?.layer.backgroundColor = UIColor.black.cgColor
                     self.circleV?.layer.borderColor = CellGoalTypeColor.Gray.cgColor
                     self.dateLb.textColor = CellGoalTypeColor.Gray
                 }

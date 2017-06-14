@@ -26,21 +26,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtc-uI-ky7">
                                 <rect key="frame" x="0.0" y="20" width="375" height="120"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCR-l7-dEV">
+                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCR-l7-dEV">
                                         <rect key="frame" x="20" y="12" width="53" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="-50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mvy-nI-9e5">
+                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="-50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mvy-nI-9e5">
                                         <rect key="frame" x="81" y="13" width="67" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2dn-vS-a3R">
+                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2dn-vS-a3R">
                                         <rect key="frame" x="99" y="52" width="51" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </switch>
@@ -431,28 +431,28 @@
                                 </constraints>
                             </view>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nU0-ww-7wr" userLabel="popV">
-                                <rect key="frame" x="10" y="220" width="77" height="245"/>
+                                <rect key="frame" x="10" y="220" width="73" height="240"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4w-Ih-Wrj" userLabel="popMenu1V">
-                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0j-Id-cNK" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="R8Z-hc-fCD"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXS-9f-w8o" userLabel="menu1">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9h-fC-wND" userLabel="menuLb1">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="30"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XaO-Zc-yBH" userLabel="menuBtn1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="SwE-2F-UCr"/>
                                                         </connections>
@@ -460,8 +460,8 @@
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="K9h-fC-wND" secondAttribute="trailing" constant="10" id="02R-U7-EmU"/>
-                                                    <constraint firstItem="K9h-fC-wND" firstAttribute="leading" secondItem="bXS-9f-w8o" secondAttribute="leading" constant="10" id="D5P-Xw-aLD"/>
+                                                    <constraint firstAttribute="trailing" secondItem="K9h-fC-wND" secondAttribute="trailing" constant="8" id="02R-U7-EmU"/>
+                                                    <constraint firstItem="K9h-fC-wND" firstAttribute="leading" secondItem="bXS-9f-w8o" secondAttribute="leading" constant="8" id="D5P-Xw-aLD"/>
                                                     <constraint firstAttribute="trailing" secondItem="XaO-Zc-yBH" secondAttribute="trailing" id="LQ2-1Q-yGe"/>
                                                     <constraint firstItem="XaO-Zc-yBH" firstAttribute="top" secondItem="bXS-9f-w8o" secondAttribute="top" id="bag-ga-Raa"/>
                                                     <constraint firstItem="XaO-Zc-yBH" firstAttribute="leading" secondItem="bXS-9f-w8o" secondAttribute="leading" id="cgX-fb-vUs"/>
@@ -478,31 +478,31 @@
                                             <constraint firstAttribute="trailing" secondItem="E0j-Id-cNK" secondAttribute="trailing" id="QPh-2c-DDY"/>
                                             <constraint firstAttribute="bottom" secondItem="E0j-Id-cNK" secondAttribute="bottom" id="RKI-Ya-tdi"/>
                                             <constraint firstItem="E0j-Id-cNK" firstAttribute="top" secondItem="A4w-Ih-Wrj" secondAttribute="top" id="VcY-Ve-y3h"/>
-                                            <constraint firstAttribute="height" priority="999" constant="35" id="h8h-oD-BPf" userLabel="popMenu1Height"/>
+                                            <constraint firstAttribute="height" priority="999" constant="30" id="h8h-oD-BPf" userLabel="popMenu1Height"/>
                                             <constraint firstAttribute="trailing" secondItem="bXS-9f-w8o" secondAttribute="trailing" priority="999" id="oLb-Gc-lvw" userLabel="popMenu1RightPadding"/>
                                             <constraint firstItem="E0j-Id-cNK" firstAttribute="leading" secondItem="A4w-Ih-Wrj" secondAttribute="leading" id="oMJ-uY-eOu"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phD-wU-bnr" userLabel="popMenu2V">
-                                        <rect key="frame" x="0.0" y="35" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="30" width="73" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNf-xW-DxW" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="z14-3k-Jgb"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jay-2u-k8P" userLabel="menu2">
-                                                <rect key="frame" x="0.0" y="4" width="77" height="31"/>
+                                                <rect key="frame" x="0.0" y="4" width="73" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ7-h0-p6u" userLabel="menuLb2">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="31"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="31"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBn-5e-aFZ" userLabel="menuBtn2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="31"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="31"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="et4-n0-2Ey"/>
                                                         </connections>
@@ -512,9 +512,9 @@
                                                 <constraints>
                                                     <constraint firstItem="ZBn-5e-aFZ" firstAttribute="leading" secondItem="Jay-2u-k8P" secondAttribute="leading" id="4aV-bH-hNS"/>
                                                     <constraint firstAttribute="bottom" secondItem="ZBn-5e-aFZ" secondAttribute="bottom" id="GL8-IV-P74"/>
-                                                    <constraint firstAttribute="trailing" secondItem="lZ7-h0-p6u" secondAttribute="trailing" constant="10" id="IWF-Xj-X09"/>
+                                                    <constraint firstAttribute="trailing" secondItem="lZ7-h0-p6u" secondAttribute="trailing" constant="8" id="IWF-Xj-X09"/>
                                                     <constraint firstAttribute="bottom" secondItem="lZ7-h0-p6u" secondAttribute="bottom" id="JLH-fj-LUC"/>
-                                                    <constraint firstItem="lZ7-h0-p6u" firstAttribute="leading" secondItem="Jay-2u-k8P" secondAttribute="leading" constant="10" id="L5k-o5-z5n"/>
+                                                    <constraint firstItem="lZ7-h0-p6u" firstAttribute="leading" secondItem="Jay-2u-k8P" secondAttribute="leading" constant="8" id="L5k-o5-z5n"/>
                                                     <constraint firstAttribute="trailing" secondItem="ZBn-5e-aFZ" secondAttribute="trailing" id="UUb-sA-Yi8"/>
                                                     <constraint firstItem="lZ7-h0-p6u" firstAttribute="top" secondItem="Jay-2u-k8P" secondAttribute="top" id="VwH-0V-o2D"/>
                                                     <constraint firstItem="ZBn-5e-aFZ" firstAttribute="top" secondItem="Jay-2u-k8P" secondAttribute="top" id="een-Za-LLw"/>
@@ -534,25 +534,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jhu-a2-3Zk" userLabel="popMenu3V">
-                                        <rect key="frame" x="0.0" y="70" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="65" width="73" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75k-X0-obQ" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="smx-Yn-r6C"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfx-KF-4Yn" userLabel="menu3">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHR-TN-gYF" userLabel="menuLb3">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="35"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyv-vy-B9n" userLabel="menuBtn3">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="bfE-w0-hqn"/>
                                                         </connections>
@@ -560,11 +560,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="PHR-TN-gYF" secondAttribute="trailing" constant="10" id="4dQ-Iv-jSB"/>
+                                                    <constraint firstAttribute="trailing" secondItem="PHR-TN-gYF" secondAttribute="trailing" constant="8" id="4dQ-Iv-jSB"/>
                                                     <constraint firstItem="zyv-vy-B9n" firstAttribute="leading" secondItem="lfx-KF-4Yn" secondAttribute="leading" id="EWd-Om-vUw"/>
                                                     <constraint firstAttribute="bottom" secondItem="PHR-TN-gYF" secondAttribute="bottom" id="TWo-Kz-bCZ"/>
                                                     <constraint firstItem="zyv-vy-B9n" firstAttribute="top" secondItem="lfx-KF-4Yn" secondAttribute="top" id="XV1-X5-r78"/>
-                                                    <constraint firstItem="PHR-TN-gYF" firstAttribute="leading" secondItem="lfx-KF-4Yn" secondAttribute="leading" constant="10" id="aBl-ng-4Uz"/>
+                                                    <constraint firstItem="PHR-TN-gYF" firstAttribute="leading" secondItem="lfx-KF-4Yn" secondAttribute="leading" constant="8" id="aBl-ng-4Uz"/>
                                                     <constraint firstAttribute="bottom" secondItem="zyv-vy-B9n" secondAttribute="bottom" id="c5s-pE-mfx"/>
                                                     <constraint firstItem="PHR-TN-gYF" firstAttribute="top" secondItem="lfx-KF-4Yn" secondAttribute="top" id="gB4-TF-qmE"/>
                                                     <constraint firstAttribute="trailing" secondItem="zyv-vy-B9n" secondAttribute="trailing" id="z4G-6E-apc"/>
@@ -584,25 +584,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zZe-WZ-nz0" userLabel="popMenu4V">
-                                        <rect key="frame" x="0.0" y="105" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="100" width="73" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQX-hm-nKr" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="UZX-Qv-92e"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtz-0I-myB" userLabel="menu4">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HfO-O2-nNj" userLabel="menuLb4">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="35"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAl-od-KYi" userLabel="menuBtn4">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="css-wA-9Zw"/>
                                                         </connections>
@@ -614,9 +614,9 @@
                                                     <constraint firstAttribute="trailing" secondItem="pAl-od-KYi" secondAttribute="trailing" id="Ezm-p7-Np2"/>
                                                     <constraint firstAttribute="bottom" secondItem="HfO-O2-nNj" secondAttribute="bottom" id="HG3-eE-6w9"/>
                                                     <constraint firstItem="HfO-O2-nNj" firstAttribute="top" secondItem="rtz-0I-myB" secondAttribute="top" id="IeS-aD-Wiy"/>
-                                                    <constraint firstItem="HfO-O2-nNj" firstAttribute="leading" secondItem="rtz-0I-myB" secondAttribute="leading" constant="10" id="Sun-Yy-nh1"/>
+                                                    <constraint firstItem="HfO-O2-nNj" firstAttribute="leading" secondItem="rtz-0I-myB" secondAttribute="leading" constant="8" id="Sun-Yy-nh1"/>
                                                     <constraint firstAttribute="bottom" secondItem="pAl-od-KYi" secondAttribute="bottom" id="mnB-kC-Sah"/>
-                                                    <constraint firstAttribute="trailing" secondItem="HfO-O2-nNj" secondAttribute="trailing" constant="10" id="srk-jC-BRd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="HfO-O2-nNj" secondAttribute="trailing" constant="8" id="srk-jC-BRd"/>
                                                     <constraint firstItem="pAl-od-KYi" firstAttribute="leading" secondItem="rtz-0I-myB" secondAttribute="leading" id="suT-PT-QYr"/>
                                                 </constraints>
                                             </view>
@@ -634,25 +634,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vl8-97-RTQ" userLabel="popMenu5V">
-                                        <rect key="frame" x="0.0" y="140" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="135" width="73" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZj-tY-ifQ" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="bcZ-bV-2Q9"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kaL-nr-ucN" userLabel="menu5">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mR2-r7-0Ui">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="35"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddy-0F-ZWI" userLabel="menuBtn5">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="IIa-JW-V1x"/>
                                                         </connections>
@@ -662,9 +662,9 @@
                                                 <constraints>
                                                     <constraint firstItem="mR2-r7-0Ui" firstAttribute="top" secondItem="kaL-nr-ucN" secondAttribute="top" id="1yP-cG-jLs"/>
                                                     <constraint firstAttribute="trailing" secondItem="ddy-0F-ZWI" secondAttribute="trailing" id="CdJ-WD-Gia"/>
-                                                    <constraint firstAttribute="trailing" secondItem="mR2-r7-0Ui" secondAttribute="trailing" constant="10" id="PBs-gW-oQV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="mR2-r7-0Ui" secondAttribute="trailing" constant="8" id="PBs-gW-oQV"/>
                                                     <constraint firstItem="ddy-0F-ZWI" firstAttribute="leading" secondItem="kaL-nr-ucN" secondAttribute="leading" id="ZcW-4p-YZJ"/>
-                                                    <constraint firstItem="mR2-r7-0Ui" firstAttribute="leading" secondItem="kaL-nr-ucN" secondAttribute="leading" constant="10" id="eTj-3t-wgb"/>
+                                                    <constraint firstItem="mR2-r7-0Ui" firstAttribute="leading" secondItem="kaL-nr-ucN" secondAttribute="leading" constant="8" id="eTj-3t-wgb"/>
                                                     <constraint firstItem="ddy-0F-ZWI" firstAttribute="top" secondItem="kaL-nr-ucN" secondAttribute="top" id="rWG-MX-kWp"/>
                                                     <constraint firstAttribute="bottom" secondItem="mR2-r7-0Ui" secondAttribute="bottom" id="vvG-z1-CxM"/>
                                                     <constraint firstAttribute="bottom" secondItem="ddy-0F-ZWI" secondAttribute="bottom" id="xCJ-XT-FTh"/>
@@ -684,25 +684,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6o-7L-eDv" userLabel="popMenu6V">
-                                        <rect key="frame" x="0.0" y="175" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="170" width="73" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G7S-R2-vcS" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="wkX-4i-ICk"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Drx-ma-pH6" userLabel="menu6">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb6" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svw-Sz-Q1P" userLabel="menuLb6">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="35"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdY-3f-vPb" userLabel="menuBtn6">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="TTo-F6-uEo"/>
                                                         </connections>
@@ -710,8 +710,8 @@
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="svw-Sz-Q1P" secondAttribute="trailing" constant="10" id="2eu-Ay-mgz"/>
-                                                    <constraint firstItem="svw-Sz-Q1P" firstAttribute="leading" secondItem="Drx-ma-pH6" secondAttribute="leading" constant="10" id="8Y1-ki-Yht"/>
+                                                    <constraint firstAttribute="trailing" secondItem="svw-Sz-Q1P" secondAttribute="trailing" constant="8" id="2eu-Ay-mgz"/>
+                                                    <constraint firstItem="svw-Sz-Q1P" firstAttribute="leading" secondItem="Drx-ma-pH6" secondAttribute="leading" constant="8" id="8Y1-ki-Yht"/>
                                                     <constraint firstAttribute="bottom" secondItem="svw-Sz-Q1P" secondAttribute="bottom" id="IQP-hp-O75"/>
                                                     <constraint firstItem="fdY-3f-vPb" firstAttribute="top" secondItem="Drx-ma-pH6" secondAttribute="top" id="OSP-Kh-dXi"/>
                                                     <constraint firstItem="svw-Sz-Q1P" firstAttribute="top" secondItem="Drx-ma-pH6" secondAttribute="top" id="UcF-wZ-jX9"/>
@@ -734,25 +734,25 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lpM-g5-INx" userLabel="popMenu7V">
-                                        <rect key="frame" x="0.0" y="210" width="77" height="35"/>
+                                        <rect key="frame" x="0.0" y="205" width="73" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KN-Oc-Wru" userLabel="backgrounBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <connections>
                                                     <action selector="dismissMenu:" destination="0yz-5r-gyq" eventType="touchUpInside" id="mS5-OD-f7M"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqC-SO-UzM" userLabel="menu7">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="menuLb7" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOr-zg-sbP" userLabel="menuLb7">
-                                                        <rect key="frame" x="10" y="0.0" width="57" height="35"/>
+                                                        <rect key="frame" x="8" y="0.0" width="57" height="35"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4J-L5-IAO" userLabel="menuBtn7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="77" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="35"/>
                                                         <connections>
                                                             <action selector="goalMenuItemAction:" destination="0yz-5r-gyq" eventType="touchUpInside" id="0lm-8J-Vh6"/>
                                                         </connections>
@@ -762,9 +762,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="hOr-zg-sbP" secondAttribute="bottom" id="AJO-WH-f0u"/>
                                                     <constraint firstAttribute="bottom" secondItem="c4J-L5-IAO" secondAttribute="bottom" id="QO1-Ur-c2T"/>
-                                                    <constraint firstAttribute="trailing" secondItem="hOr-zg-sbP" secondAttribute="trailing" constant="10" id="UqT-k6-7nQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="hOr-zg-sbP" secondAttribute="trailing" constant="8" id="UqT-k6-7nQ"/>
                                                     <constraint firstItem="hOr-zg-sbP" firstAttribute="top" secondItem="dqC-SO-UzM" secondAttribute="top" id="bg2-Ah-95F"/>
-                                                    <constraint firstItem="hOr-zg-sbP" firstAttribute="leading" secondItem="dqC-SO-UzM" secondAttribute="leading" constant="10" id="ckQ-mz-pxc"/>
+                                                    <constraint firstItem="hOr-zg-sbP" firstAttribute="leading" secondItem="dqC-SO-UzM" secondAttribute="leading" constant="8" id="ckQ-mz-pxc"/>
                                                     <constraint firstAttribute="trailing" secondItem="c4J-L5-IAO" secondAttribute="trailing" id="dFc-92-zyN"/>
                                                     <constraint firstItem="c4J-L5-IAO" firstAttribute="top" secondItem="dqC-SO-UzM" secondAttribute="top" id="f0J-zi-sTS"/>
                                                     <constraint firstItem="c4J-L5-IAO" firstAttribute="leading" secondItem="dqC-SO-UzM" secondAttribute="leading" id="yhv-KL-CQ4"/>

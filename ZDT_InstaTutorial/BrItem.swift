@@ -13,16 +13,18 @@ class BRItem {
     
     var index:Int = -1
     var serial:Int = -1
+    var maleGoal:GoalMO? = nil
     var maleGoalCid:String = ""
     var maleTestItems:[TestItem] = []
     var femaleGoalCid:String = ""
+    var femaleGoal:GoalMO? = nil
     var femaleTestItems:[TestItem] = []
     
     var testItems:[TestItem] = []
     var date:Date? = nil
     var cellGuildLine:CellGuildLine?
     var isEmptyRow:Bool = false
-    var goal:GoalMO? = nil
+   
     
     init() {
         testItems = []
